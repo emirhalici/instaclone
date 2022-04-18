@@ -1,0 +1,59 @@
+name: instaclone
+description: A simple instagram clone.
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.18.0-24.0.dev <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  http: ^0.13.4
+  shared_preferences: ^2.0.13
+  flutter_screenutil: ^5.3.1
+  flutter_staggered_grid_view: ^0.6.1
+  flutter_svg: ^1.0.3
+  provider: ^6.0.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.0
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+    - assets/icons/
+  
+  fonts:
+    - family: SF-UI-Display
+      fonts:
+        - asset: assets/fonts/SF-UI-Display-Black.ttf
+        - asset: assets/fonts/SF-UI-Display-Heavy.ttf
+        - asset: assets/fonts/SF-UI-Display-Light.ttf
+        - asset: assets/fonts/SF-UI-Display-Medium.ttf
+        - asset: assets/fonts/SF-UI-Display-Regular.ttf
+        - asset: assets/fonts/SF-UI-Display-Semibold.ttf
+        - asset: assets/fonts/SF-UI-Display-Thin.ttf
+        - asset: assets/fonts/SF-UI-Display-Ultralight.ttf
+
+
+  # fonts:
+  #   - family: Schyler
+  #     fonts:
+  #       - asset: fonts/Schyler-Regular.ttf
+  #       - asset: fonts/Schyler-Italic.ttf
+  #         style: italic
+  #   - family: Trajan Pro
+  #     fonts:
+  #       - asset: fonts/TrajanPro.ttf
+  #       - asset: fonts/TrajanPro_Bold.ttf
+  #         weight: 700

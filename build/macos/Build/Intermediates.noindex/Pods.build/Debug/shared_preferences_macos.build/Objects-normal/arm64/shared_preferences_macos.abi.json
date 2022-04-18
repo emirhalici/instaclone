@@ -1,0 +1,225 @@
+{
+  "kind": "Root",
+  "name": "TopLevel",
+  "printedName": "TopLevel",
+  "children": [
+    {
+      "kind": "Import",
+      "name": "FlutterMacOS",
+      "printedName": "FlutterMacOS",
+      "declKind": "Import",
+      "moduleName": "shared_preferences_macos"
+    },
+    {
+      "kind": "Import",
+      "name": "Foundation",
+      "printedName": "Foundation",
+      "declKind": "Import",
+      "moduleName": "shared_preferences_macos"
+    },
+    {
+      "kind": "Import",
+      "name": "SwiftOnoneSupport",
+      "printedName": "SwiftOnoneSupport",
+      "declKind": "Import",
+      "moduleName": "shared_preferences_macos"
+    },
+    {
+      "kind": "Import",
+      "name": "_Concurrency",
+      "printedName": "_Concurrency",
+      "declKind": "Import",
+      "moduleName": "shared_preferences_macos"
+    },
+    {
+      "kind": "Import",
+      "name": "shared_preferences_macos",
+      "printedName": "shared_preferences_macos",
+      "declKind": "Import",
+      "moduleName": "shared_preferences_macos",
+      "declAttributes": [
+        "Exported"
+      ]
+    },
+    {
+      "kind": "TypeDecl",
+      "name": "SharedPreferencesPlugin",
+      "printedName": "SharedPreferencesPlugin",
+      "children": [
+        {
+          "kind": "Function",
+          "name": "register",
+          "printedName": "register(with:)",
+          "children": [
+            {
+              "kind": "TypeNominal",
+              "name": "Void",
+              "printedName": "()"
+            },
+            {
+              "kind": "TypeNominal",
+              "name": "FlutterPluginRegistrar",
+              "printedName": "FlutterMacOS.FlutterPluginRegistrar",
+              "usr": "c:objc(pl)FlutterPluginRegistrar"
+            }
+          ],
+          "declKind": "Func",
+          "usr": "c:@M@shared_preferences_macos@objc(cs)SharedPreferencesPlugin(cm)registerWithRegistrar:",
+          "mangledName": "$s24shared_preferences_macos23SharedPreferencesPluginC8register4withySo07FlutterF9Registrar_p_tFZ",
+          "moduleName": "shared_preferences_macos",
+          "static": true,
+          "objc_name": "registerWithRegistrar:",
+          "declAttributes": [
+            "Final",
+            "ObjC"
+          ],
+          "funcSelfKind": "NonMutating"
+        },
+        {
+          "kind": "Function",
+          "name": "handle",
+          "printedName": "handle(_:result:)",
+          "children": [
+            {
+              "kind": "TypeNominal",
+              "name": "Void",
+              "printedName": "()"
+            },
+            {
+              "kind": "TypeNominal",
+              "name": "FlutterMethodCall",
+              "printedName": "FlutterMacOS.FlutterMethodCall",
+              "usr": "c:objc(cs)FlutterMethodCall"
+            },
+            {
+              "kind": "TypeFunc",
+              "name": "Function",
+              "printedName": "(Any?) -> ()",
+              "children": [
+                {
+                  "kind": "TypeNominal",
+                  "name": "Void",
+                  "printedName": "()"
+                },
+                {
+                  "kind": "TypeNominal",
+                  "name": "Optional",
+                  "printedName": "Any?",
+                  "children": [
+                    {
+                      "kind": "TypeNominal",
+                      "name": "ProtocolComposition",
+                      "printedName": "Any"
+                    }
+                  ],
+                  "usr": "s:Sq"
+                }
+              ]
+            }
+          ],
+          "declKind": "Func",
+          "usr": "c:@M@shared_preferences_macos@objc(cs)SharedPreferencesPlugin(im)handleMethodCall:result:",
+          "mangledName": "$s24shared_preferences_macos23SharedPreferencesPluginC6handle_6resultySo17FlutterMethodCallC_yypSgctF",
+          "moduleName": "shared_preferences_macos",
+          "isOpen": true,
+          "objc_name": "handleMethodCall:result:",
+          "declAttributes": [
+            "ObjC"
+          ],
+          "funcSelfKind": "NonMutating"
+        },
+        {
+          "kind": "Constructor",
+          "name": "init",
+          "printedName": "init()",
+          "children": [
+            {
+              "kind": "TypeNominal",
+              "name": "SharedPreferencesPlugin",
+              "printedName": "shared_preferences_macos.SharedPreferencesPlugin",
+              "usr": "c:@M@shared_preferences_macos@objc(cs)SharedPreferencesPlugin"
+            }
+          ],
+          "declKind": "Constructor",
+          "usr": "c:@M@shared_preferences_macos@objc(cs)SharedPreferencesPlugin(im)init",
+          "mangledName": "$s24shared_preferences_macos23SharedPreferencesPluginCACycfc",
+          "moduleName": "shared_preferences_macos",
+          "overriding": true,
+          "implicit": true,
+          "objc_name": "init",
+          "declAttributes": [
+            "Dynamic",
+            "ObjC",
+            "Override"
+          ],
+          "init_kind": "Designated"
+        }
+      ],
+      "declKind": "Class",
+      "usr": "c:@M@shared_preferences_macos@objc(cs)SharedPreferencesPlugin",
+      "mangledName": "$s24shared_preferences_macos23SharedPreferencesPluginC",
+      "moduleName": "shared_preferences_macos",
+      "isOpen": true,
+      "declAttributes": [
+        "ObjC"
+      ],
+      "superclassUsr": "c:objc(cs)NSObject",
+      "inheritsConvenienceInitializers": true,
+      "superclassNames": [
+        "ObjectiveC.NSObject"
+      ],
+      "conformances": [
+        {
+          "kind": "Conformance",
+          "name": "Equatable",
+          "printedName": "Equatable",
+          "usr": "s:SQ",
+          "mangledName": "$sSQ"
+        },
+        {
+          "kind": "Conformance",
+          "name": "Hashable",
+          "printedName": "Hashable",
+          "usr": "s:SH",
+          "mangledName": "$sSH"
+        },
+        {
+          "kind": "Conformance",
+          "name": "CVarArg",
+          "printedName": "CVarArg",
+          "usr": "s:s7CVarArgP",
+          "mangledName": "$ss7CVarArgP"
+        },
+        {
+          "kind": "Conformance",
+          "name": "_KeyValueCodingAndObservingPublishing",
+          "printedName": "_KeyValueCodingAndObservingPublishing",
+          "usr": "s:10Foundation37_KeyValueCodingAndObservingPublishingP",
+          "mangledName": "$s10Foundation37_KeyValueCodingAndObservingPublishingP"
+        },
+        {
+          "kind": "Conformance",
+          "name": "_KeyValueCodingAndObserving",
+          "printedName": "_KeyValueCodingAndObserving",
+          "usr": "s:10Foundation27_KeyValueCodingAndObservingP",
+          "mangledName": "$s10Foundation27_KeyValueCodingAndObservingP"
+        },
+        {
+          "kind": "Conformance",
+          "name": "CustomStringConvertible",
+          "printedName": "CustomStringConvertible",
+          "usr": "s:s23CustomStringConvertibleP",
+          "mangledName": "$ss23CustomStringConvertibleP"
+        },
+        {
+          "kind": "Conformance",
+          "name": "CustomDebugStringConvertible",
+          "printedName": "CustomDebugStringConvertible",
+          "usr": "s:s28CustomDebugStringConvertibleP",
+          "mangledName": "$ss28CustomDebugStringConvertibleP"
+        }
+      ]
+    }
+  ],
+  "json_format_version": 6
+}
