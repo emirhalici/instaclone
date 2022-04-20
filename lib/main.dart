@@ -25,6 +25,7 @@ class MyApp extends StatelessWidget {
             cursorColor: Colors.grey,
           ),
           brightness: Brightness.light,
+          primaryColor: const Color.fromARGB(0, 0, 208, 255),
           colorScheme: ThemeData().colorScheme.copyWith(
                 primary: const Color.fromARGB(0, 0, 208, 255),
                 secondary: const Color.fromARGB(0, 0, 208, 255),
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
             cursorColor: Colors.grey,
           ),
           brightness: Brightness.dark,
+          primaryColor: const Color.fromARGB(0, 0, 208, 255),
           colorScheme: ThemeData().colorScheme.copyWith(
                 // primary: const Color.fromARGB(255, 19, 89, 146),
                 // secondary: const Color.fromARGB(255, 19, 89, 146),
