@@ -73,6 +73,9 @@ class _LoginPageState extends State<LoginPage> {
                 height: 44.h,
                 child: TextField(
                   controller: passwordController,
+                  enableSuggestions: false,
+                  obscureText: true,
+                  autocorrect: false,
                   decoration: InputDecoration(
                     hintText: 'Password',
                     hintStyle: const TextStyle(color: Colors.grey),

@@ -102,6 +102,9 @@ class _SignupPage extends State<SignupPage> {
                 height: 44.h,
                 child: TextField(
                   controller: passwordController,
+                  enableSuggestions: false,
+                  obscureText: true,
+                  autocorrect: false,
                   decoration: InputDecoration(
                     hintText: 'Password',
                     hintStyle: const TextStyle(color: Colors.grey),
