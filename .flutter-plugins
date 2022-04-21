@@ -1,4 +1,8 @@
 # This is a generated file; do not edit or check into version control.
+firebase_auth=/Users/emirhalici/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth-3.3.14/
+firebase_auth_web=/Users/emirhalici/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth_web-3.3.12/
+firebase_core=/Users/emirhalici/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core-1.14.1/
+firebase_core_web=/Users/emirhalici/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core_web-1.6.2/
 path_provider_linux=/Users/emirhalici/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_linux-2.1.5/
 path_provider_windows=/Users/emirhalici/flutter/.pub-cache/hosted/pub.dartlang.org/path_provider_windows-2.0.5/
 shared_preferences=/Users/emirhalici/flutter/.pub-cache/hosted/pub.dartlang.org/shared_preferences-2.0.13/

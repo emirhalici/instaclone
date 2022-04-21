@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:instaclone/screens/login_page/login_page.dart';
+import 'package:instaclone/screens/main_page.dart';
+import 'package:instaclone/utils/authentication_service.dart';
+import 'package:provider/provider.dart';
 
 class SignupPage extends StatefulWidget {
-  SignupPage({Key? key}) : super(key: key);
+  const SignupPage({Key? key}) : super(key: key);
 
   @override
   State<SignupPage> createState() => _SignupPage();
@@ -13,6 +17,15 @@ class _SignupPage extends State<SignupPage> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  void directToMainPage() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const MainPage(),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -117,16 +130,51 @@ class _SignupPage extends State<SignupPage> {
                 width: double.infinity,
                 height: 44.h,
                 child: ElevatedButton(
-                  onPressed: () {
-                    // TODO : IMPLEMENT SIGN UP
+                  onPressed: () async {
+                    String response = await context.read<AuthenticationService>().signUp(
+                          email: emailController.text.trim(),
+                          password: passwordController.text.trim(),
+                        );
+                    print(response);
+                    if (response == 'Signed up.') {
+                      if (mounted) {
+                        String logInResponse = await context.read<AuthenticationService>().signIn(
+                              email: emailController.text.trim(),
+                              password: passwordController.text.trim(),
+                            );
+                        print(logInResponse);
+                        // TODO : create user with the same username and email
+                        directToMainPage();
+                      }
+                    }
                   },
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(const Color(0xAA3797EF)),
+                    backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF3797EF)),
                     elevation: MaterialStateProperty.all(0.0),
                   ),
                   child: const Text('Sign Up'),
                 ),
               ),
+              TextButton(
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => const LoginPage()),
+                  );
+                },
+                child: RichText(
+                  text: const TextSpan(
+                    text: 'Already have an account? ',
+                    style: TextStyle(color: Colors.grey),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: 'Log in.',
+                        style: TextStyle(color: Color(0xFF3797EF)),
+                      ),
+                    ],
+                  ),
+                ),
+              )
             ],
           ),
         ),

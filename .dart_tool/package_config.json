@@ -62,6 +62,42 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "firebase_auth",
+      "rootUri": "file:///Users/emirhalici/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth-3.3.14",
+      "packageUri": "lib/",
+      "languageVersion": "2.16"
+    },
+    {
+      "name": "firebase_auth_platform_interface",
+      "rootUri": "file:///Users/emirhalici/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth_platform_interface-6.2.3",
+      "packageUri": "lib/",
+      "languageVersion": "2.16"
+    },
+    {
+      "name": "firebase_auth_web",
+      "rootUri": "file:///Users/emirhalici/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_auth_web-3.3.12",
+      "packageUri": "lib/",
+      "languageVersion": "2.16"
+    },
+    {
+      "name": "firebase_core",
+      "rootUri": "file:///Users/emirhalici/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core-1.14.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.16"
+    },
+    {
+      "name": "firebase_core_platform_interface",
+      "rootUri": "file:///Users/emirhalici/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core_platform_interface-4.2.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.16"
+    },
+    {
+      "name": "firebase_core_web",
+      "rootUri": "file:///Users/emirhalici/flutter/.pub-cache/hosted/pub.dartlang.org/firebase_core_web-1.6.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.16"
+    },
+    {
       "name": "flutter",
       "rootUri": "file:///Users/emirhalici/flutter/packages/flutter",
       "packageUri": "lib/",
@@ -112,6 +148,12 @@
     {
       "name": "http_parser",
       "rootUri": "file:///Users/emirhalici/flutter/.pub-cache/hosted/pub.dartlang.org/http_parser-4.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "intl",
+      "rootUri": "file:///Users/emirhalici/flutter/.pub-cache/hosted/pub.dartlang.org/intl-0.17.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -344,7 +386,7 @@
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2022-04-20T21:44:44.780942Z",
+  "generated": "2022-04-21T14:36:58.662167Z",
   "generator": "pub",
   "generatorVersion": "2.18.0-30.0.dev"
 }

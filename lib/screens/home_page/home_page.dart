@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:instaclone/utils/authentication_service.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -15,17 +17,27 @@ class _HomePageState extends State<HomePage> {
     // animate to page
     // pageController.animateToPage(1, duration: const Duration(milliseconds: 200), curve: Curves.easeIn);
 
-    return Scaffold(
-      body: PageView(
-        controller: pageController,
-        children: const [
-          Scaffold(
-            body: Text('Home Page!'),
-          ),
-          Scaffold(
-            body: Text("Messages"),
-          )
-        ],
+    return SafeArea(
+      child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () async {
+            String val = await context.read<AuthenticationService>().signOut();
+            print(val);
+          },
+          backgroundColor: Colors.green,
+          foregroundColor: Colors.white,
+        ),
+        body: PageView(
+          controller: pageController,
+          children: const [
+            Scaffold(
+              body: Text('Home Page!'),
+            ),
+            Scaffold(
+              body: Text("Messages"),
+            )
+          ],
+        ),
       ),
     );
   }

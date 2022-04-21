@@ -1,16 +1,35 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:instaclone/screens/login_page/signup_page.dart';
+import 'package:instaclone/providers/home_page_provider.dart';
+import 'package:instaclone/screens/login_page/login_page.dart';
 import 'package:instaclone/screens/main_page.dart';
+import 'package:instaclone/utils/authentication_service.dart';
+import 'package:provider/provider.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => HomePageProvider()),
+        Provider<AuthenticationService>(
+          create: (context) => AuthenticationService(FirebaseAuth.instance),
+        ),
+        StreamProvider(
+          create: (context) => context.read<AuthenticationService>().authStateChanges,
+          initialData: null,
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-  // TODO: PROVIDER PACKAGE
 
   @override
   Widget build(BuildContext context) {
@@ -52,8 +71,28 @@ class MyApp extends StatelessWidget {
           fontFamily: 'SF-UI-Display',
         ),
         themeMode: ThemeMode.system,
-        home: const MainPage(),
+        home: const AuthenticationWrapper(),
       ),
     );
+  }
+}
+
+class AuthenticationWrapper extends StatefulWidget {
+  const AuthenticationWrapper({Key? key}) : super(key: key);
+
+  @override
+  State<AuthenticationWrapper> createState() => _AuthenticationWrapperState();
+}
+
+class _AuthenticationWrapperState extends State<AuthenticationWrapper> {
+  @override
+  Widget build(BuildContext context) {
+    final firebaseUser = context.watch<User?>();
+
+    if (firebaseUser != null) {
+      return const MainPage();
+    } else {
+      return const LoginPage();
+    }
   }
 }

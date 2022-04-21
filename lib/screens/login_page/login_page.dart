@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:instaclone/screens/login_page/signup_page.dart';
+import 'package:instaclone/utils/authentication_service.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
-  LoginPage({Key? key}) : super(key: key);
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -33,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: TextField(
                   controller: usernameController,
                   decoration: InputDecoration(
-                    hintText: 'Username',
+                    hintText: 'Email',
                     hintStyle: const TextStyle(color: Colors.grey),
                     contentPadding: const EdgeInsets.symmetric(horizontal: 15),
                     enabledBorder: const OutlineInputBorder(
@@ -94,7 +97,7 @@ class _LoginPageState extends State<LoginPage> {
                     'Forgot password?',
                     textAlign: TextAlign.end,
                     style: TextStyle(
-                      color: Color(0xAA3797EF),
+                      color: Color(0xFF3797EF),
                     ),
                   ),
                 ),
@@ -104,11 +107,15 @@ class _LoginPageState extends State<LoginPage> {
                 width: double.infinity,
                 height: 44.h,
                 child: ElevatedButton(
-                  onPressed: () {
-                    // TODO : IMPLEMENT LOGIN
+                  onPressed: () async {
+                    String response = await context.read<AuthenticationService>().signIn(
+                          email: usernameController.text.trim(),
+                          password: passwordController.text.trim(),
+                        );
+                    print(response);
                   },
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(const Color(0xAA3797EF)),
+                    backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF3797EF)),
                     elevation: MaterialStateProperty.all(0.0),
                   ),
                   child: const Text('Log In'),
@@ -117,11 +124,15 @@ class _LoginPageState extends State<LoginPage> {
               SizedBox(height: 32.h),
               SvgPicture.asset(
                 "assets/icons/seperator_or.svg",
+                color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
               ),
-              SizedBox(height: 32.h),
+              SizedBox(height: 12.h),
               TextButton(
                 onPressed: () {
-                  // TODO : IMPLEMENT NAVIGATION TO SIGN UP
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => const SignupPage()),
+                  );
                 },
                 child: RichText(
                   text: const TextSpan(
@@ -130,7 +141,7 @@ class _LoginPageState extends State<LoginPage> {
                     children: <TextSpan>[
                       TextSpan(
                         text: 'Sign up.',
-                        style: TextStyle(color: Color(0xAA3797EF)),
+                        style: TextStyle(color: Color(0xFF3797EF)),
                       ),
                     ],
                   ),
