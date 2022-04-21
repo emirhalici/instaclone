@@ -8,10 +8,25 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  PageController pageController = PageController(initialPage: 0);
+
   @override
   Widget build(BuildContext context) {
-    return const Text(
-      "Home",
+    // animate to page
+    // pageController.animateToPage(1, duration: const Duration(milliseconds: 200), curve: Curves.easeIn);
+
+    return Scaffold(
+      body: PageView(
+        controller: pageController,
+        children: const [
+          Scaffold(
+            body: Text('Home Page!'),
+          ),
+          Scaffold(
+            body: Text("Messages"),
+          )
+        ],
+      ),
     );
   }
 }

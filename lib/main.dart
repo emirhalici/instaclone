@@ -31,6 +31,7 @@ class MyApp extends StatelessWidget {
                 secondary: const Color.fromARGB(0, 0, 208, 255),
                 brightness: Brightness.light,
               ),
+          backgroundColor: Colors.white,
           scaffoldBackgroundColor: Colors.white,
           fontFamily: 'SF-UI-Display',
         ),
