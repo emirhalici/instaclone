@@ -28,7 +28,7 @@ class AuthenticationService {
   Future<String> signOut() async {
     try {
       await _firebaseAuth.signOut();
-      return 'Successful.';
+      return 'Signed out successfully.';
     } catch (e) {
       return 'Error while signing out.';
     }

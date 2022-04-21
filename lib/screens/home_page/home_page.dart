@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:instaclone/screens/login_page/login_page.dart';
 import 'package:instaclone/utils/authentication_service.dart';
 import 'package:provider/provider.dart';
 
@@ -19,14 +20,6 @@ class _HomePageState extends State<HomePage> {
 
     return SafeArea(
       child: Scaffold(
-        floatingActionButton: FloatingActionButton(
-          onPressed: () async {
-            String val = await context.read<AuthenticationService>().signOut();
-            print(val);
-          },
-          backgroundColor: Colors.green,
-          foregroundColor: Colors.white,
-        ),
         body: PageView(
           controller: pageController,
           children: const [

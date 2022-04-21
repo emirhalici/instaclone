@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instaclone/screens/login_page/signup_page.dart';
+import 'package:instaclone/screens/main_page.dart';
 import 'package:instaclone/utils/authentication_service.dart';
 import 'package:provider/provider.dart';
 
@@ -15,6 +16,15 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  void directToMainPage() {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const MainPage(),
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -112,7 +122,24 @@ class _LoginPageState extends State<LoginPage> {
                           email: usernameController.text.trim(),
                           password: passwordController.text.trim(),
                         );
-                    print(response);
+                    if (mounted && response == 'Signed in.') {
+                      directToMainPage();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(response),
+                          duration: const Duration(milliseconds: 500),
+                          backgroundColor: const Color(0xFF3797EF),
+                        ),
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(response),
+                          duration: const Duration(milliseconds: 500),
+                          backgroundColor: const Color(0xFF3797EF),
+                        ),
+                      );
+                    }
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF3797EF)),

@@ -136,7 +136,7 @@ class _SignupPage extends State<SignupPage> {
                           password: passwordController.text.trim(),
                         );
                     print(response);
-                    if (response == 'Signed up.') {
+                    if (response == 'Signed up.' && mounted) {
                       if (mounted) {
                         String logInResponse = await context.read<AuthenticationService>().signIn(
                               email: emailController.text.trim(),
@@ -146,6 +146,14 @@ class _SignupPage extends State<SignupPage> {
                         // TODO : create user with the same username and email
                         directToMainPage();
                       }
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(response),
+                          duration: const Duration(milliseconds: 500),
+                          backgroundColor: const Color(0xFF3797EF),
+                        ),
+                      );
                     }
                   },
                   style: ButtonStyle(
