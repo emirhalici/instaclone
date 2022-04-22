@@ -76,6 +76,9 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget profileWidget(BuildContext context, Map<String, dynamic> userData) {
+    List<dynamic> following = userData['following'];
+    List<dynamic> followers = userData['followers'];
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Column(
@@ -116,14 +119,14 @@ class _ProfilePageState extends State<ProfilePage> {
                   SizedBox(width: 30.w),
                   Column(
                     children: [
-                      Text('242', style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600)), // DUMMY TEXT
+                      Text(followers.length.toString(), style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600)),
                       Text('Followers', style: TextStyle(fontSize: 13.sp, fontWeight: FontWeight.w400)),
                     ],
                   ),
                   SizedBox(width: 30.w),
                   Column(
                     children: [
-                      Text('111', style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600)), // DUMMY TEXT
+                      Text(following.length.toString(), style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600)),
                       Text('Following', style: TextStyle(fontSize: 13.sp, fontWeight: FontWeight.w400)),
                     ],
                   )
