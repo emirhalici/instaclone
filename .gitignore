@@ -49,3 +49,5 @@ ios/Runner.xcodeproj/project.pbxproj
 android/app/google-services.json
 ios/Runner/GoogleService-Info.plist
 ios/Runner.xcodeproj/project.pbxproj
+.dart_tool/
+/build/

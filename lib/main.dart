@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:instaclone/providers/home_page_provider.dart';
+import 'package:instaclone/providers/profile_page_provider.dart';
 import 'package:instaclone/screens/login_page/login_page.dart';
 import 'package:instaclone/screens/main_page.dart';
 import 'package:instaclone/utils/authentication_service.dart';
@@ -15,6 +16,7 @@ void main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => HomePageProvider()),
+        ChangeNotifierProvider(create: (_) => ProfilePageProvider()),
         Provider<AuthenticationService>(
           create: (context) => AuthenticationService(FirebaseAuth.instance),
         ),
@@ -90,6 +92,7 @@ class _AuthenticationWrapperState extends State<AuthenticationWrapper> {
     final firebaseUser = context.watch<User?>();
 
     if (firebaseUser != null) {
+      context.read<ProfilePageProvider>().setUser(firebaseUser);
       return const MainPage();
     } else {
       return const LoginPage();

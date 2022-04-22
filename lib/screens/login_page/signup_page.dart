@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:instaclone/providers/profile_page_provider.dart';
 import 'package:instaclone/screens/login_page/login_page.dart';
 import 'package:instaclone/screens/main_page.dart';
 import 'package:instaclone/utils/authentication_service.dart';
@@ -145,9 +146,13 @@ class _SignupPage extends State<SignupPage> {
                               email: emailController.text.trim(),
                               password: passwordController.text.trim(),
                             );
-                        print(logInResponse);
-                        // TODO : create user with the same username and email
-                        directToMainPage();
+                        if (mounted) {
+                          final user = context.read<AuthenticationService>().auth.currentUser;
+                          context.read<ProfilePageProvider>().setUser(user);
+                          print(logInResponse);
+                          // TODO : create user with the same username and email
+                          directToMainPage();
+                        }
                       }
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(

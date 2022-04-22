@@ -1,8 +1,0 @@
-version: "Apple Swift version 5.5.2 (swiftlang-1300.0.47.5 clang-1300.0.29.30)"
-options: "9a1a92567da5ba281853eeb8aa848932366c22d4c906cd6a3183548b7eafb970"
-build_start_time: [1650312133, 387414932]
-build_end_time: [1650312138, 309588909]
-inputs:
-  "/Users/emirhalici/Documents/Development/FlutterProjects/instaclone/macos/Flutter/GeneratedPluginRegistrant.swift": [1650312115, 827880620]
-  "/Users/emirhalici/Documents/Development/FlutterProjects/instaclone/macos/Runner/AppDelegate.swift": [1631114968, 0]
-  "/Users/emirhalici/Documents/Development/FlutterProjects/instaclone/macos/Runner/MainFlutterWindow.swift": [1631114968, 0]

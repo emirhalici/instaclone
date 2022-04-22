@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:instaclone/providers/profile_page_provider.dart';
 import 'package:instaclone/screens/login_page/signup_page.dart';
 import 'package:instaclone/screens/main_page.dart';
 import 'package:instaclone/utils/authentication_service.dart';
@@ -126,6 +127,8 @@ class _LoginPageState extends State<LoginPage> {
                           password: passwordController.text.trim(),
                         );
                     if (mounted && response == 'Signed in.') {
+                      final user = context.read<AuthenticationService>().auth.currentUser;
+                      context.read<ProfilePageProvider>().setUser(user);
                       directToMainPage();
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(

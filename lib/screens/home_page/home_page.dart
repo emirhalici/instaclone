@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:instaclone/screens/login_page/login_page.dart';
-import 'package:instaclone/utils/authentication_service.dart';
-import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
