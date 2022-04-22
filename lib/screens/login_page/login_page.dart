@@ -27,6 +27,8 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  bool waitingForRequest = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -121,32 +123,43 @@ class _LoginPageState extends State<LoginPage> {
                 width: double.infinity,
                 height: 44.h,
                 child: ElevatedButton(
-                  onPressed: () async {
-                    String response = await context.read<AuthenticationService>().signIn(
-                          email: usernameController.text.trim(),
-                          password: passwordController.text.trim(),
-                        );
-                    if (mounted && response == 'Signed in.') {
-                      final user = context.read<AuthenticationService>().auth.currentUser;
-                      context.read<ProfilePageProvider>().setUser(user);
-                      directToMainPage();
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(response),
-                          duration: const Duration(milliseconds: 500),
-                          backgroundColor: const Color(0xFF3797EF),
-                        ),
-                      );
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(response),
-                          duration: const Duration(milliseconds: 500),
-                          backgroundColor: const Color(0xFF3797EF),
-                        ),
-                      );
-                    }
-                  },
+                  onPressed: waitingForRequest
+                      ? null
+                      : () async {
+                          setState(() {
+                            waitingForRequest = true;
+                          });
+                          String response = await context.read<AuthenticationService>().signIn(
+                                email: usernameController.text.trim(),
+                                password: passwordController.text.trim(),
+                              );
+                          if (mounted && response == 'Signed in.') {
+                            final user = context.read<AuthenticationService>().auth.currentUser;
+                            context.read<ProfilePageProvider>().setUser(user);
+                            directToMainPage();
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(response),
+                                duration: const Duration(milliseconds: 500),
+                                backgroundColor: const Color(0xFF3797EF),
+                              ),
+                            );
+                            setState(() {
+                              waitingForRequest = false;
+                            });
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(response),
+                                duration: const Duration(milliseconds: 500),
+                                backgroundColor: const Color(0xFF3797EF),
+                              ),
+                            );
+                          }
+                          setState(() {
+                            waitingForRequest = false;
+                          });
+                        },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF3797EF)),
                     elevation: MaterialStateProperty.all(0.0),
@@ -154,7 +167,10 @@ class _LoginPageState extends State<LoginPage> {
                   child: const Text('Log In'),
                 ),
               ),
-              SizedBox(height: 32.h),
+              if (waitingForRequest)
+                const Padding(padding: EdgeInsets.all(16.0), child: CircularProgressIndicator.adaptive())
+              else
+                SizedBox(height: 32.h),
               SvgPicture.asset(
                 "assets/icons/seperator_or.svg",
                 color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
