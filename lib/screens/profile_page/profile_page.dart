@@ -25,7 +25,6 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     final userData = context.watch<ProfilePageProvider>().userData;
-    print(userData);
 
     if (userData.isEmpty) {
       getUserData();
@@ -103,7 +102,7 @@ class _ProfilePageState extends State<ProfilePage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              userData['profilePic'] == ''
+              userData['profilePic'] == '' || userData['profilePic'] == null
                   ? Image.asset('assets/images/default_profile_pic.png', width: 86.w, height: 86.h)
                   : Image.network(userData['profilePic'], width: 86.w, height: 86.h),
               Row(
