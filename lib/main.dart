@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:instaclone/providers/home_page_provider.dart';
 import 'package:instaclone/providers/profile_page_provider.dart';
-import 'package:instaclone/screens/login_page/login_page.dart';
-import 'package:instaclone/screens/main_page.dart';
+import 'package:instaclone/screens/authentication_wrapper.dart';
 import 'package:instaclone/utils/authentication_service.dart';
 import 'package:provider/provider.dart';
 
@@ -47,6 +46,8 @@ class MyApp extends StatelessWidget {
           ),
           brightness: Brightness.light,
           primaryColor: const Color.fromARGB(0, 0, 208, 255),
+          splashColor: Colors.grey,
+          highlightColor: Colors.grey,
           colorScheme: ThemeData().colorScheme.copyWith(
                 primary: const Color.fromARGB(0, 0, 208, 255),
                 secondary: const Color.fromARGB(0, 0, 208, 255),
@@ -60,8 +61,10 @@ class MyApp extends StatelessWidget {
           textSelectionTheme: const TextSelectionThemeData(
             cursorColor: Colors.grey,
           ),
+          highlightColor: Colors.grey,
           brightness: Brightness.dark,
           primaryColor: const Color.fromARGB(0, 0, 208, 255),
+          splashColor: Colors.grey,
           colorScheme: ThemeData().colorScheme.copyWith(
                 // primary: const Color.fromARGB(255, 19, 89, 146),
                 // secondary: const Color.fromARGB(255, 19, 89, 146),
@@ -76,26 +79,5 @@ class MyApp extends StatelessWidget {
         home: const AuthenticationWrapper(),
       ),
     );
-  }
-}
-
-class AuthenticationWrapper extends StatefulWidget {
-  const AuthenticationWrapper({Key? key}) : super(key: key);
-
-  @override
-  State<AuthenticationWrapper> createState() => _AuthenticationWrapperState();
-}
-
-class _AuthenticationWrapperState extends State<AuthenticationWrapper> {
-  @override
-  Widget build(BuildContext context) {
-    final firebaseUser = context.watch<User?>();
-
-    if (firebaseUser != null) {
-      context.read<ProfilePageProvider>().setUser(firebaseUser);
-      return const MainPage();
-    } else {
-      return const LoginPage();
-    }
   }
 }

@@ -16,6 +16,7 @@ class ProfilePageProvider with ChangeNotifier {
   }
 
   Future<void> getCurrentUserData() async {
+    print(loggedInUser);
     final snapshot = await firestore.collection('users').get();
     String uid = loggedInUser!.uid;
     final docs = snapshot.docs;
@@ -25,5 +26,6 @@ class ProfilePageProvider with ChangeNotifier {
         userData = data;
       }
     }
+    notifyListeners();
   }
 }

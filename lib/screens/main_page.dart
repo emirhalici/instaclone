@@ -45,7 +45,7 @@ class _MainPageState extends State<MainPage> {
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
           onPressed: () async {
-            String val = await context.read<AuthenticationService>().signOut();
+            await context.read<AuthenticationService>().signOut();
             if (mounted) {
               Navigator.pushReplacement(
                 context,
@@ -54,7 +54,6 @@ class _MainPageState extends State<MainPage> {
                 ),
               );
             }
-            print(val);
           },
           backgroundColor: Colors.green,
           foregroundColor: Colors.white,

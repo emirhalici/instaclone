@@ -139,7 +139,6 @@ class _SignupPage extends State<SignupPage> {
                           email: emailController.text.trim(),
                           password: passwordController.text.trim(),
                         );
-                    print(response);
                     if (response == 'Signed up.' && mounted) {
                       if (mounted) {
                         String logInResponse = await context.read<AuthenticationService>().signIn(
@@ -149,7 +148,6 @@ class _SignupPage extends State<SignupPage> {
                         if (mounted) {
                           final user = context.read<AuthenticationService>().auth.currentUser;
                           context.read<ProfilePageProvider>().setUser(user);
-                          print(logInResponse);
                           // TODO : create user with the same username and email
                           directToMainPage();
                         }
