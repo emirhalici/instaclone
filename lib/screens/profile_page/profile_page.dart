@@ -18,8 +18,18 @@ class _ProfilePageState extends State<ProfilePage> {
     await context.watch<ProfilePageProvider>().getCurrentUserData();
   }
 
+  Future<void> getUserPosts() async {
+    context.read<ProfilePageProvider>().getUserPosts();
+  }
+
   Color getColor(BuildContext context) {
     return Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getUserPosts();
   }
 
   @override
