@@ -101,7 +101,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ],
           ),
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               userData['profilePic'] == ''
                   ? Image.asset('assets/images/default_profile_pic.png', width: 86.w, height: 86.h)
@@ -114,14 +114,14 @@ class _ProfilePageState extends State<ProfilePage> {
                       Text('Posts', style: TextStyle(fontSize: 13.sp, fontWeight: FontWeight.w400)),
                     ],
                   ),
-                  SizedBox(width: 50.w),
+                  SizedBox(width: 30.w),
                   Column(
                     children: [
                       Text('242', style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600)), // DUMMY TEXT
                       Text('Followers', style: TextStyle(fontSize: 13.sp, fontWeight: FontWeight.w400)),
                     ],
                   ),
-                  SizedBox(width: 50.w),
+                  SizedBox(width: 30.w),
                   Column(
                     children: [
                       Text('111', style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600)), // DUMMY TEXT
