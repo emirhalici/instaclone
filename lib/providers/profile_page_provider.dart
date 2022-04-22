@@ -16,16 +16,30 @@ class ProfilePageProvider with ChangeNotifier {
   }
 
   Future<void> getCurrentUserData() async {
-    print(loggedInUser);
-    final snapshot = await firestore.collection('users').get();
-    String uid = loggedInUser!.uid;
-    final docs = snapshot.docs;
-    for (var doc in docs) {
-      Map<String, dynamic> data = doc.data();
-      if (data['userUUID'] == uid) {
-        userData = data;
+    print('loggedInUser : $loggedInUser');
+    try {
+      final snapshot = await firestore.collection('users').get();
+      String uid = loggedInUser!.uid;
+      final docs = snapshot.docs;
+      for (var doc in docs) {
+        Map<String, dynamic> data = doc.data();
+        print(data);
+        if (data['userUUID'] == uid) {
+          userData = data;
+          print('userData : $userData');
+        }
       }
+      notifyListeners();
+    } catch (e) {
+      print(e);
     }
-    notifyListeners();
+  }
+
+  Future<void> setUserUpAfterSignUp(Map<String, dynamic> json) async {
+    try {
+      final snapshot = await firestore.collection('users').add(json);
+    } catch (e) {
+      print(e);
+    }
   }
 }

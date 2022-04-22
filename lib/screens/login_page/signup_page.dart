@@ -28,6 +28,8 @@ class _SignupPage extends State<SignupPage> {
     );
   }
 
+  bool waitingForRequest = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -134,34 +136,58 @@ class _SignupPage extends State<SignupPage> {
                 width: double.infinity,
                 height: 44.h,
                 child: ElevatedButton(
-                  onPressed: () async {
-                    String response = await context.read<AuthenticationService>().signUp(
-                          email: emailController.text.trim(),
-                          password: passwordController.text.trim(),
-                        );
-                    if (response == 'Signed up.' && mounted) {
-                      if (mounted) {
-                        String logInResponse = await context.read<AuthenticationService>().signIn(
-                              email: emailController.text.trim(),
-                              password: passwordController.text.trim(),
+                  onPressed: waitingForRequest
+                      ? null
+                      : () async {
+                          setState(() {
+                            waitingForRequest = true;
+                          });
+                          String response = await context.read<AuthenticationService>().signUp(
+                                email: emailController.text.trim(),
+                                password: passwordController.text.trim(),
+                              );
+                          if (response == 'Signed up.' && mounted) {
+                            if (mounted) {
+                              String logInResponse = await context.read<AuthenticationService>().signIn(
+                                    email: emailController.text.trim(),
+                                    password: passwordController.text.trim(),
+                                  );
+                              if (mounted) {
+                                final user = context.read<AuthenticationService>().auth.currentUser;
+                                context.read<ProfilePageProvider>().setUser(user);
+                                setState(() {
+                                  waitingForRequest = false;
+                                });
+                                // TODO : create user with the same username and email
+
+                                Map<String, dynamic> json = <String, dynamic>{
+                                  'following': [],
+                                  'followers': [],
+                                  'userUUID': user!.uid,
+                                  'email': emailController.text.trim(),
+                                  'username': usernameController.text.trim(),
+                                  'description': '',
+                                  'name': usernameController.text.trim(), // might change later?
+                                  'profilePic': '',
+                                };
+
+                                context.read<ProfilePageProvider>().setUserUpAfterSignUp(json);
+                                directToMainPage();
+                              }
+                            }
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(response),
+                                duration: const Duration(milliseconds: 500),
+                                backgroundColor: const Color(0xFF3797EF),
+                              ),
                             );
-                        if (mounted) {
-                          final user = context.read<AuthenticationService>().auth.currentUser;
-                          context.read<ProfilePageProvider>().setUser(user);
-                          // TODO : create user with the same username and email
-                          directToMainPage();
-                        }
-                      }
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(response),
-                          duration: const Duration(milliseconds: 500),
-                          backgroundColor: const Color(0xFF3797EF),
-                        ),
-                      );
-                    }
-                  },
+                          }
+                          setState(() {
+                            waitingForRequest = false;
+                          });
+                        },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF3797EF)),
                     elevation: MaterialStateProperty.all(0.0),
@@ -169,6 +195,10 @@ class _SignupPage extends State<SignupPage> {
                   child: const Text('Sign Up'),
                 ),
               ),
+              if (waitingForRequest)
+                const Padding(padding: EdgeInsets.all(16.0), child: CircularProgressIndicator.adaptive())
+              else
+                SizedBox(height: 32.h),
               TextButton(
                 onPressed: () {
                   Navigator.pushReplacement(
