@@ -50,6 +50,8 @@ class ProfilePageProvider with ChangeNotifier {
       final snapshot = await firestore.collection('posts').where('userUUID', isEqualTo: loggedInUser!.uid).get();
       final docs = snapshot.docs;
 
+      posts = [];
+
       for (var doc in docs) {
         Map<String, dynamic> data = doc.data();
         posts.add(PostModel.fromJson(data, userData));
