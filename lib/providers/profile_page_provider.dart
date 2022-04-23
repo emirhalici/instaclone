@@ -8,6 +8,7 @@ class ProfilePageProvider with ChangeNotifier {
   User? loggedInUser;
   Map<String, dynamic> userData = <String, dynamic>{};
   List<PostModel> posts = [];
+  String username = '';
 
   void setUser(User? user) {
     loggedInUser = user;
@@ -24,9 +25,9 @@ class ProfilePageProvider with ChangeNotifier {
       final docs = snapshot.docs;
       for (var doc in docs) {
         Map<String, dynamic> data = doc.data();
-        //print(data);
         if (data['userUUID'] == uid) {
           userData = data;
+          username = data['username'];
         }
       }
       notifyListeners();
@@ -44,13 +45,14 @@ class ProfilePageProvider with ChangeNotifier {
   }
 
   Future<void> getUserPosts() async {
+    print(userData);
     try {
       final snapshot = await firestore.collection('posts').where('userUUID', isEqualTo: loggedInUser!.uid).get();
       final docs = snapshot.docs;
 
       for (var doc in docs) {
         Map<String, dynamic> data = doc.data();
-        posts.add(PostModel.fromJson(data));
+        posts.add(PostModel.fromJson(data, username));
       }
 
       print('got all the posts');

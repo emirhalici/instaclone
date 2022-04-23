@@ -72,12 +72,13 @@ class _ProfilePageState extends State<ProfilePage> {
                       ],
                     ),
                     const Expanded(
-                        child: TabBarView(
-                      children: [
-                        ProfilePosts(),
-                        TaggedPosts(),
-                      ],
-                    ))
+                      child: TabBarView(
+                        children: [
+                          ProfilePosts(),
+                          TaggedPosts(),
+                        ],
+                      ),
+                    )
                   ],
                 ),
               ),
