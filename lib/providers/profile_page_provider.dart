@@ -45,7 +45,6 @@ class ProfilePageProvider with ChangeNotifier {
   }
 
   Future<void> getUserPosts() async {
-    print(userData);
     try {
       final snapshot = await firestore.collection('posts').where('userUUID', isEqualTo: loggedInUser!.uid).get();
       final docs = snapshot.docs;
@@ -57,14 +56,9 @@ class ProfilePageProvider with ChangeNotifier {
         posts.add(PostModel.fromJson(data, userData, doc.id));
       }
 
-      print('got all the posts');
-
       notifyListeners();
     } catch (e) {
       print(e);
-      print('something went wrong');
     }
   }
-
-  
 }

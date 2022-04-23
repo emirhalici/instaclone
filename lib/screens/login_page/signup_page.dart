@@ -148,7 +148,7 @@ class _SignupPage extends State<SignupPage> {
                               );
                           if (response == 'Signed up.' && mounted) {
                             if (mounted) {
-                              String logInResponse = await context.read<AuthenticationService>().signIn(
+                              await context.read<AuthenticationService>().signIn(
                                     email: emailController.text.trim(),
                                     password: passwordController.text.trim(),
                                   );

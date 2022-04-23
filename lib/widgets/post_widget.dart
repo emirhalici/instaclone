@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:http/http.dart';
 import 'package:instaclone/models/post_model.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:instaclone/providers/posts_provider.dart';
-import 'package:instaclone/providers/profile_page_provider.dart';
-import 'package:instaclone/screens/profile_page/profile_page.dart';
 import 'package:provider/provider.dart';
 
 class PostWidget extends StatefulWidget {
@@ -27,7 +24,7 @@ class _PostWidgetState extends State<PostWidget> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.post.userData);
+    //print(widget.post.userData);
     String profilePic = widget.post.userData['profilePic'] ?? '';
     List<String> likes = [];
 
