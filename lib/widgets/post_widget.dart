@@ -4,6 +4,10 @@ import 'package:flutter_svg/svg.dart';
 import 'package:http/http.dart';
 import 'package:instaclone/models/post_model.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:instaclone/providers/posts_provider.dart';
+import 'package:instaclone/providers/profile_page_provider.dart';
+import 'package:instaclone/screens/profile_page/profile_page.dart';
+import 'package:provider/provider.dart';
 
 class PostWidget extends StatefulWidget {
   PostModel post;
@@ -34,7 +38,7 @@ class _PostWidgetState extends State<PostWidget> {
     // WHAT KIND OF STUPID LANGUAGE THINKS AN EMPTY ARRAY
     // HAS THE LENGTH OF ONE WHEN DATA INSIDE IS FUCKING
     // EMPTY? I RAGED FOR 20 MINUTES WHILE FIGURING IT OUT
-    if (likes.length == 1 && likes[0] == '') {
+    if (likes.isNotEmpty && likes[0] == '') {
       likes.removeAt(0);
     }
 
@@ -90,22 +94,34 @@ class _PostWidgetState extends State<PostWidget> {
             ],
           ),
         ),
-        CarouselSlider(
-            items: images,
-            carouselController: _controller,
-            options: CarouselOptions(
-                aspectRatio: 1,
-                viewportFraction: 1,
-                initialPage: 0,
-                autoPlayCurve: Curves.fastOutSlowIn,
-                enableInfiniteScroll: false,
-                enlargeCenterPage: false,
-                scrollDirection: Axis.horizontal,
-                onPageChanged: (index, reason) {
-                  setState(() {
-                    _current = index;
-                  });
-                })),
+        GestureDetector(
+          onDoubleTap: () {
+            setState(() {
+              if (widget.post.likes.contains(widget.post.userUUID)) {
+                widget.post.likes.remove(widget.post.userUUID);
+              } else {
+                widget.post.likes.add(widget.post.userUUID);
+              }
+            });
+            context.read<PostsProvider>().writePost(widget.post);
+          },
+          child: CarouselSlider(
+              items: images,
+              carouselController: _controller,
+              options: CarouselOptions(
+                  aspectRatio: 1,
+                  viewportFraction: 1,
+                  initialPage: 0,
+                  autoPlayCurve: Curves.fastOutSlowIn,
+                  enableInfiniteScroll: false,
+                  enlargeCenterPage: false,
+                  scrollDirection: Axis.horizontal,
+                  onPageChanged: (index, reason) {
+                    setState(() {
+                      _current = index;
+                    });
+                  })),
+        ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
           child: Stack(
@@ -133,9 +149,21 @@ class _PostWidgetState extends State<PostWidget> {
                 children: [
                   Row(
                     children: [
-                      SvgPicture.asset(
-                        'assets/icons/heart.svg',
-                        color: getColor(),
+                      GestureDetector(
+                        child: SvgPicture.asset(
+                          widget.post.likes.contains(widget.post.userUUID) ? 'assets/icons/heart_filled.svg' : 'assets/icons/heart.svg',
+                          color: widget.post.likes.contains(widget.post.userUUID) ? const Color(0xFFF3555A) : getColor(),
+                        ),
+                        onTap: () {
+                          setState(() {
+                            if (widget.post.likes.contains(widget.post.userUUID)) {
+                              widget.post.likes.remove(widget.post.userUUID);
+                            } else {
+                              widget.post.likes.add(widget.post.userUUID);
+                            }
+                          });
+                          context.read<PostsProvider>().writePost(widget.post);
+                        },
                       ),
                       SizedBox(width: 14.w),
                       SvgPicture.asset(

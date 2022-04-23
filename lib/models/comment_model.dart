@@ -20,7 +20,7 @@ class CommentModel {
         'comment': comment,
         'likes': likes,
         'userUUID': userUUID,
-        'replies': replies,
+        'replies': ReplyModel.replyListToJson(replies),
         'timestamp': timestamp,
       };
 
@@ -35,6 +35,14 @@ class CommentModel {
     List<CommentModel> list = <CommentModel>[];
     for (var item in json) {
       list.add(CommentModel.fromJson(item));
+    }
+    return list;
+  }
+
+  static List<Map<String, dynamic>> commentListToJson(List<CommentModel> comments) {
+    List<Map<String, dynamic>> list = [];
+    for (var comment in comments) {
+      list.add(comment.toJson());
     }
     return list;
   }

@@ -33,4 +33,12 @@ class ReplyModel {
     }
     return list;
   }
+
+  static List<Map<String, dynamic>> replyListToJson(List<ReplyModel> replies) {
+    List<Map<String, dynamic>> list = [];
+    for (var reply in replies) {
+      list.add(reply.toJson());
+    }
+    return list;
+  }
 }

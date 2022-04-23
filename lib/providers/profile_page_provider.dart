@@ -54,7 +54,7 @@ class ProfilePageProvider with ChangeNotifier {
 
       for (var doc in docs) {
         Map<String, dynamic> data = doc.data();
-        posts.add(PostModel.fromJson(data, userData));
+        posts.add(PostModel.fromJson(data, userData, doc.id));
       }
 
       print('got all the posts');
@@ -65,4 +65,6 @@ class ProfilePageProvider with ChangeNotifier {
       print('something went wrong');
     }
   }
+
+  
 }

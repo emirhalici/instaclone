@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:instaclone/providers/home_page_provider.dart';
+import 'package:instaclone/providers/posts_provider.dart';
 import 'package:instaclone/providers/profile_page_provider.dart';
 import 'package:instaclone/screens/authentication_wrapper.dart';
 import 'package:instaclone/utils/authentication_service.dart';
@@ -16,6 +17,7 @@ void main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => HomePageProvider()),
         ChangeNotifierProvider(create: (_) => ProfilePageProvider()),
+        ChangeNotifierProvider(create: (_) => PostsProvider()),
         Provider<AuthenticationService>(
           create: (context) => AuthenticationService(FirebaseAuth.instance),
         ),
