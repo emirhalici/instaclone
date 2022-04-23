@@ -110,23 +110,24 @@ class _PostWidgetState extends State<PostWidget> {
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
           child: Stack(
             children: [
-              Center(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: images.asMap().entries.map((entry) {
-                    return Container(
-                        width: 8.0,
-                        height: 8.0,
-                        margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: _current == entry.key
-                              ? Colors.blue
-                              : (Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.grey).withOpacity(0.3),
-                        ));
-                  }).toList(),
+              if (images.length > 1)
+                Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: images.asMap().entries.map((entry) {
+                      return Container(
+                          width: 8.0,
+                          height: 8.0,
+                          margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: _current == entry.key
+                                ? Colors.blue
+                                : (Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.grey).withOpacity(0.3),
+                          ));
+                    }).toList(),
+                  ),
                 ),
-              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
