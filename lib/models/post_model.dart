@@ -9,6 +9,7 @@ class PostModel {
   List<CommentModel> comments;
   Timestamp timestamp;
   String username;
+  Map<String, dynamic> userData;
 
   PostModel({
     required this.likes,
@@ -18,6 +19,7 @@ class PostModel {
     required this.comments,
     required this.timestamp,
     required this.username,
+    required this.userData,
   });
 
   Map<String, dynamic> toJson() => {
@@ -29,11 +31,12 @@ class PostModel {
         'timestamp': timestamp,
       };
 
-  PostModel.fromJson(Map<String, dynamic> json, this.username)
+  PostModel.fromJson(Map<String, dynamic> json, this.userData)
       : likes = json['likes'] as List<dynamic>,
         pictures = json['pictures'] as List<dynamic>,
         description = json['description'] as String,
         userUUID = json['userUUID'] as String,
         comments = CommentModel.repliesFromJson(json['comments']),
+        username = userData['username'] as String,
         timestamp = json['timestamp'] as Timestamp;
 }

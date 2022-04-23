@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:http/http.dart';
 import 'package:instaclone/models/post_model.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
@@ -22,6 +23,21 @@ class _PostWidgetState extends State<PostWidget> {
 
   @override
   Widget build(BuildContext context) {
+    print(widget.post.userData);
+    String profilePic = widget.post.userData['profilePic'] ?? '';
+    List<String> likes = [];
+
+    for (var item in widget.post.likes) {
+      likes.add(item.toString());
+    }
+
+    // WHAT KIND OF STUPID LANGUAGE THINKS AN EMPTY ARRAY
+    // HAS THE LENGTH OF ONE WHEN DATA INSIDE IS FUCKING
+    // EMPTY? I RAGED FOR 20 MINUTES WHILE FIGURING IT OUT
+    if (likes.length == 1 && likes[0] == '') {
+      likes.removeAt(0);
+    }
+
     List<Widget> images = [];
     for (var picture in widget.post.pictures) {
       images.add(
@@ -38,6 +54,42 @@ class _PostWidgetState extends State<PostWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Container(
+          width: double.infinity,
+          height: 0.5,
+          color: getColor().withOpacity(0.2),
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children: [
+                  CircleAvatar(
+                    foregroundImage: profilePic == ''
+                        ? const AssetImage('assets/images/default_profile_pic.png')
+                        : NetworkImage(profilePic) as ImageProvider,
+                    radius: 16,
+                  ),
+                  SizedBox(width: 8.w),
+                  Text(
+                    widget.post.username,
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 13.sp,
+                    ),
+                  ),
+                ],
+              ),
+              SvgPicture.asset(
+                'assets/icons/more.svg',
+                color: getColor(),
+              ),
+            ],
+          ),
+        ),
         CarouselSlider(
             items: images,
             carouselController: _controller,
@@ -111,21 +163,33 @@ class _PostWidgetState extends State<PostWidget> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                '${widget.post.likes.length} likes',
-                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14.sp),
+                '${likes.length} likes',
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14.sp,
+                  color: getColor(),
+                ),
               ),
               SizedBox(height: 4.h),
               RichText(
                 text: TextSpan(
-                  style: const TextStyle(
-                    fontSize: 14.0,
+                  style: TextStyle(
+                    fontSize: 14.sp,
+                    color: getColor(),
                   ),
                   children: <TextSpan>[
-                    TextSpan(text: widget.post.username, style: const TextStyle(fontWeight: FontWeight.w600)),
-                    TextSpan(text: ' ${widget.post.description}'),
+                    TextSpan(
+                        text: widget.post.username,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w600,
+                        )),
+                    TextSpan(
+                      text: ' ${widget.post.description}',
+                    ),
                   ],
                 ),
-              )
+              ),
+              SizedBox(height: 16.h),
             ],
           ),
         ),
