@@ -21,6 +21,8 @@ class _PostWidgetState extends State<PostWidget> {
 
   @override
   Widget build(BuildContext context) {
+    Color primaryColor = ProjectConstants.getPrimaryColor(context, false);
+
     //print(widget.post.userData);
     String profilePic = widget.post.userData['profilePic'] ?? '';
     List<String> likes = [];
@@ -55,7 +57,7 @@ class _PostWidgetState extends State<PostWidget> {
         Container(
           width: double.infinity,
           height: 0.5,
-          color: ProjectConstants.getPrimaryColor(context, false).withOpacity(0.2),
+          color: primaryColor.withOpacity(0.2),
         ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
@@ -83,7 +85,7 @@ class _PostWidgetState extends State<PostWidget> {
               ),
               SvgPicture.asset(
                 'assets/icons/more.svg',
-                color: ProjectConstants.getPrimaryColor(context, false),
+                color: primaryColor,
               ),
             ],
           ),
@@ -146,9 +148,7 @@ class _PostWidgetState extends State<PostWidget> {
                       GestureDetector(
                         child: SvgPicture.asset(
                           widget.post.likes.contains(widget.post.userUUID) ? 'assets/icons/heart_filled.svg' : 'assets/icons/heart.svg',
-                          color: widget.post.likes.contains(widget.post.userUUID)
-                              ? const Color(0xFFF3555A)
-                              : ProjectConstants.getPrimaryColor(context, false),
+                          color: widget.post.likes.contains(widget.post.userUUID) ? const Color(0xFFF3555A) : primaryColor,
                         ),
                         onTap: () {
                           setState(() {
@@ -164,18 +164,18 @@ class _PostWidgetState extends State<PostWidget> {
                       SizedBox(width: 14.w),
                       SvgPicture.asset(
                         'assets/icons/comment.svg',
-                        color: ProjectConstants.getPrimaryColor(context, false),
+                        color: primaryColor,
                       ),
                       SizedBox(width: 14.w),
                       SvgPicture.asset(
                         'assets/icons/share.svg',
-                        color: ProjectConstants.getPrimaryColor(context, false),
+                        color: primaryColor,
                       ),
                     ],
                   ),
                   SvgPicture.asset(
                     'assets/icons/bookmark.svg',
-                    color: ProjectConstants.getPrimaryColor(context, false),
+                    color: primaryColor,
                   ),
                 ],
               ),
@@ -192,7 +192,7 @@ class _PostWidgetState extends State<PostWidget> {
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 14.sp,
-                  color: ProjectConstants.getPrimaryColor(context, false),
+                  color: primaryColor,
                 ),
               ),
               SizedBox(height: 4.h),
@@ -200,7 +200,7 @@ class _PostWidgetState extends State<PostWidget> {
                 text: TextSpan(
                   style: TextStyle(
                     fontSize: 14.sp,
-                    color: ProjectConstants.getPrimaryColor(context, false),
+                    color: primaryColor,
                   ),
                   children: <TextSpan>[
                     TextSpan(

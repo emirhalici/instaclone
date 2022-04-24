@@ -33,6 +33,8 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     final userData = context.watch<ProfilePageProvider>().userData;
 
+    Color primaryColor = ProjectConstants.getPrimaryColor(context, false);
+
     if (userData.isEmpty) {
       getUserData();
     }
@@ -52,18 +54,18 @@ class _ProfilePageState extends State<ProfilePage> {
                 body: Column(
                   children: [
                     TabBar(
-                      indicatorColor: ProjectConstants.getPrimaryColor(context, false),
+                      indicatorColor: primaryColor,
                       tabs: [
                         Tab(
                           icon: SvgPicture.asset(
                             'assets/icons/grid.svg',
-                            color: ProjectConstants.getPrimaryColor(context, false),
+                            color: primaryColor,
                           ),
                         ),
                         Tab(
                           icon: SvgPicture.asset(
                             'assets/icons/mentions.svg',
-                            color: ProjectConstants.getPrimaryColor(context, false),
+                            color: primaryColor,
                           ),
                         ),
                       ],
@@ -84,6 +86,8 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget profileWidget(BuildContext context, Map<String, dynamic> userData) {
+    Color primaryColor = ProjectConstants.getPrimaryColor(context, false);
+
     List<dynamic> following = userData['following'];
     List<dynamic> followers = userData['followers'];
 
@@ -107,7 +111,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     },
                     icon: SvgPicture.asset(
                       'assets/icons/add.svg',
-                      color: ProjectConstants.getPrimaryColor(context, false),
+                      color: primaryColor,
                     ),
                   ),
                   IconButton(
@@ -116,7 +120,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     },
                     icon: SvgPicture.asset(
                       'assets/icons/menu.svg',
-                      color: ProjectConstants.getPrimaryColor(context, false),
+                      color: primaryColor,
                     ),
                   )
                 ],
@@ -184,12 +188,12 @@ class _ProfilePageState extends State<ProfilePage> {
                 // TODO : IMPLEMENT EDIT PROFILE
               },
               style: OutlinedButton.styleFrom(
-                side: BorderSide(color: ProjectConstants.getPrimaryColor(context, false).withOpacity(0.2)),
+                side: BorderSide(color: primaryColor.withOpacity(0.2)),
               ),
               child: Text(
                 'Edit Profile',
                 style: TextStyle(
-                  color: ProjectConstants.getPrimaryColor(context, false),
+                  color: primaryColor,
                   fontSize: 13.sp,
                   fontWeight: FontWeight.w600,
                 ),

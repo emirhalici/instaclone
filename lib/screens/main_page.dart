@@ -35,6 +35,9 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    Color primaryColor = ProjectConstants.getPrimaryColor(context, false);
+    Color primaryColorReversed = ProjectConstants.getPrimaryColor(context, true);
+
     return SafeArea(
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
@@ -93,7 +96,7 @@ class _MainPageState extends State<MainPage> {
           ],
         ),
         bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: ProjectConstants.getPrimaryColor(context, true),
+          backgroundColor: primaryColorReversed,
           type: BottomNavigationBarType.fixed,
           showUnselectedLabels: false,
           showSelectedLabels: false,
@@ -102,44 +105,44 @@ class _MainPageState extends State<MainPage> {
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
                 'assets/icons/home.svg',
-                color: ProjectConstants.getPrimaryColor(context, false),
+                color: primaryColor,
               ),
               activeIcon: SvgPicture.asset(
                 'assets/icons/home_filled.svg',
-                color: ProjectConstants.getPrimaryColor(context, false),
+                color: primaryColor,
               ),
               label: 'Home',
             ),
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
                 'assets/icons/search.svg',
-                color: ProjectConstants.getPrimaryColor(context, false),
+                color: primaryColor,
               ),
               activeIcon: SvgPicture.asset(
                 'assets/icons/search_filled.svg',
-                color: ProjectConstants.getPrimaryColor(context, false),
+                color: primaryColor,
               ),
               label: 'Search',
             ),
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
                 'assets/icons/reels.svg',
-                color: ProjectConstants.getPrimaryColor(context, false),
+                color: primaryColor,
               ),
               activeIcon: SvgPicture.asset(
                 'assets/icons/reels_filled.svg',
-                color: ProjectConstants.getPrimaryColor(context, false),
+                color: primaryColor,
               ),
               label: 'Reels',
             ),
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
                 'assets/icons/shop.svg',
-                color: ProjectConstants.getPrimaryColor(context, false),
+                color: primaryColor,
               ),
               activeIcon: SvgPicture.asset(
                 'assets/icons/shop_filled.svg',
-                color: ProjectConstants.getPrimaryColor(context, false),
+                color: primaryColor,
               ),
               label: 'Shop',
             ),
@@ -150,7 +153,7 @@ class _MainPageState extends State<MainPage> {
             ),
           ],
           currentIndex: _selectedIndex,
-          selectedItemColor: ProjectConstants.getPrimaryColor(context, false),
+          selectedItemColor: primaryColor,
           onTap: _onItemTapped,
         ),
       ),
