@@ -5,6 +5,7 @@ import 'package:instaclone/models/post_model.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:instaclone/providers/posts_provider.dart';
 import 'package:instaclone/utils/project_constants.dart';
+import 'package:instaclone/widgets/post_comments_widget.dart';
 import 'package:provider/provider.dart';
 
 class PostWidget extends StatefulWidget {
@@ -162,9 +163,17 @@ class _PostWidgetState extends State<PostWidget> {
                         },
                       ),
                       SizedBox(width: 14.w),
-                      SvgPicture.asset(
-                        'assets/icons/comment.svg',
-                        color: primaryColor,
+                      GestureDetector(
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => PostCommentsWidget(post: widget.post),
+                          ),
+                        ),
+                        child: SvgPicture.asset(
+                          'assets/icons/comment.svg',
+                          color: primaryColor,
+                        ),
                       ),
                       SizedBox(width: 14.w),
                       SvgPicture.asset(
