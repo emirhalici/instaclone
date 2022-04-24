@@ -34,16 +34,48 @@ class _ProfilePageState extends State<ProfilePage> {
     final userData = context.watch<ProfilePageProvider>().userData;
 
     Color primaryColor = ProjectConstants.getPrimaryColor(context, false);
+    Color primaryColorReversed = ProjectConstants.getPrimaryColor(context, true);
 
     if (userData.isEmpty) {
       getUserData();
     }
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: primaryColorReversed,
+        foregroundColor: primaryColor,
+        toolbarHeight: ProjectConstants.toolbarHeight,
+        title: Text(
+          userData['username'],
+          style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              // TODO : IMPLEMENT ADD POST SCREEN
+            },
+            icon: SvgPicture.asset(
+              'assets/icons/add.svg',
+              color: primaryColor,
+            ),
+          ),
+          IconButton(
+            onPressed: () {
+              // TODO : IMPLEMENT PROFILE MENU
+            },
+            icon: SvgPicture.asset(
+              'assets/icons/menu.svg',
+              color: primaryColor,
+            ),
+          )
+        ],
+        centerTitle: false,
+      ),
       body: userData.isEmpty
           ? const Center(child: CircularProgressIndicator.adaptive())
           : DefaultTabController(
               length: 2,
               child: NestedScrollView(
+                controller: context.read<ProfilePageProvider>().pageScrollController,
                 headerSliverBuilder: (context, innerBoxIsScrolled) {
                   return [
                     SliverList(
@@ -96,37 +128,6 @@ class _ProfilePageState extends State<ProfilePage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                userData['username'],
-                style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
-              ),
-              Row(
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      // TODO : IMPLEMENT ADD POST SCREEN
-                    },
-                    icon: SvgPicture.asset(
-                      'assets/icons/add.svg',
-                      color: primaryColor,
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      // TODO : IMPLEMENT PROFILE MENU
-                    },
-                    icon: SvgPicture.asset(
-                      'assets/icons/menu.svg',
-                      color: primaryColor,
-                    ),
-                  )
-                ],
-              )
-            ],
-          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

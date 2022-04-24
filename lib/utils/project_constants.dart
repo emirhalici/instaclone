@@ -9,4 +9,6 @@ class ProjectConstants {
     }
     return Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black;
   }
+
+  static const double toolbarHeight = 48.0;
 }
