@@ -102,14 +102,27 @@ class _ProfilePageState extends State<ProfilePage> {
                 userData['username'],
                 style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
               ),
-              IconButton(
-                onPressed: () {
-                  // TODO : IMPLEMENT PROFILE MENU
-                },
-                icon: SvgPicture.asset(
-                  'assets/icons/menu.svg',
-                  color: getColor(context),
-                ),
+              Row(
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      // TODO : IMPLEMENT ADD POST SCREEN
+                    },
+                    icon: SvgPicture.asset(
+                      'assets/icons/add.svg',
+                      color: getColor(context),
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      // TODO : IMPLEMENT PROFILE MENU
+                    },
+                    icon: SvgPicture.asset(
+                      'assets/icons/menu.svg',
+                      color: getColor(context),
+                    ),
+                  )
+                ],
               )
             ],
           ),
