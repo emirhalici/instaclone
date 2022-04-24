@@ -127,28 +127,25 @@ class _ProfilePageState extends State<ProfilePage> {
                       height: 86.0,
                       child: CircleAvatar(foregroundImage: NetworkImage(userData['profilePic'])),
                     ),
-              Row(
+              Column(
                 children: [
-                  Column(
-                    children: [
-                      Text('54', style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600)), // DUMMY TEXT
-                      Text('Posts', style: TextStyle(fontSize: 13.sp, fontWeight: FontWeight.w400)),
-                    ],
+                  Text(
+                    context.watch<ProfilePageProvider>().posts.length.toString(),
+                    style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
                   ),
-                  SizedBox(width: 30.w),
-                  Column(
-                    children: [
-                      Text(followers.length.toString(), style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600)),
-                      Text('Followers', style: TextStyle(fontSize: 13.sp, fontWeight: FontWeight.w400)),
-                    ],
-                  ),
-                  SizedBox(width: 30.w),
-                  Column(
-                    children: [
-                      Text(following.length.toString(), style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600)),
-                      Text('Following', style: TextStyle(fontSize: 13.sp, fontWeight: FontWeight.w400)),
-                    ],
-                  )
+                  Text('Posts', style: TextStyle(fontSize: 13.sp, fontWeight: FontWeight.w400)),
+                ],
+              ),
+              Column(
+                children: [
+                  Text(followers.length.toString(), style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600)),
+                  Text('Followers', style: TextStyle(fontSize: 13.sp, fontWeight: FontWeight.w400)),
+                ],
+              ),
+              Column(
+                children: [
+                  Text(following.length.toString(), style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600)),
+                  Text('Following', style: TextStyle(fontSize: 13.sp, fontWeight: FontWeight.w400)),
                 ],
               ),
             ],

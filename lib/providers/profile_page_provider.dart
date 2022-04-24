@@ -38,7 +38,7 @@ class ProfilePageProvider with ChangeNotifier {
 
   Future<void> setUserUpAfterSignUp(Map<String, dynamic> json) async {
     try {
-      final snapshot = await firestore.collection('users').add(json);
+      await firestore.collection('users').add(json);
     } catch (e) {
       print(e);
     }
