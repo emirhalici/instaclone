@@ -6,7 +6,7 @@ class PostsProvider with ChangeNotifier {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   Future<void> writePost(PostModel postModel) async {
-    var collection = await firestore
+    await firestore
         .collection('posts')
         .doc(postModel.documentId)
         .update(postModel.toJson())

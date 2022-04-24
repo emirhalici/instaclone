@@ -17,13 +17,19 @@ class _ProfilePostsState extends State<ProfilePosts> {
   Widget build(BuildContext context) {
     List<PostModel> posts = context.watch<ProfilePageProvider>().posts;
 
+    if (posts.isEmpty) {
+      context.watch<ProfilePageProvider>().getUserPosts();
+    }
+
     List<PostWidget> postWidgets = [];
     for (var post in posts) {
       postWidgets.add(PostWidget(post: post));
     }
 
     return posts.isEmpty
-        ? const CircularProgressIndicator.adaptive()
+        ? CircularProgressIndicator.adaptive(
+            backgroundColor: Theme.of(context).brightness == Brightness.light ? Colors.black : Colors.white,
+          )
         : ListView(
             children: postWidgets,
           );

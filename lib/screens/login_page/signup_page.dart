@@ -196,7 +196,11 @@ class _SignupPage extends State<SignupPage> {
                 ),
               ),
               if (waitingForRequest)
-                const Padding(padding: EdgeInsets.all(16.0), child: CircularProgressIndicator.adaptive())
+                Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: CircularProgressIndicator.adaptive(
+                      backgroundColor: Theme.of(context).brightness == Brightness.light ? Colors.black : Colors.white,
+                    ))
               else
                 SizedBox(height: 32.h),
               TextButton(
