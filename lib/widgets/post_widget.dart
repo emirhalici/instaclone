@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:instaclone/models/post_model.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:instaclone/providers/posts_provider.dart';
+import 'package:instaclone/utils/project_constants.dart';
 import 'package:provider/provider.dart';
 
 class PostWidget extends StatefulWidget {
@@ -15,10 +16,6 @@ class PostWidget extends StatefulWidget {
 }
 
 class _PostWidgetState extends State<PostWidget> {
-  Color getColor() {
-    return Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black;
-  }
-
   final CarouselController _controller = CarouselController();
   int _current = 0;
 
@@ -58,7 +55,7 @@ class _PostWidgetState extends State<PostWidget> {
         Container(
           width: double.infinity,
           height: 0.5,
-          color: getColor().withOpacity(0.2),
+          color: ProjectConstants.getPrimaryColor(context, false).withOpacity(0.2),
         ),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 8.h),
@@ -86,7 +83,7 @@ class _PostWidgetState extends State<PostWidget> {
               ),
               SvgPicture.asset(
                 'assets/icons/more.svg',
-                color: getColor(),
+                color: ProjectConstants.getPrimaryColor(context, false),
               ),
             ],
           ),
@@ -149,7 +146,9 @@ class _PostWidgetState extends State<PostWidget> {
                       GestureDetector(
                         child: SvgPicture.asset(
                           widget.post.likes.contains(widget.post.userUUID) ? 'assets/icons/heart_filled.svg' : 'assets/icons/heart.svg',
-                          color: widget.post.likes.contains(widget.post.userUUID) ? const Color(0xFFF3555A) : getColor(),
+                          color: widget.post.likes.contains(widget.post.userUUID)
+                              ? const Color(0xFFF3555A)
+                              : ProjectConstants.getPrimaryColor(context, false),
                         ),
                         onTap: () {
                           setState(() {
@@ -165,18 +164,18 @@ class _PostWidgetState extends State<PostWidget> {
                       SizedBox(width: 14.w),
                       SvgPicture.asset(
                         'assets/icons/comment.svg',
-                        color: getColor(),
+                        color: ProjectConstants.getPrimaryColor(context, false),
                       ),
                       SizedBox(width: 14.w),
                       SvgPicture.asset(
                         'assets/icons/share.svg',
-                        color: getColor(),
+                        color: ProjectConstants.getPrimaryColor(context, false),
                       ),
                     ],
                   ),
                   SvgPicture.asset(
                     'assets/icons/bookmark.svg',
-                    color: getColor(),
+                    color: ProjectConstants.getPrimaryColor(context, false),
                   ),
                 ],
               ),
@@ -193,7 +192,7 @@ class _PostWidgetState extends State<PostWidget> {
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 14.sp,
-                  color: getColor(),
+                  color: ProjectConstants.getPrimaryColor(context, false),
                 ),
               ),
               SizedBox(height: 4.h),
@@ -201,7 +200,7 @@ class _PostWidgetState extends State<PostWidget> {
                 text: TextSpan(
                   style: TextStyle(
                     fontSize: 14.sp,
-                    color: getColor(),
+                    color: ProjectConstants.getPrimaryColor(context, false),
                   ),
                   children: <TextSpan>[
                     TextSpan(

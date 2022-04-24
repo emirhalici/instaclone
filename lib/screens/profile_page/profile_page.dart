@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:instaclone/providers/profile_page_provider.dart';
 import 'package:instaclone/screens/profile_page/profile_posts.dart';
 import 'package:instaclone/screens/profile_page/tagged_posts.dart';
+import 'package:instaclone/utils/project_constants.dart';
 import 'package:provider/provider.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -20,10 +21,6 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Future<void> getUserPosts() async {
     context.read<ProfilePageProvider>().getUserPosts();
-  }
-
-  Color getColor(BuildContext context) {
-    return Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black;
   }
 
   @override
@@ -55,18 +52,18 @@ class _ProfilePageState extends State<ProfilePage> {
                 body: Column(
                   children: [
                     TabBar(
-                      indicatorColor: getColor(context),
+                      indicatorColor: ProjectConstants.getPrimaryColor(context, false),
                       tabs: [
                         Tab(
                           icon: SvgPicture.asset(
                             'assets/icons/grid.svg',
-                            color: getColor(context),
+                            color: ProjectConstants.getPrimaryColor(context, false),
                           ),
                         ),
                         Tab(
                           icon: SvgPicture.asset(
                             'assets/icons/mentions.svg',
-                            color: getColor(context),
+                            color: ProjectConstants.getPrimaryColor(context, false),
                           ),
                         ),
                       ],
@@ -110,7 +107,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     },
                     icon: SvgPicture.asset(
                       'assets/icons/add.svg',
-                      color: getColor(context),
+                      color: ProjectConstants.getPrimaryColor(context, false),
                     ),
                   ),
                   IconButton(
@@ -119,7 +116,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     },
                     icon: SvgPicture.asset(
                       'assets/icons/menu.svg',
-                      color: getColor(context),
+                      color: ProjectConstants.getPrimaryColor(context, false),
                     ),
                   )
                 ],
@@ -187,12 +184,12 @@ class _ProfilePageState extends State<ProfilePage> {
                 // TODO : IMPLEMENT EDIT PROFILE
               },
               style: OutlinedButton.styleFrom(
-                side: BorderSide(color: getColor(context).withOpacity(0.2)),
+                side: BorderSide(color: ProjectConstants.getPrimaryColor(context, false).withOpacity(0.2)),
               ),
               child: Text(
                 'Edit Profile',
                 style: TextStyle(
-                  color: getColor(context),
+                  color: ProjectConstants.getPrimaryColor(context, false),
                   fontSize: 13.sp,
                   fontWeight: FontWeight.w600,
                 ),

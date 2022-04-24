@@ -6,6 +6,7 @@ import 'package:instaclone/screens/reels_page/reels_page.dart';
 import 'package:instaclone/screens/search_page/search_page.dart';
 import 'package:instaclone/screens/shop_page/shop_page.dart';
 import 'package:instaclone/utils/authentication_service.dart';
+import 'package:instaclone/utils/project_constants.dart';
 import 'package:provider/provider.dart';
 
 import 'login_page/login_page.dart';
@@ -18,13 +19,6 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  Color getColor(bool isReversed) {
-    if (isReversed) {
-      return Theme.of(context).brightness == Brightness.light ? Colors.white : Colors.black;
-    }
-    return Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black;
-  }
-
   int _selectedIndex = 0;
 
   final _homeScreen = GlobalKey<NavigatorState>();
@@ -99,7 +93,7 @@ class _MainPageState extends State<MainPage> {
           ],
         ),
         bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: getColor(true),
+          backgroundColor: ProjectConstants.getPrimaryColor(context, true),
           type: BottomNavigationBarType.fixed,
           showUnselectedLabels: false,
           showSelectedLabels: false,
@@ -108,44 +102,44 @@ class _MainPageState extends State<MainPage> {
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
                 'assets/icons/home.svg',
-                color: getColor(false),
+                color: ProjectConstants.getPrimaryColor(context, false),
               ),
               activeIcon: SvgPicture.asset(
                 'assets/icons/home_filled.svg',
-                color: getColor(false),
+                color: ProjectConstants.getPrimaryColor(context, false),
               ),
               label: 'Home',
             ),
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
                 'assets/icons/search.svg',
-                color: getColor(false),
+                color: ProjectConstants.getPrimaryColor(context, false),
               ),
               activeIcon: SvgPicture.asset(
                 'assets/icons/search_filled.svg',
-                color: getColor(false),
+                color: ProjectConstants.getPrimaryColor(context, false),
               ),
               label: 'Search',
             ),
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
                 'assets/icons/reels.svg',
-                color: getColor(false),
+                color: ProjectConstants.getPrimaryColor(context, false),
               ),
               activeIcon: SvgPicture.asset(
                 'assets/icons/reels_filled.svg',
-                color: getColor(false),
+                color: ProjectConstants.getPrimaryColor(context, false),
               ),
               label: 'Reels',
             ),
             BottomNavigationBarItem(
               icon: SvgPicture.asset(
                 'assets/icons/shop.svg',
-                color: getColor(false),
+                color: ProjectConstants.getPrimaryColor(context, false),
               ),
               activeIcon: SvgPicture.asset(
                 'assets/icons/shop_filled.svg',
-                color: getColor(false),
+                color: ProjectConstants.getPrimaryColor(context, false),
               ),
               label: 'Shop',
             ),
@@ -156,7 +150,7 @@ class _MainPageState extends State<MainPage> {
             ),
           ],
           currentIndex: _selectedIndex,
-          selectedItemColor: getColor(false),
+          selectedItemColor: ProjectConstants.getPrimaryColor(context, false),
           onTap: _onItemTapped,
         ),
       ),
