@@ -9,6 +9,7 @@ class ProfilePageProvider with ChangeNotifier {
   Map<String, dynamic> userData = <String, dynamic>{};
   List<PostModel> posts = [];
   String username = '';
+  ScrollController pageScrollController = ScrollController();
 
   void setUser(User? user) {
     loggedInUser = user;

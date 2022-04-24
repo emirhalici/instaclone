@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:instaclone/providers/profile_page_provider.dart';
 import 'package:instaclone/screens/home_page/home_page.dart';
 import 'package:instaclone/screens/profile_page/profile_page.dart';
 import 'package:instaclone/screens/reels_page/reels_page.dart';
@@ -28,9 +29,38 @@ class _MainPageState extends State<MainPage> {
   final _profileScreen = GlobalKey<NavigatorState>();
 
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+    if (_selectedIndex == index) {
+      switch (index) {
+        case 0:
+          _homeScreen.currentState?.popUntil((route) => route.isFirst);
+          break;
+        case 1:
+          _searchScreen.currentState?.popUntil((route) => route.isFirst);
+          break;
+        case 2:
+          _reelsScreen.currentState?.popUntil((route) => route.isFirst);
+          break;
+        case 3:
+          _shopScreen.currentState?.popUntil((route) => route.isFirst);
+          break;
+        case 4:
+          if (_profileScreen.currentState?.canPop() ?? false) {
+            _profileScreen.currentState?.popUntil((route) => route.isFirst);
+          } else {
+            context
+                .read<ProfilePageProvider>()
+                .pageScrollController
+                .animateTo(0, duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
+          }
+          break;
+
+        default:
+      }
+    } else {
+      setState(() {
+        _selectedIndex = index;
+      });
+    }
   }
 
   @override
