@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -5,6 +6,7 @@ import 'package:instaclone/models/post_model.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:instaclone/providers/posts_provider.dart';
 import 'package:instaclone/utils/project_constants.dart';
+import 'package:instaclone/utils/project_utils.dart';
 import 'package:instaclone/widgets/post_comments_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -221,6 +223,13 @@ class _PostWidgetState extends State<PostWidget> {
                       text: ' ${widget.post.description}',
                     ),
                   ],
+                ),
+              ),
+              SizedBox(height: 8.h),
+              Text(
+                ProjectUtils.timestampToString(widget.post.timestamp, Timestamp.now()),
+                style: TextStyle(
+                  color: ProjectConstants.getPrimaryColor(context, false).withOpacity(0.45),
                 ),
               ),
               SizedBox(height: 16.h),
