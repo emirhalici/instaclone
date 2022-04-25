@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:instaclone/providers/profile_page_provider.dart';
+import 'package:instaclone/utils/project_constants.dart';
 import 'package:instaclone/widgets/post_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -27,11 +28,7 @@ class _ProfilePostsState extends State<ProfilePosts> {
     }
 
     return posts.isEmpty
-        ? CircularProgressIndicator.adaptive(
-            backgroundColor: Theme.of(context).brightness == Brightness.light ? Colors.black : Colors.white,
-          )
-        : ListView(
-            children: postWidgets,
-          );
+        ? CircularProgressIndicator.adaptive(backgroundColor: ProjectConstants.getPrimaryColor(context, false))
+        : ListView(children: postWidgets);
   }
 }

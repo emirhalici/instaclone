@@ -151,7 +151,7 @@ class _PostWidgetState extends State<PostWidget> {
                       GestureDetector(
                         child: SvgPicture.asset(
                           widget.post.likes.contains(widget.post.userUUID) ? 'assets/icons/heart_filled.svg' : 'assets/icons/heart.svg',
-                          color: widget.post.likes.contains(widget.post.userUUID) ? const Color(0xFFF3555A) : primaryColor,
+                          color: widget.post.likes.contains(widget.post.userUUID) ? ProjectConstants.redColor : primaryColor,
                         ),
                         onTap: () {
                           setState(() {

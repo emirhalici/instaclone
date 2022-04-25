@@ -71,7 +71,9 @@ class _ProfilePageState extends State<ProfilePage> {
         centerTitle: false,
       ),
       body: userData.isEmpty
-          ? const Center(child: CircularProgressIndicator.adaptive())
+          ? Center(
+              child: CircularProgressIndicator.adaptive(backgroundColor: ProjectConstants.getPrimaryColor(context, false)),
+            )
           : DefaultTabController(
               length: 2,
               child: NestedScrollView(

@@ -5,6 +5,7 @@ import 'package:instaclone/providers/profile_page_provider.dart';
 import 'package:instaclone/screens/login_page/login_page.dart';
 import 'package:instaclone/screens/main_page.dart';
 import 'package:instaclone/utils/authentication_service.dart';
+import 'package:instaclone/utils/project_constants.dart';
 import 'package:provider/provider.dart';
 
 class SignupPage extends StatefulWidget {
@@ -178,7 +179,7 @@ class _SignupPage extends State<SignupPage> {
                               SnackBar(
                                 content: Text(response),
                                 duration: const Duration(milliseconds: 500),
-                                backgroundColor: const Color(0xFF3797EF),
+                                backgroundColor: ProjectConstants.blueColor,
                               ),
                             );
                           }
@@ -187,7 +188,7 @@ class _SignupPage extends State<SignupPage> {
                           });
                         },
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF3797EF)),
+                    backgroundColor: MaterialStateProperty.all<Color>(ProjectConstants.blueColor),
                     elevation: MaterialStateProperty.all(0.0),
                   ),
                   child: const Text('Sign Up'),
@@ -195,10 +196,9 @@ class _SignupPage extends State<SignupPage> {
               ),
               if (waitingForRequest)
                 Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: CircularProgressIndicator.adaptive(
-                      backgroundColor: Theme.of(context).brightness == Brightness.light ? Colors.black : Colors.white,
-                    ))
+                  padding: const EdgeInsets.all(16.0),
+                  child: CircularProgressIndicator.adaptive(backgroundColor: ProjectConstants.getPrimaryColor(context, false)),
+                )
               else
                 SizedBox(height: 32.h),
               TextButton(
@@ -215,7 +215,7 @@ class _SignupPage extends State<SignupPage> {
                     children: <TextSpan>[
                       TextSpan(
                         text: 'Log in.',
-                        style: TextStyle(color: Color(0xFF3797EF)),
+                        style: TextStyle(color: ProjectConstants.blueColor),
                       ),
                     ],
                   ),

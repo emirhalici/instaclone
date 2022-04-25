@@ -5,6 +5,7 @@ import 'package:instaclone/providers/profile_page_provider.dart';
 import 'package:instaclone/screens/login_page/signup_page.dart';
 import 'package:instaclone/screens/main_page.dart';
 import 'package:instaclone/utils/authentication_service.dart';
+import 'package:instaclone/utils/project_constants.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
@@ -113,7 +114,7 @@ class _LoginPageState extends State<LoginPage> {
                     'Forgot password?',
                     textAlign: TextAlign.end,
                     style: TextStyle(
-                      color: Color(0xFF3797EF),
+                      color: ProjectConstants.blueColor,
                     ),
                   ),
                 ),
@@ -141,7 +142,7 @@ class _LoginPageState extends State<LoginPage> {
                               SnackBar(
                                 content: Text(response),
                                 duration: const Duration(milliseconds: 500),
-                                backgroundColor: const Color(0xFF3797EF),
+                                backgroundColor: ProjectConstants.blueColor,
                               ),
                             );
                             setState(() {
@@ -152,7 +153,7 @@ class _LoginPageState extends State<LoginPage> {
                               SnackBar(
                                 content: Text(response),
                                 duration: const Duration(milliseconds: 500),
-                                backgroundColor: const Color(0xFF3797EF),
+                                backgroundColor: ProjectConstants.blueColor,
                               ),
                             );
                           }
@@ -161,7 +162,7 @@ class _LoginPageState extends State<LoginPage> {
                           });
                         },
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF3797EF)),
+                    backgroundColor: MaterialStateProperty.all<Color>(ProjectConstants.blueColor),
                     elevation: MaterialStateProperty.all(0.0),
                   ),
                   child: const Text('Log In'),
@@ -170,14 +171,12 @@ class _LoginPageState extends State<LoginPage> {
               if (waitingForRequest)
                 Padding(
                     padding: const EdgeInsets.all(16.0),
-                    child: CircularProgressIndicator.adaptive(
-                      backgroundColor: Theme.of(context).brightness == Brightness.light ? Colors.black : Colors.white,
-                    ))
+                    child: CircularProgressIndicator.adaptive(backgroundColor: ProjectConstants.getPrimaryColor(context, false)))
               else
                 SizedBox(height: 32.h),
               SvgPicture.asset(
                 "assets/icons/seperator_or.svg",
-                color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
+                color: ProjectConstants.getPrimaryColor(context, false),
               ),
               SizedBox(height: 12.h),
               TextButton(
@@ -194,7 +193,7 @@ class _LoginPageState extends State<LoginPage> {
                     children: <TextSpan>[
                       TextSpan(
                         text: 'Sign up.',
-                        style: TextStyle(color: Color(0xFF3797EF)),
+                        style: TextStyle(color: ProjectConstants.blueColor),
                       ),
                     ],
                   ),

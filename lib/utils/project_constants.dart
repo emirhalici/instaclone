@@ -9,4 +9,7 @@ class ProjectConstants {
   }
 
   static const double toolbarHeight = 48.0;
+
+  static const Color blueColor = Color(0xFF3797EF);
+  static const Color redColor = Color(0xFFF3555A);
 }
