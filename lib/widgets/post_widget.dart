@@ -95,14 +95,31 @@ class _PostWidgetState extends State<PostWidget> {
         ),
         GestureDetector(
           onDoubleTap: () {
-            setState(() {
-              if (widget.post.likes.contains(widget.post.userUUID)) {
-                widget.post.likes.remove(widget.post.userUUID);
-              } else {
-                widget.post.likes.add(widget.post.userUUID);
-              }
-            });
-            context.read<PostsProvider>().writePost(widget.post);
+            try {
+              setState(() {
+                if (widget.post.likes.contains(widget.post.userUUID)) {
+                  widget.post.likes.remove(widget.post.userUUID);
+                } else {
+                  widget.post.likes.add(widget.post.userUUID);
+                }
+              });
+              context.read<PostsProvider>().writePost(widget.post);
+            } catch (e) {
+              setState(() {
+                if (widget.post.likes.contains(widget.post.userUUID)) {
+                  widget.post.likes.remove(widget.post.userUUID);
+                } else {
+                  widget.post.likes.add(widget.post.userUUID);
+                }
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('An unexpected error occured: $e'),
+                    duration: const Duration(milliseconds: 500),
+                    backgroundColor: ProjectConstants.blueColor,
+                  ),
+                );
+              });
+            }
           },
           child: CarouselSlider(
               items: images,
@@ -154,14 +171,31 @@ class _PostWidgetState extends State<PostWidget> {
                           color: widget.post.likes.contains(widget.post.userUUID) ? ProjectConstants.redColor : primaryColor,
                         ),
                         onTap: () {
-                          setState(() {
-                            if (widget.post.likes.contains(widget.post.userUUID)) {
-                              widget.post.likes.remove(widget.post.userUUID);
-                            } else {
-                              widget.post.likes.add(widget.post.userUUID);
-                            }
-                          });
-                          context.read<PostsProvider>().writePost(widget.post);
+                          try {
+                            setState(() {
+                              if (widget.post.likes.contains(widget.post.userUUID)) {
+                                widget.post.likes.remove(widget.post.userUUID);
+                              } else {
+                                widget.post.likes.add(widget.post.userUUID);
+                              }
+                            });
+                            context.read<PostsProvider>().writePost(widget.post);
+                          } catch (e) {
+                            setState(() {
+                              if (widget.post.likes.contains(widget.post.userUUID)) {
+                                widget.post.likes.remove(widget.post.userUUID);
+                              } else {
+                                widget.post.likes.add(widget.post.userUUID);
+                              }
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('An unexpected error occured: $e'),
+                                  duration: const Duration(milliseconds: 500),
+                                  backgroundColor: ProjectConstants.blueColor,
+                                ),
+                              );
+                            });
+                          }
                         },
                       ),
                       SizedBox(width: 14.w),

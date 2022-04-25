@@ -10,7 +10,6 @@ class PostsProvider with ChangeNotifier {
         .collection('posts')
         .doc(postModel.documentId)
         .update(postModel.toJson())
-        .then((value) => print('updated'))
-        .catchError((error) => print('Update failed: $error'));
+        .catchError((error) => throw ('Update failed: $error'));
   }
 }
