@@ -41,7 +41,7 @@ class ProfilePageProvider with ChangeNotifier {
     try {
       await firestore.collection('users').add(json);
     } catch (e) {
-      print(e);
+      rethrow;
     }
   }
 

@@ -170,8 +170,18 @@ class _SignupPage extends State<SignupPage> {
                                   'profilePic': '',
                                 };
 
-                                context.read<ProfilePageProvider>().setUserUpAfterSignUp(json);
-                                directToMainPage();
+                                try {
+                                  context.read<ProfilePageProvider>().setUserUpAfterSignUp(json);
+                                  directToMainPage();
+                                } catch (e) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text('An unexpected error occured: $e'),
+                                      duration: const Duration(milliseconds: 500),
+                                      backgroundColor: ProjectConstants.blueColor,
+                                    ),
+                                  );
+                                }
                               }
                             }
                           } else {
