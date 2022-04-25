@@ -45,7 +45,7 @@ class _ProfilePageState extends State<ProfilePage> {
         foregroundColor: primaryColor,
         toolbarHeight: ProjectConstants.toolbarHeight,
         title: Text(
-          userData['username'],
+          userData['username'] ?? 'null',
           style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
         ),
         actions: [

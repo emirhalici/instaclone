@@ -158,8 +158,6 @@ class _SignupPage extends State<SignupPage> {
                                 setState(() {
                                   waitingForRequest = false;
                                 });
-                                // TODO : create user with the same username and email
-
                                 Map<String, dynamic> json = <String, dynamic>{
                                   'following': [],
                                   'followers': [],
