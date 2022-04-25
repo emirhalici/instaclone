@@ -41,6 +41,12 @@ class _ProfilePageState extends State<ProfilePage> {
     }
     return Scaffold(
       appBar: AppBar(
+        shape: Border(
+          bottom: BorderSide(
+            color: primaryColor.withOpacity(0.2),
+            width: 0.5,
+          ),
+        ),
         backgroundColor: primaryColorReversed,
         foregroundColor: primaryColor,
         toolbarHeight: ProjectConstants.toolbarHeight,
@@ -130,6 +136,9 @@ class _ProfilePageState extends State<ProfilePage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SizedBox(
+            height: 12.h,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
