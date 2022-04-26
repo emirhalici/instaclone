@@ -12,4 +12,13 @@ class PostsProvider with ChangeNotifier {
         .update(postModel.toJson())
         .catchError((error) => throw ('Update failed: $error'));
   }
+
+  Future<QuerySnapshot<Map<String, dynamic>>> getUsersForComments(PostModel postModel) async {
+    List<String> usersUUIDs = [];
+    for (var element in postModel.comments) {
+      usersUUIDs.add(element.userUUID);
+    }
+    var snapshot = await firestore.collection('users').where('userUUID', whereIn: usersUUIDs).get();
+    return snapshot;
+  }
 }

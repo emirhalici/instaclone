@@ -3,22 +3,75 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instaclone/models/post_model.dart';
+import 'package:instaclone/providers/posts_provider.dart';
 import 'package:instaclone/utils/project_constants.dart';
 import 'package:instaclone/utils/project_utils.dart';
+import 'package:instaclone/widgets/comment_widget.dart';
+import 'package:provider/provider.dart';
 
 class PostCommentsWidget extends StatefulWidget {
-  PostModel post;
-  PostCommentsWidget({Key? key, required this.post}) : super(key: key);
+  final PostModel post;
+  const PostCommentsWidget({Key? key, required this.post}) : super(key: key);
 
   @override
   State<PostCommentsWidget> createState() => _PostCommentsWidgetState();
 }
 
 class _PostCommentsWidgetState extends State<PostCommentsWidget> {
+  List<Map<String, dynamic>> users = [];
+
+  @override
+  void initState() {
+    super.initState();
+    getUsersForComments();
+  }
+
+  Future<void> getUsersForComments() async {
+    if (widget.post.comments.isNotEmpty) {
+      QuerySnapshot<Map<String, dynamic>> usersSnapshot = await context.read<PostsProvider>().getUsersForComments(widget.post);
+      for (var element in usersSnapshot.docs) {
+        users.add(element.data());
+      }
+      setState(() {});
+    }
+  }
+
+  Map<String, dynamic> getUserFromUsers(String userUUID) {
+    for (var user in users) {
+      if (user['userUUID'] == userUUID) {
+        return user;
+      }
+    }
+    throw 'user not found error: given userUUID $userUUID doesn\'t match in the users. users: ${users.toString()}';
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (widget.post.comments.isNotEmpty && users.isEmpty) {
+      getUsersForComments();
+    }
+
     Color primaryColor = ProjectConstants.getPrimaryColor(context, false);
     Color primaryColorReversed = ProjectConstants.getPrimaryColor(context, true);
+
+    List<Widget> comments = [];
+
+    for (var comment in widget.post.comments) {
+      if (users.isNotEmpty) {
+        try {
+          comments.add(
+            CommentWidget(
+              commentModel: comment,
+              userModel: getUserFromUsers(comment.userUUID),
+            ),
+          );
+        } catch (e) {
+          // TODO : URGENT
+          // TODO : HANDLE UNEXPECTED USER NOT FOUND ERROR
+          print('unexpected error: $e');
+        }
+      }
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -47,7 +100,11 @@ class _PostCommentsWidgetState extends State<PostCommentsWidget> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const CircleAvatar(),
+                CircleAvatar(
+                  foregroundImage: (widget.post.userData['profilePic'] != null && widget.post.userData['profilePic'] != '')
+                      ? NetworkImage(widget.post.userData['profilePic'])
+                      : const AssetImage('assets/images/default_profile_pic.png') as ImageProvider,
+                ),
                 Expanded(
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 12.w),
@@ -57,7 +114,7 @@ class _PostCommentsWidgetState extends State<PostCommentsWidget> {
                         RichText(
                           text: TextSpan(
                             style: TextStyle(
-                              fontSize: 14.sp,
+                              fontSize: 13.sp,
                               color: primaryColor,
                             ),
                             children: [
@@ -68,8 +125,9 @@ class _PostCommentsWidgetState extends State<PostCommentsWidget> {
                                   },
                                   child: Text(
                                     widget.post.username,
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       fontWeight: FontWeight.w600,
+                                      fontSize: 13.sp,
                                     ),
                                   ),
                                 ),
@@ -98,7 +156,16 @@ class _PostCommentsWidgetState extends State<PostCommentsWidget> {
             width: double.infinity,
             height: 0.5,
           ),
-          // TODO : IMPLEMENT COMMENTS
+          if (comments.isNotEmpty)
+            users.isEmpty
+                ? CircularProgressIndicator.adaptive(
+                    backgroundColor: ProjectConstants.getPrimaryColor(context, false),
+                  )
+                : SingleChildScrollView(
+                    child: Column(
+                      children: comments,
+                    ),
+                  ),
         ],
       ),
     );
