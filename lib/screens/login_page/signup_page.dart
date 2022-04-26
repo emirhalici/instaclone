@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:instaclone/providers/home_page_provider.dart';
 import 'package:instaclone/providers/profile_page_provider.dart';
 import 'package:instaclone/screens/login_page/login_page.dart';
 import 'package:instaclone/screens/main_page.dart';
@@ -156,6 +157,7 @@ class _SignupPage extends State<SignupPage> {
                               if (mounted) {
                                 final user = context.read<AuthenticationService>().auth.currentUser;
                                 context.read<ProfilePageProvider>().setUser(user);
+                                context.read<HomePageProvider>().setUser(user);
                                 setState(() {
                                   waitingForRequest = false;
                                 });

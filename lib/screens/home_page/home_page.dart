@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:instaclone/providers/home_page_provider.dart';
+import 'package:instaclone/screens/home_page/messenger_page.dart';
 import 'package:instaclone/utils/project_constants.dart';
+import 'package:instaclone/widgets/post_widget.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -11,18 +15,39 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  PageController pageController = PageController(initialPage: 0);
+  //PageController pageController = PageController(initialPage: 0);
+
+  Future<void> getFollowingPosts() async {
+    context.read<HomePageProvider>().getPostsForMainPage();
+    setState(() {});
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getFollowingPosts();
+  }
 
   @override
   Widget build(BuildContext context) {
-    // animate to page
-
     Color primaryColor = ProjectConstants.getPrimaryColor(context, false);
     Color primaryColorReversed = ProjectConstants.getPrimaryColor(context, true);
 
+    if (context.watch<HomePageProvider>().allPosts.isEmpty) {
+      getFollowingPosts();
+    }
+
+    // TODO: CHANGE THIS WITH INFINITE SCROLL PAGINATION
+    List<PostWidget> postWidgets = [];
+    context.watch<HomePageProvider>().allPosts.forEach(
+          (element) => postWidgets.add(
+            PostWidget(post: element),
+          ),
+        );
+
     return SafeArea(
       child: PageView(
-        controller: pageController,
+        controller: context.read<HomePageProvider>().pageController,
         children: [
           Scaffold(
             appBar: AppBar(
@@ -35,6 +60,7 @@ class _HomePageState extends State<HomePage> {
               backgroundColor: primaryColorReversed,
               foregroundColor: primaryColor,
               toolbarHeight: ProjectConstants.toolbarHeight,
+              elevation: 0,
               title: SvgPicture.asset(
                 "assets/icons/logo.svg",
                 color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
@@ -60,7 +86,10 @@ class _HomePageState extends State<HomePage> {
                 ),
                 IconButton(
                   onPressed: () {
-                    pageController.animateToPage(1, duration: const Duration(milliseconds: 400), curve: Curves.ease);
+                    context
+                        .read<HomePageProvider>()
+                        .pageController
+                        .animateToPage(1, duration: const Duration(milliseconds: 400), curve: Curves.ease);
                   },
                   icon: SvgPicture.asset(
                     'assets/icons/messenger.svg',
@@ -70,12 +99,15 @@ class _HomePageState extends State<HomePage> {
               ],
               centerTitle: false,
             ),
-            body: Column(
-              children: [
-                // TODO : IMPLEMENT STORIES
-                
-              ],
-            ),
+            body: postWidgets.isEmpty
+                ? Center(
+                    child: CircularProgressIndicator.adaptive(
+                      backgroundColor: primaryColor,
+                    ),
+                  )
+                : ListView(
+                    children: postWidgets,
+                  ),
           ),
           const MessengerPage(),
         ],
