@@ -38,7 +38,7 @@ class _CommentWidgetState extends State<CommentWidget> {
                   RichText(
                     text: TextSpan(
                       style: TextStyle(
-                        fontSize: 14.sp,
+                        fontSize: 13.sp,
                         color: primaryColor,
                       ),
                       children: [
@@ -49,8 +49,9 @@ class _CommentWidgetState extends State<CommentWidget> {
                             },
                             child: Text(
                               widget.userModel!['username'],
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontWeight: FontWeight.w600,
+                                fontSize: 13.sp,
                               ),
                             ),
                           ),

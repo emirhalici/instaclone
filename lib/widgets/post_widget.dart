@@ -259,11 +259,29 @@ class _PostWidgetState extends State<PostWidget> {
                   ],
                 ),
               ),
-              SizedBox(height: 8.h),
+              SizedBox(height: 4.h),
+              if (widget.post.comments.isNotEmpty)
+                GestureDetector(
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PostCommentsWidget(post: widget.post),
+                    ),
+                  ),
+                  child: Text(
+                    'See all comments',
+                    style: TextStyle(
+                      color: ProjectConstants.getPrimaryColor(context, false).withOpacity(0.6),
+                      fontSize: 13.sp,
+                    ),
+                  ),
+                ),
+              SizedBox(height: 4.h),
               Text(
                 ProjectUtils.timestampToString(widget.post.timestamp, Timestamp.now()),
                 style: TextStyle(
                   color: ProjectConstants.getPrimaryColor(context, false).withOpacity(0.45),
+                  fontSize: 12.sp,
                 ),
               ),
               SizedBox(height: 16.h),
