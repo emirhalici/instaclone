@@ -142,7 +142,7 @@ class _ProfilePageState extends State<ProfilePage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              userData['profilePic'] == '' || userData['profilePic'] == null
+              userData['profilePic'] == null || userData['profilePic'] == ''
                   ? const SizedBox(
                       width: 86.0,
                       height: 86.0,
