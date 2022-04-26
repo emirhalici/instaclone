@@ -11,8 +11,8 @@ import 'package:instaclone/widgets/post_comments_widget.dart';
 import 'package:provider/provider.dart';
 
 class PostWidget extends StatefulWidget {
-  PostModel post;
-  PostWidget({Key? key, required this.post}) : super(key: key);
+  final PostModel post;
+  const PostWidget({Key? key, required this.post}) : super(key: key);
 
   @override
   State<PostWidget> createState() => _PostWidgetState();

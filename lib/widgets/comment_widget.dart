@@ -6,9 +6,9 @@ import 'package:instaclone/utils/project_constants.dart';
 import 'package:instaclone/utils/project_utils.dart';
 
 class CommentWidget extends StatefulWidget {
-  CommentModel commentModel;
-  Map<String, dynamic>? userModel;
-  CommentWidget({Key? key, required this.commentModel, required this.userModel}) : super(key: key);
+  final CommentModel commentModel;
+  final Map<String, dynamic>? userModel;
+  const CommentWidget({Key? key, required this.commentModel, required this.userModel}) : super(key: key);
 
   @override
   State<CommentWidget> createState() => _CommentWidgetState();
@@ -18,7 +18,6 @@ class _CommentWidgetState extends State<CommentWidget> {
   @override
   Widget build(BuildContext context) {
     Color primaryColor = ProjectConstants.getPrimaryColor(context, false);
-    Color primaryColorReversed = ProjectConstants.getPrimaryColor(context, true);
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
