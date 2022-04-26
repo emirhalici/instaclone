@@ -77,9 +77,7 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-          const Scaffold(
-            body: Text("Messages"),
-          )
+          const MessengerPage(),
         ],
       ),
     );
