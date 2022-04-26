@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -11,15 +9,18 @@ class HomePageProvider with ChangeNotifier {
   User? loggedInUser;
   Map<String, dynamic>? userData;
   List<String> followingUUIDs = [];
-  List<PostModel> allPosts = [];
+  Stream<List<List<PostModel>>>? postsStream;
 
   void setUser(User? user) {
     loggedInUser = user;
   }
 
-  Future<void> getPostsForMainPage() async {
-    List<PostModel> posts = [];
+  Future<Map<String, dynamic>> getUserWithUserUUID(String userUUID) async {
+    var snapshot = await firestore.collection('users').where('userUUID', isEqualTo: userUUID).get();
+    return snapshot.docs[0].data();
+  }
 
+  Future<void> getPostsStreamForMainPage() async {
     if (userData == null) {
       final snapshot = await firestore.collection('users').where('userUUID', isEqualTo: loggedInUser?.uid).get();
       if (snapshot.docs.isNotEmpty) {
@@ -38,12 +39,19 @@ class HomePageProvider with ChangeNotifier {
       throw 'Unexpected error: User not following anybody.';
     }
 
-    var snapshot = await firestore.collection('posts').where('userUUID', whereIn: followingUUIDs).get();
-    for (var doc in snapshot.docs) {
-      var userSnapshot = await firestore.collection('users').where('userUUID', isEqualTo: doc.data()['userUUID']).get();
-      posts.add(PostModel.fromJson(doc.data(), userSnapshot.docs[0].data(), doc.id));
-    }
-    allPosts = posts;
+    postsStream = firestore.collection('posts').where('userUUID', whereIn: followingUUIDs).snapshots().asyncMap(
+          (snapshot) => Future.wait([getUserForPost(snapshot)]),
+        );
     notifyListeners();
+  }
+
+  Future<List<PostModel>> getUserForPost(QuerySnapshot<Map<String, dynamic>> snapshot) async {
+    List<PostModel> posts = [];
+    for (var doc in snapshot.docs) {
+      var data = doc.data();
+      var user = await getUserWithUserUUID(data['userUUID']);
+      posts.add(PostModel.fromJson(data, user, doc.id));
+    }
+    return posts;
   }
 }
