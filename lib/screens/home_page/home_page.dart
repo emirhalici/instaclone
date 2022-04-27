@@ -121,6 +121,7 @@ class _HomePageState extends State<HomePage> {
                         }
 
                         return ListView(
+                          controller: context.read<HomePageProvider>().mainPostsController,
                           children: postWidgets,
                         );
                       },

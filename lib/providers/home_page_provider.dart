@@ -10,6 +10,7 @@ class HomePageProvider with ChangeNotifier {
   Map<String, dynamic>? userData;
   List<String> followingUUIDs = [];
   Stream<List<List<PostModel>>>? postsStream;
+  ScrollController mainPostsController = ScrollController();
 
   void setUser(User? user) {
     loggedInUser = user;
