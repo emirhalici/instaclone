@@ -27,6 +27,15 @@ class AuthenticationService {
     }
   }
 
+  Future<String> sendPasswordResetEmail({required String email}) async {
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
+      return 'A reset link has been sent to your mail';
+    } catch (e) {
+      return 'Error while resetting password';
+    }
+  }
+
   Future<String> signOut() async {
     try {
       await _firebaseAuth.signOut();
