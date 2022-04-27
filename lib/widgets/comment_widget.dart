@@ -1,9 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:instaclone/models/comment_model.dart';
 import 'package:instaclone/utils/project_constants.dart';
-import 'package:instaclone/utils/project_utils.dart';
+import 'package:instaclone/widgets/duration_timer_widget.dart';
 
 class CommentWidget extends StatefulWidget {
   final CommentModel commentModel;
@@ -62,12 +61,12 @@ class _CommentWidgetState extends State<CommentWidget> {
                       ],
                     ),
                   ),
-                  Text(
-                    ProjectUtils.timestampToString(widget.commentModel.timestamp, Timestamp.now()),
-                    style: TextStyle(
+                  DurationTimerWidget(
+                    date: widget.commentModel.timestamp.toDate(),
+                    textStyle: TextStyle(
                       color: ProjectConstants.getPrimaryColor(context, false).withOpacity(0.45),
                     ),
-                  ),
+                  )
                 ],
               ),
             ),

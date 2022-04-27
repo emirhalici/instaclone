@@ -1,10 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class ProjectUtils {
-  static String timestampToString(Timestamp timestamp, Timestamp timestampNow) {
-    DateTime now = timestampNow.toDate();
-    DateTime then = timestamp.toDate();
-
+  static String timestampToString(DateTime then, DateTime now) {
     Duration difference = now.difference(then);
     String returnStr = '';
     if (difference.inDays >= 365) {

@@ -11,6 +11,7 @@ import 'package:instaclone/screens/profile_page/profile_page.dart';
 import 'package:instaclone/utils/project_constants.dart';
 import 'package:instaclone/utils/project_utils.dart';
 import 'package:instaclone/widgets/comment_widget.dart';
+import 'package:instaclone/widgets/duration_timer_widget.dart';
 import 'package:provider/provider.dart';
 
 class PostCommentsWidget extends StatefulWidget {
@@ -151,9 +152,9 @@ class _PostCommentsWidgetState extends State<PostCommentsWidget> {
                             ],
                           ),
                         ),
-                        Text(
-                          ProjectUtils.timestampToString(widget.post.timestamp, Timestamp.now()),
-                          style: TextStyle(
+                        DurationTimerWidget(
+                          date: widget.post.timestamp.toDate(),
+                          textStyle: TextStyle(
                             color: ProjectConstants.getPrimaryColor(context, false).withOpacity(0.45),
                           ),
                         ),
