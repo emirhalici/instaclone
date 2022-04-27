@@ -68,124 +68,122 @@ class _MainPageState extends State<MainPage> {
     Color primaryColor = ProjectConstants.getPrimaryColor(context, false);
     Color primaryColorReversed = ProjectConstants.getPrimaryColor(context, true);
 
-    return SafeArea(
-      child: Scaffold(
-        floatingActionButton: FloatingActionButton(
-          onPressed: () async {
-            await context.read<AuthenticationService>().signOut();
-            if (mounted) {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const LoginPage(),
-                ),
-              );
-            }
-          },
-          backgroundColor: Colors.green,
-          foregroundColor: Colors.white,
-        ),
-        body: IndexedStack(
-          index: _selectedIndex,
-          children: <Widget>[
-            Navigator(
-              key: _homeScreen,
-              onGenerateRoute: (route) => MaterialPageRoute(
-                settings: route,
-                builder: (context) => const HomePage(),
+    return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          await context.read<AuthenticationService>().signOut();
+          if (mounted) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const LoginPage(),
               ),
+            );
+          }
+        },
+        backgroundColor: Colors.green,
+        foregroundColor: Colors.white,
+      ),
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: <Widget>[
+          Navigator(
+            key: _homeScreen,
+            onGenerateRoute: (route) => MaterialPageRoute(
+              settings: route,
+              builder: (context) => const HomePage(),
             ),
-            Navigator(
-              key: _searchScreen,
-              onGenerateRoute: (route) => MaterialPageRoute(
-                settings: route,
-                builder: (context) => const SearchPage(),
-              ),
+          ),
+          Navigator(
+            key: _searchScreen,
+            onGenerateRoute: (route) => MaterialPageRoute(
+              settings: route,
+              builder: (context) => const SearchPage(),
             ),
-            Navigator(
-              key: _reelsScreen,
-              onGenerateRoute: (route) => MaterialPageRoute(
-                settings: route,
-                builder: (context) => const ReelsPage(),
-              ),
+          ),
+          Navigator(
+            key: _reelsScreen,
+            onGenerateRoute: (route) => MaterialPageRoute(
+              settings: route,
+              builder: (context) => const ReelsPage(),
             ),
-            Navigator(
-              key: _shopScreen,
-              onGenerateRoute: (route) => MaterialPageRoute(
-                settings: route,
-                builder: (context) => const ShopPage(),
-              ),
+          ),
+          Navigator(
+            key: _shopScreen,
+            onGenerateRoute: (route) => MaterialPageRoute(
+              settings: route,
+              builder: (context) => const ShopPage(),
             ),
-            Navigator(
-              key: _profileScreen,
-              onGenerateRoute: (route) => MaterialPageRoute(
-                settings: route,
-                builder: (context) => const ProfilePage(),
-              ),
+          ),
+          Navigator(
+            key: _profileScreen,
+            onGenerateRoute: (route) => MaterialPageRoute(
+              settings: route,
+              builder: (context) => const ProfilePage(),
             ),
-          ],
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: primaryColorReversed,
-          type: BottomNavigationBarType.fixed,
-          showUnselectedLabels: false,
-          showSelectedLabels: false,
-          elevation: 0,
-          items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                'assets/icons/home.svg',
-                color: primaryColor,
-              ),
-              activeIcon: SvgPicture.asset(
-                'assets/icons/home_filled.svg',
-                color: primaryColor,
-              ),
-              label: 'Home',
+          ),
+        ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: primaryColorReversed,
+        type: BottomNavigationBarType.fixed,
+        showUnselectedLabels: false,
+        showSelectedLabels: false,
+        elevation: 0,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              'assets/icons/home.svg',
+              color: primaryColor,
             ),
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                'assets/icons/search.svg',
-                color: primaryColor,
-              ),
-              activeIcon: SvgPicture.asset(
-                'assets/icons/search_filled.svg',
-                color: primaryColor,
-              ),
-              label: 'Search',
+            activeIcon: SvgPicture.asset(
+              'assets/icons/home_filled.svg',
+              color: primaryColor,
             ),
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                'assets/icons/reels.svg',
-                color: primaryColor,
-              ),
-              activeIcon: SvgPicture.asset(
-                'assets/icons/reels_filled.svg',
-                color: primaryColor,
-              ),
-              label: 'Reels',
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              'assets/icons/search.svg',
+              color: primaryColor,
             ),
-            BottomNavigationBarItem(
-              icon: SvgPicture.asset(
-                'assets/icons/shop.svg',
-                color: primaryColor,
-              ),
-              activeIcon: SvgPicture.asset(
-                'assets/icons/shop_filled.svg',
-                color: primaryColor,
-              ),
-              label: 'Shop',
+            activeIcon: SvgPicture.asset(
+              'assets/icons/search_filled.svg',
+              color: primaryColor,
             ),
-            BottomNavigationBarItem(
-              icon: Image.asset('assets/images/profile_small.png'),
-              activeIcon: Image.asset('assets/images/profile_small_filled.png'),
-              label: 'Profile',
+            label: 'Search',
+          ),
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              'assets/icons/reels.svg',
+              color: primaryColor,
             ),
-          ],
-          currentIndex: _selectedIndex,
-          selectedItemColor: primaryColor,
-          onTap: _onItemTapped,
-        ),
+            activeIcon: SvgPicture.asset(
+              'assets/icons/reels_filled.svg',
+              color: primaryColor,
+            ),
+            label: 'Reels',
+          ),
+          BottomNavigationBarItem(
+            icon: SvgPicture.asset(
+              'assets/icons/shop.svg',
+              color: primaryColor,
+            ),
+            activeIcon: SvgPicture.asset(
+              'assets/icons/shop_filled.svg',
+              color: primaryColor,
+            ),
+            label: 'Shop',
+          ),
+          BottomNavigationBarItem(
+            icon: Image.asset('assets/images/profile_small.png'),
+            activeIcon: Image.asset('assets/images/profile_small_filled.png'),
+            label: 'Profile',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: primaryColor,
+        onTap: _onItemTapped,
       ),
     );
   }
