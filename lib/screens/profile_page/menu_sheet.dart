@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:instaclone/screens/login_page/login_page.dart';
 import 'package:instaclone/utils/authentication_service.dart';
 import 'package:instaclone/utils/project_constants.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +13,15 @@ class MenuSheet extends StatelessWidget {
       color: ProjectConstants.getPrimaryColor(context, false),
       fontWeight: FontWeight.w600,
     );
+
+    void directToLoginPage() {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const LoginPage(),
+        ),
+      );
+    }
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -81,6 +91,7 @@ class MenuSheet extends StatelessWidget {
           ),
           onTap: () async {
             await context.read<AuthenticationService>().signOut();
+            directToLoginPage();
           },
         ),
       ],

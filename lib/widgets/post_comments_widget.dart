@@ -78,6 +78,16 @@ class _PostCommentsWidgetState extends State<PostCommentsWidget> {
       }
     }
 
+    void showErrorMessageToUser() {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Error while posting a comment'),
+          duration: Duration(milliseconds: 500),
+          backgroundColor: ProjectConstants.blueColor,
+        ),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: primaryColorReversed,
@@ -252,13 +262,7 @@ class _PostCommentsWidgetState extends State<PostCommentsWidget> {
                             });
                           } else {
                             widget.post.comments.remove(comment);
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text('Error while posting a comment'),
-                                duration: Duration(milliseconds: 500),
-                                backgroundColor: ProjectConstants.blueColor,
-                              ),
-                            );
+                            showErrorMessageToUser();
                           }
                         },
                         child: Text(
