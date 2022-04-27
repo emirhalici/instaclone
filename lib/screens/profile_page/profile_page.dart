@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:instaclone/providers/profile_page_provider.dart';
+import 'package:instaclone/screens/profile_page/menu_sheet.dart';
 import 'package:instaclone/screens/profile_page/profile_posts.dart';
 import 'package:instaclone/screens/profile_page/tagged_posts.dart';
 import 'package:instaclone/utils/project_constants.dart';
@@ -67,7 +68,17 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
           IconButton(
             onPressed: () {
-              // TODO : IMPLEMENT PROFILE MENU
+              showModalBottomSheet(
+                  context: context,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(16.0),
+                      topRight: Radius.circular(16.0),
+                    ),
+                  ),
+                  builder: (context) {
+                    return const MenuSheet();
+                  });
             },
             icon: SvgPicture.asset(
               'assets/icons/menu.svg',
