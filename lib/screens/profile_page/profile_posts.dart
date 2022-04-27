@@ -28,7 +28,11 @@ class _ProfilePostsState extends State<ProfilePosts> {
     }
 
     return posts.isEmpty
-        ? CircularProgressIndicator.adaptive(backgroundColor: ProjectConstants.getPrimaryColor(context, false))
+        ? (context.read<ProfilePageProvider>().isUserPostsEmpty
+            ? Container()
+            : CircularProgressIndicator.adaptive(
+                backgroundColor: ProjectConstants.getPrimaryColor(context, false),
+              ))
         : ListView(children: postWidgets);
   }
 }
