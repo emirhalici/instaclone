@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class ProjectUtils {
   static String timestampToString(DateTime then, DateTime now) {
     Duration difference = now.difference(then);

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instaclone/providers/home_page_provider.dart';
 import 'package:instaclone/utils/project_constants.dart';
 import 'package:provider/provider.dart';

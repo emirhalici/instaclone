@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:instaclone/providers/home_page_provider.dart';
-import 'package:instaclone/providers/posts_provider.dart';
 import 'package:instaclone/providers/profile_page_provider.dart';
 import 'package:instaclone/screens/login_page/login_page.dart';
 import 'package:instaclone/screens/main_page.dart';

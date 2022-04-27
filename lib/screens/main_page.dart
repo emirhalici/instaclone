@@ -7,11 +7,8 @@ import 'package:instaclone/screens/profile_page/profile_page.dart';
 import 'package:instaclone/screens/reels_page/reels_page.dart';
 import 'package:instaclone/screens/search_page/search_page.dart';
 import 'package:instaclone/screens/shop_page/shop_page.dart';
-import 'package:instaclone/utils/authentication_service.dart';
 import 'package:instaclone/utils/project_constants.dart';
 import 'package:provider/provider.dart';
-
-import 'login_page/login_page.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);

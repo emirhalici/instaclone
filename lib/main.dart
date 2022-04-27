@@ -38,9 +38,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: const Size(375, 812),
-      builder: (_) => MaterialApp(
+      builder: (context) => MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Insta',
+        useInheritedMediaQuery: true,
         // TODO: THEME
         theme: ThemeData(
           textSelectionTheme: const TextSelectionThemeData(
