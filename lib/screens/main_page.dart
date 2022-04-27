@@ -57,10 +57,12 @@ class _MainPageState extends State<MainPage> {
           if (_profileScreen.currentState?.canPop() ?? false) {
             _profileScreen.currentState?.popUntil((route) => route.isFirst);
           } else {
-            context
-                .read<ProfilePageProvider>()
-                .pageScrollController
-                .animateTo(0, duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
+            if (context.read<ProfilePageProvider>().pageScrollController.hasClients) {
+              context
+                  .read<ProfilePageProvider>()
+                  .pageScrollController
+                  .animateTo(0, duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
+            }
           }
           break;
 
@@ -79,21 +81,21 @@ class _MainPageState extends State<MainPage> {
     Color primaryColorReversed = ProjectConstants.getPrimaryColor(context, true);
 
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          await context.read<AuthenticationService>().signOut();
-          if (mounted) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const LoginPage(),
-              ),
-            );
-          }
-        },
-        backgroundColor: Colors.green,
-        foregroundColor: Colors.white,
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () async {
+      //     await context.read<AuthenticationService>().signOut();
+      //     if (mounted) {
+      //       Navigator.pushReplacement(
+      //         context,
+      //         MaterialPageRoute(
+      //           builder: (context) => const LoginPage(),
+      //         ),
+      //       );
+      //     }
+      //   },
+      //   backgroundColor: Colors.green,
+      //   foregroundColor: Colors.white,
+      // ),
       body: IndexedStack(
         index: _selectedIndex,
         children: <Widget>[
