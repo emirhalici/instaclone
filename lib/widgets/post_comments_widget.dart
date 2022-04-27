@@ -2,8 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:instaclone/models/comment_model.dart';
 import 'package:instaclone/models/post_model.dart';
+import 'package:instaclone/models/reply_model.dart';
 import 'package:instaclone/providers/posts_provider.dart';
+import 'package:instaclone/providers/profile_page_provider.dart';
+import 'package:instaclone/screens/profile_page/profile_page.dart';
 import 'package:instaclone/utils/project_constants.dart';
 import 'package:instaclone/utils/project_utils.dart';
 import 'package:instaclone/widgets/comment_widget.dart';
@@ -19,6 +23,8 @@ class PostCommentsWidget extends StatefulWidget {
 
 class _PostCommentsWidgetState extends State<PostCommentsWidget> {
   List<Map<String, dynamic>> users = [];
+  TextEditingController userCommentTextController = TextEditingController();
+  String userCommentText = '';
 
   @override
   void initState() {
@@ -79,6 +85,13 @@ class _PostCommentsWidgetState extends State<PostCommentsWidget> {
         foregroundColor: primaryColor,
         toolbarHeight: ProjectConstants.toolbarHeight,
         automaticallyImplyLeading: true,
+        elevation: 0,
+        shape: Border(
+          bottom: BorderSide(
+            color: primaryColor.withOpacity(0.2),
+            width: 0.5,
+          ),
+        ),
         title: const Text('Comments'),
         centerTitle: false,
         actions: [
@@ -158,14 +171,103 @@ class _PostCommentsWidgetState extends State<PostCommentsWidget> {
           ),
           if (comments.isNotEmpty)
             users.isEmpty
-                ? CircularProgressIndicator.adaptive(
-                    backgroundColor: ProjectConstants.getPrimaryColor(context, false),
+                ? Expanded(
+                    child: CircularProgressIndicator.adaptive(
+                      backgroundColor: ProjectConstants.getPrimaryColor(context, false),
+                    ),
                   )
-                : SingleChildScrollView(
-                    child: Column(
-                      children: comments,
+                : Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: comments,
+                      ),
+                    ),
+                  )
+          else
+            Expanded(child: Container()),
+          Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: CircleAvatar(
+                  foregroundImage: (widget.post.userData['profilePic'] != null && widget.post.userData['profilePic'] != '')
+                      ? NetworkImage(widget.post.userData['profilePic'])
+                      : const AssetImage('assets/images/default_profile_pic.png') as ImageProvider,
+                  radius: 24,
+                ),
+              ),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.only(right: 8.w),
+                  child: TextField(
+                    controller: userCommentTextController,
+                    textAlignVertical: TextAlignVertical.center,
+                    onChanged: (value) {
+                      setState(() {
+                        userCommentText = value;
+                      });
+                    },
+                    minLines: 1,
+                    maxLines: 3,
+                    expands: false,
+                    decoration: InputDecoration(
+                      isDense: true,
+                      hintText: 'Add a comment...',
+                      hintStyle: const TextStyle(color: Colors.grey),
+                      border: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(24.0)),
+                        borderSide: BorderSide(
+                          color: Colors.grey,
+                          width: 0.5,
+                        ),
+                      ),
+                      focusedBorder: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(24.0)),
+                        borderSide: BorderSide(
+                          color: Colors.grey,
+                          width: 0.5,
+                        ),
+                      ),
+                      enabledBorder: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(24.0)),
+                        borderSide: BorderSide(
+                          color: Colors.grey,
+                          width: 0.5,
+                        ),
+                      ),
+                      suffix: GestureDetector(
+                        onTap: () {
+                          widget.post.comments.add(
+                            CommentModel(
+                              comment: userCommentText,
+                              likes: <String>[],
+                              userUUID: context.read<ProfilePageProvider>().loggedInUser!.uid,
+                              replies: <ReplyModel>[],
+                              timestamp: Timestamp.now(),
+                            ),
+                          );
+                          context.read<PostsProvider>().writePost(widget.post);
+                          userCommentTextController.clear();
+                          setState(() {
+                            userCommentText = '';
+                          });
+                        },
+                        child: Text(
+                          'Post  ',
+                          style: TextStyle(
+                            color: userCommentText == '' ? ProjectConstants.blueColor.withAlpha(100) : ProjectConstants.blueColor,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                      fillColor: primaryColorReversed,
+                      filled: true,
                     ),
                   ),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
