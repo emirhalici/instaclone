@@ -7,9 +7,7 @@ import 'package:instaclone/models/post_model.dart';
 import 'package:instaclone/models/reply_model.dart';
 import 'package:instaclone/providers/posts_provider.dart';
 import 'package:instaclone/providers/profile_page_provider.dart';
-import 'package:instaclone/screens/profile_page/profile_page.dart';
 import 'package:instaclone/utils/project_constants.dart';
-import 'package:instaclone/utils/project_utils.dart';
 import 'package:instaclone/widgets/comment_widget.dart';
 import 'package:instaclone/widgets/duration_timer_widget.dart';
 import 'package:provider/provider.dart';
@@ -237,21 +235,31 @@ class _PostCommentsWidgetState extends State<PostCommentsWidget> {
                         ),
                       ),
                       suffix: GestureDetector(
-                        onTap: () {
-                          widget.post.comments.add(
-                            CommentModel(
-                              comment: userCommentText,
-                              likes: <String>[],
-                              userUUID: context.read<ProfilePageProvider>().loggedInUser!.uid,
-                              replies: <ReplyModel>[],
-                              timestamp: Timestamp.now(),
-                            ),
+                        onTap: () async {
+                          CommentModel comment = CommentModel(
+                            comment: userCommentText,
+                            likes: <String>[],
+                            userUUID: context.read<ProfilePageProvider>().loggedInUser!.uid,
+                            replies: <ReplyModel>[],
+                            timestamp: Timestamp.now(),
                           );
-                          context.read<PostsProvider>().writePost(widget.post);
-                          userCommentTextController.clear();
-                          setState(() {
-                            userCommentText = '';
-                          });
+                          widget.post.comments.add(comment);
+                          bool isSuccess = await context.read<PostsProvider>().writePost(widget.post);
+                          if (isSuccess) {
+                            userCommentTextController.clear();
+                            setState(() {
+                              userCommentText = '';
+                            });
+                          } else {
+                            widget.post.comments.remove(comment);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Error while posting a comment'),
+                                duration: Duration(milliseconds: 500),
+                                backgroundColor: ProjectConstants.blueColor,
+                              ),
+                            );
+                          }
                         },
                         child: Text(
                           'Post  ',

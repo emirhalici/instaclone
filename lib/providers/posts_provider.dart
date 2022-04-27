@@ -5,12 +5,15 @@ import 'package:instaclone/models/post_model.dart';
 class PostsProvider with ChangeNotifier {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  Future<void> writePost(PostModel postModel) async {
-    await firestore
-        .collection('posts')
-        .doc(postModel.documentId)
-        .update(postModel.toJson())
-        .catchError((error) => throw ('Update failed: $error'));
+  Future<bool> writePost(PostModel postModel) async {
+    bool isSuccess = false;
+    await firestore.collection('posts').doc(postModel.documentId).update(postModel.toJson()).then(((value) {
+      isSuccess = true;
+    })).catchError((error) {
+      print('unexpected error while writing post, $error');
+      isSuccess = false;
+    });
+    return isSuccess;
   }
 
   Future<QuerySnapshot<Map<String, dynamic>>> getUsersForComments(PostModel postModel) async {
