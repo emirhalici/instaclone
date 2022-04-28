@@ -4,6 +4,7 @@ import 'package:instaclone/models/post_model.dart';
 import 'package:instaclone/providers/home_page_provider.dart';
 import 'package:instaclone/screens/home_page/messenger_page.dart';
 import 'package:instaclone/utils/project_constants.dart';
+import 'package:instaclone/widgets/add_sheet.dart';
 import 'package:instaclone/widgets/post_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -59,7 +60,16 @@ class _HomePageState extends State<HomePage> {
                 actions: [
                   IconButton(
                     onPressed: () {
-                      // TODO : IMPLEMENT ADD POST SCREEN
+                      showModalBottomSheet(
+                        context: context,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(16.0),
+                            topRight: Radius.circular(16.0),
+                          ),
+                        ),
+                        builder: (context) => const AddSheet(),
+                      );
                     },
                     icon: SvgPicture.asset(
                       'assets/icons/add.svg',
