@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:instaclone/models/user_model.dart';
 import 'package:instaclone/screens/profile_page/profile_posts_general.dart';
 import 'package:provider/provider.dart';
 
@@ -34,12 +35,13 @@ class _ProfilePageGeneralState extends State<ProfilePageGeneral> {
 
   @override
   Widget build(BuildContext context) {
-    final userData = context.watch<ProfilePageProvider>().anotherUserData;
+    final userModel = context.watch<ProfilePageProvider>().anotherUserModel;
+    final currentUserModel = context.watch<ProfilePageProvider>().userModel;
 
     Color primaryColor = ProjectConstants.getPrimaryColor(context, false);
     Color primaryColorReversed = ProjectConstants.getPrimaryColor(context, true);
 
-    if (userData.isEmpty) {
+    if (userModel == null) {
       getUserData();
     }
     return Scaffold(
@@ -55,7 +57,7 @@ class _ProfilePageGeneralState extends State<ProfilePageGeneral> {
         toolbarHeight: ProjectConstants.toolbarHeight,
         elevation: 0,
         title: Text(
-          userData['username'] ?? 'null',
+          userModel?.username ?? '',
           style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
         ),
         actions: [
@@ -69,7 +71,7 @@ class _ProfilePageGeneralState extends State<ProfilePageGeneral> {
         ],
         centerTitle: false,
       ),
-      body: userData.isEmpty
+      body: (userModel == null || currentUserModel == null)
           ? Center(
               child: CircularProgressIndicator.adaptive(backgroundColor: ProjectConstants.getPrimaryColor(context, false)),
             )
@@ -80,7 +82,7 @@ class _ProfilePageGeneralState extends State<ProfilePageGeneral> {
                 headerSliverBuilder: (context, innerBoxIsScrolled) {
                   return [
                     SliverList(
-                      delegate: SliverChildListDelegate([profileWidget(context, userData)]),
+                      delegate: SliverChildListDelegate([profileWidget(context, userModel, currentUserModel)]),
                     )
                   ];
                 },
@@ -118,11 +120,12 @@ class _ProfilePageGeneralState extends State<ProfilePageGeneral> {
     );
   }
 
-  Widget profileWidget(BuildContext context, Map<String, dynamic> userData) {
+  Widget profileWidget(BuildContext context, UserModel userData, UserModel currentUser) {
     Color primaryColor = ProjectConstants.getPrimaryColor(context, false);
+    Color primaryColorReversed = ProjectConstants.getPrimaryColor(context, true);
 
-    List<dynamic> following = userData['following'];
-    List<dynamic> followers = userData['followers'];
+    List<dynamic> following = userData.following;
+    List<dynamic> followers = userData.followers;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -135,7 +138,7 @@ class _ProfilePageGeneralState extends State<ProfilePageGeneral> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              userData['profilePic'] == null || userData['profilePic'] == ''
+              userData.profilePic == ''
                   ? const SizedBox(
                       width: 86.0,
                       height: 86.0,
@@ -144,7 +147,7 @@ class _ProfilePageGeneralState extends State<ProfilePageGeneral> {
                   : SizedBox(
                       width: 86.0,
                       height: 86.0,
-                      child: CircleAvatar(foregroundImage: NetworkImage(userData['profilePic'])),
+                      child: CircleAvatar(foregroundImage: NetworkImage(userData.profilePic)),
                     ),
               Column(
                 children: [
@@ -171,7 +174,7 @@ class _ProfilePageGeneralState extends State<ProfilePageGeneral> {
           ),
           SizedBox(height: 12.h),
           Text(
-            userData['name'],
+            userData.name,
             style: TextStyle(
               fontWeight: FontWeight.w600,
               fontSize: 12.sp,
@@ -179,7 +182,7 @@ class _ProfilePageGeneralState extends State<ProfilePageGeneral> {
           ),
           SizedBox(height: 4.h),
           Text(
-            userData['description'],
+            userData.description,
             style: TextStyle(
               fontWeight: FontWeight.w400,
               fontSize: 12.sp,
@@ -190,32 +193,63 @@ class _ProfilePageGeneralState extends State<ProfilePageGeneral> {
             mainAxisSize: MainAxisSize.max,
             children: [
               Expanded(
-                child: ElevatedButton(
-                  onPressed: () {
-                    // TODO : IMPLEMENT FOLLOW USER
-                  },
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(ProjectConstants.blueColor),
-                    elevation: MaterialStateProperty.all(0.0),
-                  ),
-                  child: const Text('Follow'),
-                ),
-                // child: OutlinedButton(
-                //   onPressed: () {
-                //     // TODO : IMPLEMENT FOLLOW
-                //   },
-                //   style: OutlinedButton.styleFrom(
-                //     side: BorderSide(color: primaryColor.withOpacity(0.2)),
-                //   ),
-                //   child: Text(
-                //     'Follow',
-                //     style: TextStyle(
-                //       color: primaryColor,
-                //       fontSize: 13.sp,
-                //       fontWeight: FontWeight.w600,
-                //     ),
-                //   ),
-                // ),
+                child: currentUser.following.contains(userData.userUUID)
+                    ? OutlinedButton(
+                        onPressed: () async {
+                          // TODO : IMPLEMENT FOLLOW USER
+                          currentUser.following.remove(userData.userUUID);
+                          userData.followers.remove(currentUser.userUUID);
+
+                          bool response1 = await context.read<ProfilePageProvider>().writeUser(currentUser);
+                          bool response2 = await context.read<ProfilePageProvider>().writeUser(userData);
+
+                          if (!response1 || !response2) {
+                            // TODO : ERROR PRINT APPROPIATE MESSAGE
+                            currentUser.following.add(userData.userUUID);
+                            userData.followers.add(currentUser.userUUID);
+                            print('error');
+                          }
+                        },
+                        style: OutlinedButton.styleFrom(
+                          side: BorderSide(color: primaryColor.withOpacity(0.2)),
+                        ),
+                        child: Text(
+                          'Following',
+                          style: TextStyle(
+                            color: primaryColor,
+                            fontSize: 13.sp,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      )
+                    : ElevatedButton(
+                        onPressed: () async {
+                          // TODO : IMPLEMENT FOLLOW USER
+                          currentUser.following.add(userData.userUUID);
+                          userData.followers.add(currentUser.userUUID);
+
+                          bool response1 = await context.read<ProfilePageProvider>().writeUser(currentUser);
+                          bool response2 = await context.read<ProfilePageProvider>().writeUser(userData);
+
+                          if (!response1 || !response2) {
+                            // TODO : ERROR PRINT APPROPIATE MESSAGE
+                            currentUser.following.remove(userData.userUUID);
+                            userData.followers.remove(currentUser.userUUID);
+                            print('error');
+                          }
+                        },
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(ProjectConstants.blueColor),
+                          elevation: MaterialStateProperty.all(0.0),
+                        ),
+                        child: Text(
+                          'Follow',
+                          style: TextStyle(
+                            fontSize: 13.sp,
+                            color: primaryColorReversed,
+                          ),
+                        ),
+                      ),
               ),
               SizedBox(width: 16.w),
               Expanded(

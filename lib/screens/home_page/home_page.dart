@@ -17,6 +17,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   Future<void> getFollowingPosts() async {
+    context.read<HomePageProvider>().getUserStream();
     context.read<HomePageProvider>().getPostsStreamForMainPage();
   }
 
@@ -42,100 +43,107 @@ class _HomePageState extends State<HomePage> {
         controller: context.read<HomePageProvider>().pageController,
         children: [
           Scaffold(
-              appBar: AppBar(
-                shape: Border(
-                  bottom: BorderSide(
-                    color: primaryColor.withOpacity(0.2),
-                    width: 0.5,
-                  ),
+            appBar: AppBar(
+              shape: Border(
+                bottom: BorderSide(
+                  color: primaryColor.withOpacity(0.2),
+                  width: 0.5,
                 ),
-                backgroundColor: primaryColorReversed,
-                foregroundColor: primaryColor,
-                toolbarHeight: ProjectConstants.toolbarHeight,
-                elevation: 0,
-                title: SvgPicture.asset(
-                  "assets/icons/logo.svg",
-                  color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
-                ),
-                actions: [
-                  IconButton(
-                    onPressed: () {
-                      showModalBottomSheet(
-                        context: context,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(16.0),
-                            topRight: Radius.circular(16.0),
-                          ),
-                        ),
-                        builder: (context) => const AddSheet(),
-                      );
-                    },
-                    icon: SvgPicture.asset(
-                      'assets/icons/add.svg',
-                      color: primaryColor,
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      // TODO : IMPLEMENT RECENTLY MENU
-                    },
-                    icon: SvgPicture.asset(
-                      'assets/icons/heart.svg',
-                      color: primaryColor,
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () {
-                      context
-                          .read<HomePageProvider>()
-                          .pageController
-                          .animateToPage(1, duration: const Duration(milliseconds: 400), curve: Curves.ease);
-                    },
-                    icon: SvgPicture.asset(
-                      'assets/icons/messenger.svg',
-                      color: primaryColor,
-                    ),
-                  ),
-                ],
-                centerTitle: false,
               ),
-              body: stream == null
-                  ? Center(
-                      child: CircularProgressIndicator.adaptive(
-                        backgroundColor: primaryColor,
+              backgroundColor: primaryColorReversed,
+              foregroundColor: primaryColor,
+              toolbarHeight: ProjectConstants.toolbarHeight,
+              elevation: 0,
+              title: SvgPicture.asset(
+                "assets/icons/logo.svg",
+                color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
+              ),
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    showModalBottomSheet(
+                      context: context,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(16.0),
+                          topRight: Radius.circular(16.0),
+                        ),
                       ),
-                    )
-                  : StreamBuilder<List<List<PostModel>>>(
-                      stream: stream,
-                      builder: (BuildContext context, AsyncSnapshot<List<List<PostModel>>> list) {
-                        if (list.hasError) {
-                          return const Center(
-                            child: Text('Something went wrong'),
+                      builder: (context) => const AddSheet(),
+                    );
+                  },
+                  icon: SvgPicture.asset(
+                    'assets/icons/add.svg',
+                    color: primaryColor,
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {
+                    // TODO : IMPLEMENT RECENTLY MENU
+                  },
+                  icon: SvgPicture.asset(
+                    'assets/icons/heart.svg',
+                    color: primaryColor,
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {
+                    context
+                        .read<HomePageProvider>()
+                        .pageController
+                        .animateToPage(1, duration: const Duration(milliseconds: 400), curve: Curves.ease);
+                  },
+                  icon: SvgPicture.asset(
+                    'assets/icons/messenger.svg',
+                    color: primaryColor,
+                  ),
+                ),
+              ],
+              centerTitle: false,
+            ),
+            body: (stream == null)
+                ? (context.watch<HomePageProvider>().userModel!.following.isEmpty)
+                    ? Container()
+                    : Center(
+                        child: CircularProgressIndicator.adaptive(
+                          backgroundColor: primaryColor,
+                        ),
+                      )
+                : (context.watch<HomePageProvider>().userModel!.following.isEmpty)
+                    ? Container()
+                    : StreamBuilder<List<List<PostModel>>>(
+                        stream: stream,
+                        builder: (BuildContext context, AsyncSnapshot<List<List<PostModel>>> list) {
+                          if (list.hasError) {
+                            return const Center(
+                              child: Text('Something went wrong'),
+                            );
+                          }
+
+                          if (list.connectionState == ConnectionState.waiting) {
+                            print(context.watch<HomePageProvider>().userModel!.following);
+                            print('waiting for connection');
+                            return Center(
+                              child: CircularProgressIndicator.adaptive(
+                                backgroundColor: primaryColor,
+                              ),
+                            );
+                          }
+
+                          var data = list.data![0];
+
+                          List<Widget> postWidgets = [];
+                          for (var post in data) {
+                            postWidgets.add(PostWidget(post: post));
+                          }
+
+                          return ListView(
+                            controller: context.read<HomePageProvider>().mainPostsController,
+                            children: postWidgets,
                           );
-                        }
-
-                        if (list.connectionState == ConnectionState.waiting) {
-                          return Center(
-                            child: CircularProgressIndicator.adaptive(
-                              backgroundColor: primaryColor,
-                            ),
-                          );
-                        }
-
-                        var data = list.data![0];
-
-                        List<Widget> postWidgets = [];
-                        for (var post in data) {
-                          postWidgets.add(PostWidget(post: post));
-                        }
-
-                        return ListView(
-                          controller: context.read<HomePageProvider>().mainPostsController,
-                          children: postWidgets,
-                        );
-                      },
-                    )),
+                        },
+                      ),
+          ),
           const MessengerPage(),
         ],
       ),

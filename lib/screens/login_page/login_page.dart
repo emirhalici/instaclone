@@ -142,6 +142,8 @@ class _LoginPageState extends State<LoginPage> {
                           if (mounted && response == 'Signed in.') {
                             final user = context.read<AuthenticationService>().auth.currentUser;
                             context.read<ProfilePageProvider>().setUser(user);
+                            context.read<ProfilePageProvider>().userData = {};
+                            context.read<ProfilePageProvider>().userModel = null;
                             context.read<HomePageProvider>().setUser(user);
                             directToMainPage();
                             ScaffoldMessenger.of(context).showSnackBar(

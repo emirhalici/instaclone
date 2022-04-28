@@ -2,12 +2,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:instaclone/models/post_model.dart';
+import 'package:instaclone/models/user_model.dart';
 
 class ProfilePageProvider with ChangeNotifier {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   User? loggedInUser;
   Map<String, dynamic> userData = <String, dynamic>{};
   Map<String, dynamic> anotherUserData = <String, dynamic>{};
+  UserModel? anotherUserModel;
+  UserModel? userModel;
   List<PostModel> posts = [];
   List<PostModel> anotherUserPosts = [];
   String username = '';
@@ -32,6 +35,7 @@ class ProfilePageProvider with ChangeNotifier {
         Map<String, dynamic> data = doc.data();
         if (data['userUUID'] == uid) {
           userData = data;
+          userModel = UserModel.fromJson(data, doc.id);
           username = data['username'];
         }
       }
@@ -79,6 +83,7 @@ class ProfilePageProvider with ChangeNotifier {
         Map<String, dynamic> data = doc.data();
         if (data['userUUID'] == userUUID) {
           anotherUserData = data;
+          anotherUserModel = UserModel.fromJson(anotherUserData, doc.id);
         }
       }
       notifyListeners();
@@ -107,5 +112,15 @@ class ProfilePageProvider with ChangeNotifier {
     } catch (e) {
       return false;
     }
+  }
+
+  Future<bool> writeUser(UserModel userModel) async {
+    bool isSuccess = false;
+    await firestore.collection('users').doc(userModel.docId).update(userModel.toJson()).then(((value) {
+      isSuccess = true;
+    })).catchError((error) {
+      isSuccess = false;
+    });
+    return isSuccess;
   }
 }

@@ -2,15 +2,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:instaclone/models/post_model.dart';
+import 'package:instaclone/models/user_model.dart';
 
 class HomePageProvider with ChangeNotifier {
   PageController pageController = PageController(initialPage: 0);
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   User? loggedInUser;
-  Map<String, dynamic>? userData;
   List<String> followingUUIDs = [];
   Stream<List<List<PostModel>>>? postsStream;
+  Stream? userStream;
   ScrollController mainPostsController = ScrollController();
+  UserModel? userModel;
 
   void setUser(User? user) {
     loggedInUser = user;
@@ -22,27 +24,23 @@ class HomePageProvider with ChangeNotifier {
   }
 
   Future<void> getPostsStreamForMainPage() async {
-    if (userData == null) {
-      final snapshot = await firestore.collection('users').where('userUUID', isEqualTo: loggedInUser?.uid).get();
-      if (snapshot.docs.isNotEmpty) {
-        userData = snapshot.docs[0].data();
+    if (userStream == null) {
+      await getUserStream();
+    }
+
+    userStream?.listen((snapshot) {
+      UserModel user = UserModel.fromJson(snapshot.docs[0].data(), snapshot.docs[0].id);
+      userModel = user;
+      if (user.following.isEmpty) {
+        postsStream = null;
+      } else {
+        postsStream = firestore.collection('posts').where('userUUID', whereIn: user.following).snapshots().asyncMap(
+              (snapshot) => Future.wait([getUserForPost(snapshot)]),
+            );
       }
-    }
 
-    if (followingUUIDs.isEmpty && userData != null && userData!['following'] != null && userData?['following'] != null) {
-      for (var followingUUID in userData!['following']) {
-        followingUUIDs.add(followingUUID);
-      }
-      followingUUIDs.add(loggedInUser!.uid);
-    }
-
-    if (followingUUIDs.isEmpty) {
-      throw 'Unexpected error: User not following anybody.';
-    }
-
-    postsStream = firestore.collection('posts').where('userUUID', whereIn: followingUUIDs).snapshots().asyncMap(
-          (snapshot) => Future.wait([getUserForPost(snapshot)]),
-        );
+      notifyListeners();
+    });
     notifyListeners();
   }
 
@@ -54,5 +52,17 @@ class HomePageProvider with ChangeNotifier {
       posts.add(PostModel.fromJson(data, user, doc.id));
     }
     return posts;
+  }
+
+  Future<void> getUserStream() async {
+    if (userStream == null) {
+      userStream = firestore.collection('users').where('userUUID', isEqualTo: loggedInUser?.uid).snapshots();
+      userStream?.listen(
+        (snapshot) {
+          userModel = UserModel.fromJson(snapshot.docs[0].data(), snapshot.docs[0].id);
+        },
+      );
+      notifyListeners();
+    }
   }
 }
