@@ -7,10 +7,13 @@ class ProfilePageProvider with ChangeNotifier {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   User? loggedInUser;
   Map<String, dynamic> userData = <String, dynamic>{};
+  Map<String, dynamic> anotherUserData = <String, dynamic>{};
   List<PostModel> posts = [];
+  List<PostModel> anotherUserPosts = [];
   String username = '';
   ScrollController pageScrollController = ScrollController();
   bool isUserPostsEmpty = false;
+  bool isAnotherUserPostsEmpty = false;
 
   void setUser(User? user) {
     loggedInUser = user;
@@ -60,6 +63,44 @@ class ProfilePageProvider with ChangeNotifier {
       }
       if (posts.isEmpty) {
         isUserPostsEmpty = true;
+      }
+      notifyListeners();
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> getUserData(String userUUID) async {
+    try {
+      final snapshot = await firestore.collection('users').where('userUUID', isEqualTo: userUUID).get();
+      final docs = snapshot.docs;
+      for (var doc in docs) {
+        Map<String, dynamic> data = doc.data();
+        if (data['userUUID'] == userUUID) {
+          anotherUserData = data;
+        }
+      }
+      notifyListeners();
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> getPosts(String userUUID) async {
+    try {
+      final snapshot = await firestore.collection('posts').where('userUUID', isEqualTo: userUUID).get();
+      final docs = snapshot.docs;
+
+      anotherUserPosts = [];
+
+      for (var doc in docs) {
+        Map<String, dynamic> data = doc.data();
+        anotherUserPosts.add(PostModel.fromJson(data, anotherUserData, doc.id));
+      }
+      if (anotherUserPosts.isEmpty) {
+        isAnotherUserPostsEmpty = true;
       }
       notifyListeners();
       return true;

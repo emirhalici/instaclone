@@ -4,6 +4,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:instaclone/models/post_model.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:instaclone/providers/posts_provider.dart';
+import 'package:instaclone/providers/profile_page_provider.dart';
+import 'package:instaclone/screens/profile_page/profile_page.dart';
+import 'package:instaclone/screens/profile_page/profile_page_general.dart';
 import 'package:instaclone/utils/project_constants.dart';
 import 'package:instaclone/widgets/duration_timer_widget.dart';
 import 'package:instaclone/widgets/post_comments_widget.dart';
@@ -76,11 +79,30 @@ class _PostWidgetState extends State<PostWidget> {
                     radius: 16,
                   ),
                   SizedBox(width: 8.w),
-                  Text(
-                    widget.post.username,
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      fontSize: 13.sp,
+                  GestureDetector(
+                    onTap: () {
+                      if (widget.post.userUUID == context.read<ProfilePageProvider>().loggedInUser?.uid) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ProfilePage(),
+                          ),
+                        );
+                      } else {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ProfilePageGeneral(userUUID: widget.post.userUUID),
+                          ),
+                        );
+                      }
+                    },
+                    child: Text(
+                      widget.post.username,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 13.sp,
+                      ),
                     ),
                   ),
                 ],

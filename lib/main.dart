@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:instaclone/providers/home_page_provider.dart';
 import 'package:instaclone/providers/posts_provider.dart';
 import 'package:instaclone/providers/profile_page_provider.dart';
+import 'package:instaclone/providers/search_page_provider.dart';
 import 'package:instaclone/screens/authentication_wrapper.dart';
 import 'package:instaclone/utils/authentication_service.dart';
 import 'package:provider/provider.dart';
@@ -18,6 +19,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => HomePageProvider()),
         ChangeNotifierProvider(create: (_) => ProfilePageProvider()),
         ChangeNotifierProvider(create: (_) => PostsProvider()),
+        ChangeNotifierProvider(create: (_) => SearchPageProvider()),
         Provider<AuthenticationService>(
           create: (context) => AuthenticationService(FirebaseAuth.instance),
         ),
