@@ -10,6 +10,7 @@ class ProfilePageProvider with ChangeNotifier {
   List<PostModel> posts = [];
   String username = '';
   ScrollController pageScrollController = ScrollController();
+  bool isUserPostsEmpty = false;
 
   void setUser(User? user) {
     loggedInUser = user;
@@ -19,7 +20,7 @@ class ProfilePageProvider with ChangeNotifier {
     return loggedInUser?.uid;
   }
 
-  Future<void> getCurrentUserData() async {
+  Future<bool> getCurrentUserData() async {
     try {
       final snapshot = await firestore.collection('users').get();
       String uid = loggedInUser!.uid;
@@ -32,8 +33,9 @@ class ProfilePageProvider with ChangeNotifier {
         }
       }
       notifyListeners();
+      return true;
     } catch (e) {
-      print(e);
+      return false;
     }
   }
 
@@ -45,7 +47,7 @@ class ProfilePageProvider with ChangeNotifier {
     }
   }
 
-  Future<void> getUserPosts() async {
+  Future<bool> getUserPosts() async {
     try {
       final snapshot = await firestore.collection('posts').where('userUUID', isEqualTo: loggedInUser!.uid).get();
       final docs = snapshot.docs;
@@ -56,10 +58,13 @@ class ProfilePageProvider with ChangeNotifier {
         Map<String, dynamic> data = doc.data();
         posts.add(PostModel.fromJson(data, userData, doc.id));
       }
-
+      if (posts.isEmpty) {
+        isUserPostsEmpty = true;
+      }
       notifyListeners();
+      return true;
     } catch (e) {
-      print(e);
+      return false;
     }
   }
 }

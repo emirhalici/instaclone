@@ -10,7 +10,6 @@ class PostsProvider with ChangeNotifier {
     await firestore.collection('posts').doc(postModel.documentId).update(postModel.toJson()).then(((value) {
       isSuccess = true;
     })).catchError((error) {
-      print('unexpected error while writing post, $error');
       isSuccess = false;
     });
     return isSuccess;
