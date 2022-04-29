@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:instaclone/screens/add_post_page/add_post_page.dart';
 import 'package:instaclone/utils/project_constants.dart';
 
 class AddSheet extends StatelessWidget {
@@ -32,8 +33,8 @@ class AddSheet extends StatelessWidget {
             style: listTileTextStyle,
           ),
           onTap: () {
-            // TODO : IMPLEMENT ADD POST SCREEN
             Navigator.pop(context);
+            Navigator.push(context, MaterialPageRoute(builder: (context) => const AddPostPage()));
           },
         ),
         ListTile(

@@ -33,6 +33,14 @@ class PostModel {
         'timestamp': timestamp,
       };
 
+  PostModel.newModelForUpload(this.userUUID, this.pictures, this.description)
+      : likes = <String>[],
+        comments = <CommentModel>[],
+        username = '',
+        documentId = '',
+        userData = {},
+        timestamp = Timestamp.now();
+
   PostModel.fromJson(Map<String, dynamic> json, this.userData, this.documentId)
       : likes = json['likes'] as List<dynamic>,
         pictures = json['pictures'] as List<dynamic>,
