@@ -34,7 +34,9 @@ class HomePageProvider with ChangeNotifier {
       if (user.following.isEmpty) {
         postsStream = null;
       } else {
-        postsStream = firestore.collection('posts').where('userUUID', whereIn: user.following).snapshots().asyncMap(
+        List following = user.following;
+        following.add(user.userUUID);
+        postsStream = firestore.collection('posts').where('userUUID', whereIn: following).snapshots().asyncMap(
               (snapshot) => Future.wait([getUserForPost(snapshot)]),
             );
       }

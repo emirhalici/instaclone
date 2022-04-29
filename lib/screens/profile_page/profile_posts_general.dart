@@ -15,12 +15,22 @@ class ProfilePostsGeneral extends StatefulWidget {
 }
 
 class _ProfilePostsGeneralState extends State<ProfilePostsGeneral> {
+  void getPosts() async {
+    context.read<ProfilePageProvider>().getPosts(widget.userUUID);
+  }
+
+  @override
+  void initState() {
+    Future.delayed(Duration.zero, getPosts);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     List<PostModel> posts = context.watch<ProfilePageProvider>().anotherUserPosts;
 
     if (posts.isEmpty) {
-      context.watch<ProfilePageProvider>().getPosts(widget.userUUID);
+      getPosts();
     }
 
     List<PostWidget> postWidgets = [];

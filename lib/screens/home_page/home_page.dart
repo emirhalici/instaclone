@@ -102,7 +102,7 @@ class _HomePageState extends State<HomePage> {
               centerTitle: false,
             ),
             body: (stream == null)
-                ? (context.watch<HomePageProvider>().userModel!.following.isEmpty)
+                ? (context.watch<HomePageProvider>().userModel != null && context.watch<HomePageProvider>().userModel!.following.isEmpty)
                     ? Container()
                     : Center(
                         child: CircularProgressIndicator.adaptive(
@@ -121,8 +121,6 @@ class _HomePageState extends State<HomePage> {
                           }
 
                           if (list.connectionState == ConnectionState.waiting) {
-                            print(context.watch<HomePageProvider>().userModel!.following);
-                            print('waiting for connection');
                             return Center(
                               child: CircularProgressIndicator.adaptive(
                                 backgroundColor: primaryColor,

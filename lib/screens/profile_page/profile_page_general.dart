@@ -18,19 +18,20 @@ class ProfilePageGeneral extends StatefulWidget {
 
 class _ProfilePageGeneralState extends State<ProfilePageGeneral> {
   Future<void> getUserData() async {
-    bool response = await context.watch<ProfilePageProvider>().getUserData(widget.userUUID);
+    await context.read<ProfilePageProvider>().getUserData(widget.userUUID);
     // TODO : HANDLE RESPONSE
   }
 
   Future<void> getUserPosts() async {
-    bool response = await context.read<ProfilePageProvider>().getUserPosts();
+    await context.read<ProfilePageProvider>().getUserPosts();
     // TODO : HANDLE RESPONSE
   }
 
   @override
   void initState() {
+    Future.delayed(Duration.zero, getUserData);
+    Future.delayed(Duration.zero, getUserPosts);
     super.initState();
-    getUserPosts();
   }
 
   @override
@@ -127,6 +128,10 @@ class _ProfilePageGeneralState extends State<ProfilePageGeneral> {
     List<dynamic> following = userData.following;
     List<dynamic> followers = userData.followers;
 
+    Future<bool> writeUser(UserModel user) async {
+      return context.read<ProfilePageProvider>().writeUser(user);
+    }
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12),
       child: Column(
@@ -152,7 +157,7 @@ class _ProfilePageGeneralState extends State<ProfilePageGeneral> {
               Column(
                 children: [
                   Text(
-                    context.watch<ProfilePageProvider>().posts.length.toString(),
+                    context.watch<ProfilePageProvider>().anotherUserPosts.length.toString(),
                     style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
                   ),
                   Text('Posts', style: TextStyle(fontSize: 13.sp, fontWeight: FontWeight.w400)),
@@ -196,12 +201,11 @@ class _ProfilePageGeneralState extends State<ProfilePageGeneral> {
                 child: currentUser.following.contains(userData.userUUID)
                     ? OutlinedButton(
                         onPressed: () async {
-                          // TODO : IMPLEMENT FOLLOW USER
                           currentUser.following.remove(userData.userUUID);
                           userData.followers.remove(currentUser.userUUID);
 
-                          bool response1 = await context.read<ProfilePageProvider>().writeUser(currentUser);
-                          bool response2 = await context.read<ProfilePageProvider>().writeUser(userData);
+                          bool response1 = await writeUser(currentUser);
+                          bool response2 = await writeUser(userData);
 
                           if (!response1 || !response2) {
                             // TODO : ERROR PRINT APPROPIATE MESSAGE
@@ -209,6 +213,7 @@ class _ProfilePageGeneralState extends State<ProfilePageGeneral> {
                             userData.followers.add(currentUser.userUUID);
                             print('error');
                           }
+                          setState(() {});
                         },
                         style: OutlinedButton.styleFrom(
                           side: BorderSide(color: primaryColor.withOpacity(0.2)),
@@ -228,15 +233,17 @@ class _ProfilePageGeneralState extends State<ProfilePageGeneral> {
                           currentUser.following.add(userData.userUUID);
                           userData.followers.add(currentUser.userUUID);
 
-                          bool response1 = await context.read<ProfilePageProvider>().writeUser(currentUser);
-                          bool response2 = await context.read<ProfilePageProvider>().writeUser(userData);
+                          writeUser(currentUser);
+                          bool response1 = await writeUser(currentUser);
+                          bool response2 = await writeUser(userData);
 
                           if (!response1 || !response2) {
                             // TODO : ERROR PRINT APPROPIATE MESSAGE
                             currentUser.following.remove(userData.userUUID);
                             userData.followers.remove(currentUser.userUUID);
-                            print('error');
                           }
+
+                          setState(() {});
                         },
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all<Color>(ProjectConstants.blueColor),

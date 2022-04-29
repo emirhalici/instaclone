@@ -98,7 +98,7 @@ class _PostWidgetState extends State<PostWidget> {
                       }
                     },
                     child: Text(
-                      widget.post.username,
+                      widget.post.userData['username'],
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 13.sp,
