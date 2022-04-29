@@ -86,6 +86,9 @@ class _SearchPageState extends State<SearchPage> {
                             Navigator.push(context, MaterialPageRoute(builder: (context) => PostPage(postWidget: postWidget)));
                           },
                           highlightColor: Colors.black.withOpacity(0.2),
+                          focusColor: Colors.black.withOpacity(0.2),
+                          hoverColor: Colors.black.withOpacity(0.2),
+                          splashColor: Colors.black.withOpacity(0.2),
                           child: Ink.image(
                             image: NetworkImage(
                               post.pictures[0],
