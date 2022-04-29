@@ -78,21 +78,6 @@ class _MainPageState extends State<MainPage> {
     Color primaryColorReversed = ProjectConstants.getPrimaryColor(context, true);
 
     return Scaffold(
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () async {
-      //     await context.read<AuthenticationService>().signOut();
-      //     if (mounted) {
-      //       Navigator.pushReplacement(
-      //         context,
-      //         MaterialPageRoute(
-      //           builder: (context) => const LoginPage(),
-      //         ),
-      //       );
-      //     }
-      //   },
-      //   backgroundColor: Colors.green,
-      //   foregroundColor: Colors.white,
-      // ),
       body: IndexedStack(
         index: _selectedIndex,
         children: <Widget>[

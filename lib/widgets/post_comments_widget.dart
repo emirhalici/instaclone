@@ -73,7 +73,6 @@ class _PostCommentsWidgetState extends State<PostCommentsWidget> {
         } catch (e) {
           // TODO : URGENT
           // TODO : HANDLE UNEXPECTED USER NOT FOUND ERROR
-          print('unexpected error: $e');
         }
       }
     }

@@ -18,12 +18,12 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   Future<void> getUserData() async {
-    bool response = await context.watch<ProfilePageProvider>().getCurrentUserData();
+    await context.watch<ProfilePageProvider>().getCurrentUserData();
     // TODO : HANDLE RESPONSE
   }
 
   Future<void> getUserPosts() async {
-    bool response = await context.read<ProfilePageProvider>().getUserPosts();
+    await context.read<ProfilePageProvider>().getUserPosts();
     // TODO : HANDLE RESPONSE
   }
 
