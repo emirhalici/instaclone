@@ -100,10 +100,12 @@ class _SearchPageState extends State<SearchPage> {
                         ),
                       ));
                     }
-                    return GridView.count(
-                      crossAxisCount: 3,
-                      shrinkWrap: true,
-                      children: postImages,
+                    return Expanded(
+                      child: GridView.count(
+                        crossAxisCount: 3,
+                        shrinkWrap: true,
+                        children: postImages,
+                      ),
                     );
                   },
                 )
