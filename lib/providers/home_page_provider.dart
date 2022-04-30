@@ -36,9 +36,12 @@ class HomePageProvider with ChangeNotifier {
       } else {
         List following = user.following;
         following.add(user.userUUID);
-        postsStream = firestore.collection('posts').where('userUUID', whereIn: following).snapshots().asyncMap(
-              (snapshot) => Future.wait([getUserForPost(snapshot)]),
-            );
+        postsStream =
+            firestore.collection('posts').where('userUUID', whereIn: following).orderBy('timestamp', descending: true).snapshots().asyncMap(
+          (snapshot) {
+            return Future.wait([getUserForPost(snapshot)]);
+          },
+        );
       }
 
       notifyListeners();
