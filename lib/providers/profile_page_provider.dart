@@ -11,12 +11,15 @@ class ProfilePageProvider with ChangeNotifier {
   Map<String, dynamic> anotherUserData = <String, dynamic>{};
   UserModel? anotherUserModel;
   UserModel? userModel;
-  List<PostModel> posts = [];
-  List<PostModel> anotherUserPosts = [];
   String username = '';
-  ScrollController pageScrollController = ScrollController();
+  ScrollController userProfileScrollController = ScrollController();
+  ScrollController anotherUserProfileScrollController = ScrollController();
   bool isUserPostsEmpty = false;
   bool isAnotherUserPostsEmpty = false;
+  Stream<List<PostModel>>? userPostsStream;
+  Stream<List<PostModel>>? anotherUserPostsStream;
+  int userPostsCount = 0;
+  int anotherUserPostsCount = 0;
 
   void setUser(User? user) {
     loggedInUser = user;
@@ -54,24 +57,41 @@ class ProfilePageProvider with ChangeNotifier {
     }
   }
 
-  Future<bool> getUserPosts() async {
-    try {
-      final snapshot = await firestore.collection('posts').where('userUUID', isEqualTo: loggedInUser!.uid).get();
-      final docs = snapshot.docs;
-
-      posts = [];
-
-      for (var doc in docs) {
-        Map<String, dynamic> data = doc.data();
-        posts.add(PostModel.fromJson(data, userData, doc.id));
-      }
-      if (posts.isEmpty) {
-        isUserPostsEmpty = true;
-      }
+  Future<void> getUserPostsStream() async {
+    if (userPostsStream == null) {
+      userPostsStream = firestore
+          .collection('posts')
+          .where('userUUID', isEqualTo: loggedInUser!.uid)
+          .orderBy('timestamp', descending: true)
+          .snapshots()
+          .asyncMap(
+        (snapshot) {
+          List<PostModel> posts = [];
+          for (var doc in snapshot.docs) {
+            PostModel post = PostModel.fromJson(doc.data(), userData, doc.id);
+            posts.add(post);
+          }
+          return posts;
+        },
+      );
       notifyListeners();
-      return true;
-    } catch (e) {
-      return false;
+    }
+  }
+
+  Future<void> getAnotherUserPostsStream(String userUUID) async {
+    if (anotherUserPostsStream == null) {
+      anotherUserPostsStream =
+          firestore.collection('posts').where('userUUID', isEqualTo: userUUID).orderBy('timestamp', descending: true).snapshots().asyncMap(
+        (snapshot) {
+          List<PostModel> posts = [];
+          for (var doc in snapshot.docs) {
+            PostModel post = PostModel.fromJson(doc.data(), anotherUserData, doc.id);
+            posts.add(post);
+          }
+          return posts;
+        },
+      );
+      notifyListeners();
     }
   }
 
@@ -93,27 +113,6 @@ class ProfilePageProvider with ChangeNotifier {
     }
   }
 
-  Future<bool> getPosts(String userUUID) async {
-    try {
-      final snapshot = await firestore.collection('posts').where('userUUID', isEqualTo: userUUID).get();
-      final docs = snapshot.docs;
-
-      anotherUserPosts = [];
-
-      for (var doc in docs) {
-        Map<String, dynamic> data = doc.data();
-        anotherUserPosts.add(PostModel.fromJson(data, anotherUserData, doc.id));
-      }
-      if (anotherUserPosts.isEmpty) {
-        isAnotherUserPostsEmpty = true;
-      }
-      notifyListeners();
-      return true;
-    } catch (e) {
-      return false;
-    }
-  }
-
   Future<bool> writeUser(UserModel userModel) async {
     bool isSuccess = false;
     await firestore.collection('users').doc(userModel.docId).update(userModel.toJson()).then(((value) {
@@ -122,5 +121,15 @@ class ProfilePageProvider with ChangeNotifier {
       isSuccess = false;
     });
     return isSuccess;
+  }
+
+  void setUserPostsCount(int length) {
+    userPostsCount = length;
+    notifyListeners();
+  }
+
+  void setAnotherUserPostsCount(int length) {
+    anotherUserPostsCount = length;
+    notifyListeners();
   }
 }

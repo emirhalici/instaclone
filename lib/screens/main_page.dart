@@ -54,10 +54,10 @@ class _MainPageState extends State<MainPage> {
           if (_profileScreen.currentState?.canPop() ?? false) {
             _profileScreen.currentState?.popUntil((route) => route.isFirst);
           } else {
-            if (context.read<ProfilePageProvider>().pageScrollController.hasClients) {
+            if (context.read<ProfilePageProvider>().userProfileScrollController.hasClients) {
               context
                   .read<ProfilePageProvider>()
-                  .pageScrollController
+                  .userProfileScrollController
                   .animateTo(0, duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
             }
           }

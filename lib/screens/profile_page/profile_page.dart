@@ -22,15 +22,15 @@ class _ProfilePageState extends State<ProfilePage> {
     // TODO : HANDLE RESPONSE
   }
 
-  Future<void> getUserPosts() async {
-    await context.read<ProfilePageProvider>().getUserPosts();
+  Future<void> getUserPostsStream() async {
+    await context.read<ProfilePageProvider>().getUserPostsStream();
     // TODO : HANDLE RESPONSE
   }
 
   @override
   void initState() {
     super.initState();
-    getUserPosts();
+    Future.delayed(Duration.zero, getUserPostsStream);
   }
 
   @override
@@ -107,7 +107,7 @@ class _ProfilePageState extends State<ProfilePage> {
           : DefaultTabController(
               length: 2,
               child: NestedScrollView(
-                controller: context.read<ProfilePageProvider>().pageScrollController,
+                controller: context.read<ProfilePageProvider>().userProfileScrollController,
                 headerSliverBuilder: (context, innerBoxIsScrolled) {
                   return [
                     SliverList(
@@ -180,7 +180,7 @@ class _ProfilePageState extends State<ProfilePage> {
               Column(
                 children: [
                   Text(
-                    context.watch<ProfilePageProvider>().posts.length.toString(),
+                    context.watch<ProfilePageProvider>().userPostsCount.toString(),
                     style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
                   ),
                   Text('Posts', style: TextStyle(fontSize: 13.sp, fontWeight: FontWeight.w400)),
