@@ -21,7 +21,7 @@ class _PostPageState extends State<PostPage> {
       appBar: AppBar(
         foregroundColor: primaryColor,
         backgroundColor: primaryColorReversed,
-        title: const Text('Explore'),
+        title: Text(widget.postWidget.post.username),
         centerTitle: false,
         automaticallyImplyLeading: true,
         elevation: 0,
