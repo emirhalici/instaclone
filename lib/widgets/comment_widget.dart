@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:instaclone/models/comment_model.dart';
+import 'package:instaclone/screens/profile_page/profile_page_general.dart';
 import 'package:instaclone/utils/project_constants.dart';
 import 'package:instaclone/widgets/duration_timer_widget.dart';
 
@@ -44,7 +45,12 @@ class _CommentWidgetState extends State<CommentWidget> {
                         WidgetSpan(
                           child: GestureDetector(
                             onTap: () {
-                              // TODO : IMPLEMENT GO THE PROFILE
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: ((context) => ProfilePageGeneral(userUUID: widget.userModel!['userUUID'])),
+                                ),
+                              );
                             },
                             child: Text(
                               widget.userModel!['username'],
