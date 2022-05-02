@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:instaclone/models/user_model.dart';
 import 'package:instaclone/providers/profile_page_provider.dart';
+import 'package:instaclone/screens/profile_page/edit_profile_page.dart';
 import 'package:instaclone/widgets/add_sheet.dart';
 import 'package:instaclone/widgets/menu_sheet.dart';
 import 'package:instaclone/screens/profile_page/profile_posts.dart';
@@ -35,12 +37,12 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-    final userData = context.watch<ProfilePageProvider>().userData;
+    final userModel = context.watch<ProfilePageProvider>().userModel;
 
     Color primaryColor = ProjectConstants.getPrimaryColor(context, false);
     Color primaryColorReversed = ProjectConstants.getPrimaryColor(context, true);
 
-    if (userData.isEmpty) {
+    if (userModel == null) {
       getUserData();
     }
     return Scaffold(
@@ -56,7 +58,7 @@ class _ProfilePageState extends State<ProfilePage> {
         toolbarHeight: ProjectConstants.toolbarHeight,
         elevation: 0,
         title: Text(
-          userData['username'] ?? 'null',
+          userModel == null ? 'null' : userModel.username,
           style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.w600),
         ),
         actions: [
@@ -100,7 +102,7 @@ class _ProfilePageState extends State<ProfilePage> {
         ],
         centerTitle: false,
       ),
-      body: userData.isEmpty
+      body: userModel == null
           ? Center(
               child: CircularProgressIndicator.adaptive(backgroundColor: ProjectConstants.getPrimaryColor(context, false)),
             )
@@ -111,7 +113,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 headerSliverBuilder: (context, innerBoxIsScrolled) {
                   return [
                     SliverList(
-                      delegate: SliverChildListDelegate([profileWidget(context, userData)]),
+                      delegate: SliverChildListDelegate([profileWidget(context, userModel.toJson())]),
                     )
                   ];
                 },
@@ -221,7 +223,12 @@ class _ProfilePageState extends State<ProfilePage> {
             width: double.infinity,
             child: OutlinedButton(
               onPressed: () {
-                // TODO : IMPLEMENT EDIT PROFILE
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EditProfilePage(user: context.read<ProfilePageProvider>().userModel!),
+                  ),
+                );
               },
               style: OutlinedButton.styleFrom(
                 side: BorderSide(color: primaryColor.withOpacity(0.2)),

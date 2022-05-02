@@ -1,8 +1,12 @@
+import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:instaclone/models/post_model.dart';
 import 'package:instaclone/models/user_model.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class ProfilePageProvider with ChangeNotifier {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -58,41 +62,48 @@ class ProfilePageProvider with ChangeNotifier {
   }
 
   Future<void> getUserPostsStream() async {
-    if (userPostsStream == null) {
-      userPostsStream = firestore
-          .collection('posts')
-          .where('userUUID', isEqualTo: loggedInUser!.uid)
-          .orderBy('timestamp', descending: true)
-          .snapshots()
-          .asyncMap(
-        (snapshot) {
-          List<PostModel> posts = [];
-          for (var doc in snapshot.docs) {
-            PostModel post = PostModel.fromJson(doc.data(), userData, doc.id);
-            posts.add(post);
-          }
-          return posts;
-        },
-      );
-      notifyListeners();
-    }
+    userPostsStream = firestore
+        .collection('posts')
+        .where('userUUID', isEqualTo: loggedInUser!.uid)
+        .orderBy('timestamp', descending: true)
+        .snapshots()
+        .asyncMap(
+      (snapshot) {
+        List<PostModel> posts = [];
+        for (var doc in snapshot.docs) {
+          PostModel post = PostModel.fromJson(doc.data(), userData, doc.id);
+          posts.add(post);
+        }
+        return posts;
+      },
+    );
+    notifyListeners();
   }
 
   Future<void> getAnotherUserPostsStream(String userUUID) async {
-    if (anotherUserPostsStream == null) {
-      anotherUserPostsStream =
-          firestore.collection('posts').where('userUUID', isEqualTo: userUUID).orderBy('timestamp', descending: true).snapshots().asyncMap(
-        (snapshot) {
-          List<PostModel> posts = [];
-          for (var doc in snapshot.docs) {
-            PostModel post = PostModel.fromJson(doc.data(), anotherUserData, doc.id);
-            posts.add(post);
-          }
-          return posts;
-        },
-      );
-      notifyListeners();
+    anotherUserPostsStream =
+        firestore.collection('posts').where('userUUID', isEqualTo: userUUID).orderBy('timestamp', descending: true).snapshots().asyncMap(
+      (snapshot) {
+        List<PostModel> posts = [];
+        for (var doc in snapshot.docs) {
+          PostModel post = PostModel.fromJson(doc.data(), anotherUserData, doc.id);
+          posts.add(post);
+        }
+        return posts;
+      },
+    );
+    notifyListeners();
+  }
+
+  Future<String> uploadProfilePicture(XFile image) async {
+    // TODO : URGENT
+    // TODO : ADD RANDOM UID
+    String filePath = 'profilePics/${image.path.split("/").last}';
+    TaskSnapshot uploadTask = await firebase_storage.FirebaseStorage.instance.ref(filePath).putFile(File(image.path));
+    if (uploadTask.state == TaskState.error) {
+      return '';
     }
+    return await uploadTask.ref.getDownloadURL();
   }
 
   Future<bool> getUserData(String userUUID) async {
