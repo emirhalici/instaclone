@@ -1,16 +1,46 @@
 # instaclone
+An **instagram** clone app powered with **Firebase** and written in **Flutter/Dart**.
+### Features implemented so far:
+ - [x] Light/Dark mode
+ - [x] Log in
+ - [x] Log out
+ - [x] Sign up
+ - [x] Forgot password
+ - [x] Main posts feed
+ - [x] Explore page
+ - [x] Profile page
+ - [x] User profile page
+ - [x] Adding posts
 
-A new Flutter project.
+### Features I'm working on:
+ - [ ] Search for username
+ - [ ] Handle back button presses
+ - [ ] DM messages
+ - [ ] Infinite scroll pagination
+ - [ ] Scroll to refresh
 
-## Getting Started
+### Features I'm planning to implement:
+ - [ ] Reels page ⌛️
+ - [ ] Shop page ⌛️
+ - [ ] IG Stories ⌛️
 
-This project is a starting point for a Flutter application.
+## Run Locally
+Clone the project
 
-A few resources to get you started if this is your first Flutter project:
+    git clone https://github.com/emirhalici/instaclone
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Go to the project directory
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+    cd instaclone
+
+Install dependencies
+
+    flutter pub get
+
+Run App
+
+    flutter run
+# Photos/Screenshots
+TODO
+# Videos/Screencasts
+TODO
