@@ -5,6 +5,7 @@ import 'package:instaclone/screens/login_page/login_page.dart';
 import 'package:instaclone/screens/main_page.dart';
 import 'package:instaclone/utils/authentication_service.dart';
 import 'package:instaclone/utils/project_constants.dart';
+import 'package:instaclone/utils/project_utils.dart';
 import 'package:provider/provider.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
@@ -28,14 +29,8 @@ class _ForgotPasswordPage extends State<ForgotPasswordPage> {
     );
   }
 
-  void showSnackBarMessage(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        duration: const Duration(milliseconds: 500),
-        backgroundColor: ProjectConstants.blueColor,
-      ),
-    );
+  void showResponseSnackbar(String response) {
+    ProjectUtils.showSnackBarMessage(context, response);
   }
 
   bool waitingForRequest = false;
@@ -99,7 +94,7 @@ class _ForgotPasswordPage extends State<ForgotPasswordPage> {
                           setState(() {
                             waitingForRequest = false;
                           });
-                          showSnackBarMessage(response);
+                          showResponseSnackbar(response);
                         },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(ProjectConstants.blueColor),

@@ -8,6 +8,7 @@ import 'package:instaclone/models/reply_model.dart';
 import 'package:instaclone/providers/posts_provider.dart';
 import 'package:instaclone/providers/profile_page_provider.dart';
 import 'package:instaclone/utils/project_constants.dart';
+import 'package:instaclone/utils/project_utils.dart';
 import 'package:instaclone/widgets/comment_widget.dart';
 import 'package:instaclone/widgets/duration_timer_widget.dart';
 import 'package:provider/provider.dart';
@@ -78,13 +79,7 @@ class _PostCommentsWidgetState extends State<PostCommentsWidget> {
     }
 
     void showErrorMessageToUser() {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Error while posting a comment'),
-          duration: Duration(milliseconds: 500),
-          backgroundColor: ProjectConstants.blueColor,
-        ),
-      );
+      ProjectUtils.showSnackBarMessage(context, 'Error while posting a comment');
     }
 
     return Scaffold(

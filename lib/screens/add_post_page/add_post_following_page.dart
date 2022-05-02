@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:instaclone/models/post_model.dart';
 import 'package:instaclone/providers/posts_provider.dart';
 import 'package:instaclone/utils/project_constants.dart';
+import 'package:instaclone/utils/project_utils.dart';
 import 'package:provider/provider.dart';
 
 class AddPostFollowingPage extends StatefulWidget {
@@ -27,6 +28,10 @@ class _AddPostFollowingPageState extends State<AddPostFollowingPage> {
 
   Future<bool> addNewPost(PostModel postModel) async {
     return await context.read<PostsProvider>().addNewPost(postModel);
+  }
+
+  void showResponseSnackbar(String response) {
+    ProjectUtils.showSnackBarMessage(context, response);
   }
 
   @override
@@ -64,7 +69,7 @@ class _AddPostFollowingPageState extends State<AddPostFollowingPage> {
               if (response) {
                 popUntilFirstRoute();
               } else {
-                // TODO : SHOW SNACKBAR WITH RESPONSE
+                showResponseSnackbar('Failed to upload posts.');
                 setState(() {
                   isLoading = false;
                 });

@@ -7,6 +7,7 @@ import 'package:instaclone/screens/login_page/login_page.dart';
 import 'package:instaclone/screens/main_page.dart';
 import 'package:instaclone/utils/authentication_service.dart';
 import 'package:instaclone/utils/project_constants.dart';
+import 'package:instaclone/utils/project_utils.dart';
 import 'package:provider/provider.dart';
 
 class SignupPage extends StatefulWidget {
@@ -176,24 +177,12 @@ class _SignupPage extends State<SignupPage> {
                                   context.read<ProfilePageProvider>().setUserUpAfterSignUp(json);
                                   directToMainPage();
                                 } catch (e) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                      content: Text('An unexpected error occured: $e'),
-                                      duration: const Duration(milliseconds: 500),
-                                      backgroundColor: ProjectConstants.blueColor,
-                                    ),
-                                  );
+                                  ProjectUtils.showSnackBarMessage(context, 'An unexpected error occured: $e');
                                 }
                               }
                             }
                           } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(response),
-                                duration: const Duration(milliseconds: 500),
-                                backgroundColor: ProjectConstants.blueColor,
-                              ),
-                            );
+                            ProjectUtils.showSnackBarMessage(context, response);
                           }
                           setState(() {
                             waitingForRequest = false;

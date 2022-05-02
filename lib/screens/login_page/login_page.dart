@@ -8,6 +8,7 @@ import 'package:instaclone/screens/login_page/signup_page.dart';
 import 'package:instaclone/screens/main_page.dart';
 import 'package:instaclone/utils/authentication_service.dart';
 import 'package:instaclone/utils/project_constants.dart';
+import 'package:instaclone/utils/project_utils.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
@@ -146,24 +147,12 @@ class _LoginPageState extends State<LoginPage> {
                             context.read<ProfilePageProvider>().userModel = null;
                             context.read<HomePageProvider>().setUser(user);
                             directToMainPage();
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(response),
-                                duration: const Duration(milliseconds: 500),
-                                backgroundColor: ProjectConstants.blueColor,
-                              ),
-                            );
+                            ProjectUtils.showSnackBarMessage(context, response);
                             setState(() {
                               waitingForRequest = false;
                             });
                           } else {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text(response),
-                                duration: const Duration(milliseconds: 500),
-                                backgroundColor: ProjectConstants.blueColor,
-                              ),
-                            );
+                            ProjectUtils.showSnackBarMessage(context, response);
                           }
                           setState(() {
                             waitingForRequest = false;

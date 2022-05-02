@@ -8,6 +8,7 @@ import 'package:instaclone/providers/profile_page_provider.dart';
 import 'package:instaclone/screens/profile_page/profile_page.dart';
 import 'package:instaclone/screens/profile_page/profile_page_general.dart';
 import 'package:instaclone/utils/project_constants.dart';
+import 'package:instaclone/utils/project_utils.dart';
 import 'package:instaclone/widgets/duration_timer_widget.dart';
 import 'package:instaclone/widgets/post_comments_widget.dart';
 import 'package:provider/provider.dart';
@@ -132,13 +133,7 @@ class _PostWidgetState extends State<PostWidget> {
                 } else {
                   widget.post.likes.add(widget.post.userUUID);
                 }
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('An unexpected error occured: $e'),
-                    duration: const Duration(milliseconds: 500),
-                    backgroundColor: ProjectConstants.blueColor,
-                  ),
-                );
+                ProjectUtils.showSnackBarMessage(context, 'An unexpected error occured: $e');
               });
             }
           },
@@ -208,13 +203,7 @@ class _PostWidgetState extends State<PostWidget> {
                               } else {
                                 widget.post.likes.add(widget.post.userUUID);
                               }
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text('An unexpected error occured: $e'),
-                                  duration: const Duration(milliseconds: 500),
-                                  backgroundColor: ProjectConstants.blueColor,
-                                ),
-                              );
+                              ProjectUtils.showSnackBarMessage(context, 'An unexpected error occured: $e');
                             });
                           }
                         },

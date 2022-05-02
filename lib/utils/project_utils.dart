@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:instaclone/utils/project_constants.dart';
+
 class ProjectUtils {
   static String timestampToString(DateTime then, DateTime now) {
     Duration difference = now.difference(then);
@@ -16,5 +19,15 @@ class ProjectUtils {
       returnStr = '${difference.inSeconds} seconds ago';
     }
     return returnStr;
+  }
+
+  static void showSnackBarMessage(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        duration: const Duration(milliseconds: 500),
+        backgroundColor: ProjectConstants.blueColor,
+      ),
+    );
   }
 }
