@@ -4,11 +4,12 @@ import 'package:image_picker/image_picker.dart';
 import 'package:instaclone/models/user_model.dart';
 import 'package:instaclone/providers/profile_page_provider.dart';
 import 'package:instaclone/utils/project_constants.dart';
+import 'package:instaclone/utils/project_utils.dart';
 import 'package:provider/provider.dart';
 
 class EditProfilePage extends StatefulWidget {
-  UserModel user;
-  EditProfilePage({Key? key, required this.user}) : super(key: key);
+  final UserModel user;
+  const EditProfilePage({Key? key, required this.user}) : super(key: key);
 
   @override
   State<EditProfilePage> createState() => _EditProfilePageState();
@@ -29,13 +30,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   }
 
   void showErrorSnackbar() {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('An unexpected error occured while saving user'),
-        duration: Duration(milliseconds: 500),
-        backgroundColor: ProjectConstants.blueColor,
-      ),
-    );
+    ProjectUtils.showSnackBarMessage(context, 'An unexpected error occured while saving user');
   }
 
   void popStack() {
