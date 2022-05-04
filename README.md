@@ -1,7 +1,6 @@
 # instaclone
 An **instagram** clone app powered with **Firebase** and written in **Flutter/Dart**.
 ### Features implemented so far:
- - [x] Light/Dark mode
  - [x] Log in
  - [x] Log out
  - [x] Sign up
@@ -17,7 +16,7 @@ An **instagram** clone app powered with **Firebase** and written in **Flutter/Da
  - [ ] Handle back button presses
  - [ ] DM messages
  - [ ] Infinite scroll pagination
- - [ ] Scroll to refresh
+ - [ ] ~~Scroll to refresh (not really needed because all posts are taken as streams and they are in sync with firestore)~~
 
 ### Features I'm planning to implement:
  - [ ] Reels page ⌛️
