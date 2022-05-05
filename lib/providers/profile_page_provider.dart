@@ -98,6 +98,7 @@ class ProfilePageProvider with ChangeNotifier {
   Future<String> uploadProfilePicture(XFile image) async {
     // TODO : URGENT
     // TODO : ADD RANDOM UID
+    // https://pub.dev/packages/uuid
     String filePath = 'profilePics/${image.path.split("/").last}';
     TaskSnapshot uploadTask = await firebase_storage.FirebaseStorage.instance.ref(filePath).putFile(File(image.path));
     if (uploadTask.state == TaskState.error) {
@@ -114,6 +115,7 @@ class ProfilePageProvider with ChangeNotifier {
         Map<String, dynamic> data = doc.data();
         if (data['userUUID'] == userUUID) {
           anotherUserData = data;
+          print('another user data $anotherUserData');
           anotherUserModel = UserModel.fromJson(anotherUserData, doc.id);
         }
       }

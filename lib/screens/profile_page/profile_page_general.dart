@@ -211,7 +211,6 @@ class _ProfilePageGeneralState extends State<ProfilePageGeneral> {
                             // TODO : ERROR PRINT APPROPIATE MESSAGE
                             currentUser.following.add(userData.userUUID);
                             userData.followers.add(currentUser.userUUID);
-                            print('error');
                           }
                           setState(() {});
                         },
@@ -229,7 +228,6 @@ class _ProfilePageGeneralState extends State<ProfilePageGeneral> {
                       )
                     : ElevatedButton(
                         onPressed: () async {
-                          // TODO : IMPLEMENT FOLLOW USER
                           currentUser.following.add(userData.userUUID);
                           userData.followers.add(currentUser.userUUID);
 
