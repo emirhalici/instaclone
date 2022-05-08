@@ -102,6 +102,7 @@ class _SearchPageState extends State<SearchPage> {
                     }
                     return Expanded(
                       child: GridView.count(
+                        controller: context.read<SearchPageProvider>().searchPostsController,
                         crossAxisCount: 3,
                         shrinkWrap: true,
                         children: postImages,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:instaclone/providers/home_page_provider.dart';
 import 'package:instaclone/providers/profile_page_provider.dart';
+import 'package:instaclone/providers/search_page_provider.dart';
 import 'package:instaclone/screens/home_page/home_page.dart';
 import 'package:instaclone/screens/profile_page/profile_page.dart';
 import 'package:instaclone/screens/reels_page/reels_page.dart';
@@ -42,7 +43,15 @@ class _MainPageState extends State<MainPage> {
           }
           break;
         case 1:
-          _searchScreen.currentState?.popUntil((route) => route.isFirst);
+          if (_searchScreen.currentState?.canPop() ?? false) {
+            _searchScreen.currentState?.popUntil((route) => route.isFirst);
+          } else if (context.read<SearchPageProvider>().searchPostsController.hasClients) {
+            context
+                .read<SearchPageProvider>()
+                .searchPostsController
+                .animateTo(0, duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
+          }
+
           break;
         case 2:
           _reelsScreen.currentState?.popUntil((route) => route.isFirst);
