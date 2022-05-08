@@ -54,6 +54,7 @@ class _ForgotPasswordPage extends State<ForgotPasswordPage> {
                 height: 44.h,
                 child: TextField(
                   controller: emailController,
+                  keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                     hintText: 'Email',
                     hintStyle: const TextStyle(color: Colors.grey),

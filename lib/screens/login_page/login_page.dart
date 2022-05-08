@@ -52,6 +52,7 @@ class _LoginPageState extends State<LoginPage> {
                 height: 44.h,
                 child: TextField(
                   controller: usernameController,
+                  keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                     hintText: 'Email',
                     hintStyle: const TextStyle(color: Colors.grey),
