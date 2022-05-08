@@ -57,8 +57,8 @@ class _PostWidgetState extends State<PostWidget> {
       );
     }
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return ListView(
+      shrinkWrap: true,
       children: [
         Container(
           width: double.infinity,
