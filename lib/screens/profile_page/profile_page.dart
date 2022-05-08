@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:instaclone/providers/profile_page_provider.dart';
 import 'package:instaclone/screens/profile_page/edit_profile_page.dart';
+import 'package:instaclone/utils/project_utils.dart';
 import 'package:instaclone/widgets/add_sheet.dart';
 import 'package:instaclone/widgets/menu_sheet.dart';
 import 'package:instaclone/screens/profile_page/profile_posts.dart';
@@ -62,37 +63,14 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
         actions: [
           IconButton(
-            onPressed: () {
-              showModalBottomSheet(
-                context: context,
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(16.0),
-                    topRight: Radius.circular(16.0),
-                  ),
-                ),
-                builder: (context) => const AddSheet(),
-              );
-            },
+            onPressed: () => ProjectUtils.showBottomSheet(context, (context) => const AddSheet()),
             icon: SvgPicture.asset(
               'assets/icons/add.svg',
               color: primaryColor,
             ),
           ),
           IconButton(
-            onPressed: () {
-              showModalBottomSheet(
-                  context: context,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(16.0),
-                      topRight: Radius.circular(16.0),
-                    ),
-                  ),
-                  builder: (context) {
-                    return const MenuSheet();
-                  });
-            },
+            onPressed: () => ProjectUtils.showBottomSheet(context, (context) => const MenuSheet()),
             icon: SvgPicture.asset(
               'assets/icons/menu.svg',
               color: primaryColor,

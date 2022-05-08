@@ -30,4 +30,18 @@ class ProjectUtils {
       ),
     );
   }
+
+  static void showBottomSheet(BuildContext context, Widget Function(BuildContext) builder) {
+    showModalBottomSheet(
+      useRootNavigator: true,
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(16.0),
+          topRight: Radius.circular(16.0),
+        ),
+      ),
+      builder: builder,
+    );
+  }
 }

@@ -163,16 +163,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           Padding(
             padding: EdgeInsets.only(top: 22.h),
             child: GestureDetector(
-              onTap: () => showModalBottomSheet(
-                context: context,
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(16.0),
-                    topRight: Radius.circular(16.0),
-                  ),
-                ),
-                builder: (context) => changeProfilePicMenu(context),
-              ),
+              onTap: () => ProjectUtils.showBottomSheet(context, (context) => changeProfilePicMenu(context)),
               child: Center(
                 child: widget.user.profilePic == ''
                     ? const SizedBox(
@@ -193,17 +184,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             ),
           ),
           TextButton(
-            onPressed: () {
-              showModalBottomSheet(
-                  context: context,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(16.0),
-                      topRight: Radius.circular(16.0),
-                    ),
-                  ),
-                  builder: (context) => changeProfilePicMenu(context));
-            },
+            onPressed: () => ProjectUtils.showBottomSheet(context, (context) => changeProfilePicMenu(context)),
             child: const Text(
               'Change Profile Picture',
               style: TextStyle(
