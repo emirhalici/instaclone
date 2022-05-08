@@ -33,6 +33,7 @@ class ProjectUtils {
 
   static void showBottomSheet(BuildContext context, Widget Function(BuildContext) builder) {
     showModalBottomSheet(
+      isScrollControlled: true,
       useRootNavigator: true,
       context: context,
       shape: const RoundedRectangleBorder(
