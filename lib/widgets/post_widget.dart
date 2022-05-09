@@ -59,7 +59,7 @@ class _PostWidgetState extends State<PostWidget> {
 
     return ListView(
       shrinkWrap: true,
-      physics: const ScrollPhysics(),
+      physics: const ClampingScrollPhysics(),
       children: [
         Container(
           width: double.infinity,
