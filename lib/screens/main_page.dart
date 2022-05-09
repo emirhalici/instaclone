@@ -3,7 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:instaclone/providers/home_page_provider.dart';
 import 'package:instaclone/providers/profile_page_provider.dart';
 import 'package:instaclone/providers/search_page_provider.dart';
-import 'package:instaclone/screens/home_page/home_page.dart';
+import 'package:instaclone/screens/home_page/home_page_main.dart';
 import 'package:instaclone/screens/profile_page/profile_page.dart';
 import 'package:instaclone/screens/reels_page/reels_page.dart';
 import 'package:instaclone/screens/search_page/search_page.dart';
@@ -34,7 +34,12 @@ class _MainPageState extends State<MainPage> {
           if (_homeScreen.currentState?.canPop() ?? false) {
             _homeScreen.currentState?.popUntil((route) => route.isFirst);
           } else {
-            if (context.read<HomePageProvider>().mainPostsController.hasClients) {
+            if (context.read<HomePageProvider>().pageController.page == 1) {
+              context
+                  .read<HomePageProvider>()
+                  .pageController
+                  .animateTo(0, duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
+            } else if (context.read<HomePageProvider>().mainPostsController.hasClients) {
               context
                   .read<HomePageProvider>()
                   .mainPostsController
@@ -94,7 +99,7 @@ class _MainPageState extends State<MainPage> {
             key: _homeScreen,
             onGenerateRoute: (route) => MaterialPageRoute(
               settings: route,
-              builder: (context) => const HomePage(),
+              builder: (context) => const HomePageMain(),
             ),
           ),
           Navigator(

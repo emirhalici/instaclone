@@ -10,12 +10,13 @@ class MessengerPage extends StatefulWidget {
   State<MessengerPage> createState() => _MessengerPageState();
 }
 
-class _MessengerPageState extends State<MessengerPage> {
+class _MessengerPageState extends State<MessengerPage> with AutomaticKeepAliveClientMixin<MessengerPage> {
   @override
   Widget build(BuildContext context) {
     Color primaryColor = ProjectConstants.getPrimaryColor(context, false);
     Color primaryColorReversed = ProjectConstants.getPrimaryColor(context, true);
 
+    super.build(context);
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: ProjectConstants.toolbarHeight,
@@ -42,4 +43,7 @@ class _MessengerPageState extends State<MessengerPage> {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
