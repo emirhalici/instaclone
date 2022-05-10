@@ -40,6 +40,18 @@ Run App
 
     flutter run
 # Photos/Screenshots
-TODO
+
+|Feeds Page|Explore Page| Profile Page |
+|--|--|--|
+| ![Feeds Page](https://user-images.githubusercontent.com/81600010/167615678-1927dd8c-3da6-4e6d-b6d1-9cd4f0fab2ff.PNG) |![Explore Page](https://user-images.githubusercontent.com/81600010/167615781-83c483dc-6273-4181-b994-654712a64417.PNG)  | ![Profile Page](https://user-images.githubusercontent.com/81600010/167615967-849c1125-9aae-4bc1-a5a2-a60960fed9be.PNG) |
+
+|My Profile Page|Edit Profile Page| Edit Profile Picture |
+|--|--|--|
+| ![My Profile Page](https://user-images.githubusercontent.com/81600010/167616233-7493e7e4-50b5-432c-8312-07e5e085a675.PNG) |![Edit Profile Page](https://user-images.githubusercontent.com/81600010/167616247-d13711dd-6fb0-4215-af0f-3cf484ee1805.PNG)  | ![Edit Profile Picture](https://user-images.githubusercontent.com/81600010/167616254-4916a879-c119-4e6a-8943-5547a2ebaa98.PNG) |
+
+|Add Post Page 1|Add Post Page 2|Add Post Page 3|
+|--|--|--|
+| ![Add Post 1](https://user-images.githubusercontent.com/81600010/167616434-1d096f7b-8f8c-45f6-ba44-ad9851bbeed7.PNG) |![Add Post 2](https://user-images.githubusercontent.com/81600010/167616457-3f7f2883-d973-4b4a-9366-866f778dd0c9.PNG)  | ![Add Post 3](https://user-images.githubusercontent.com/81600010/167616459-ed5dd4be-7351-4d42-b57b-35d5e095326c.PNG) |
+
 # Videos/Screencasts
 TODO
