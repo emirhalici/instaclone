@@ -2,7 +2,7 @@
 An **instagram** clone app powered with **Firebase** and written in **Flutter/Dart**.
 ### Features implemented so far:
  - [x] Log in
- - [x] Log out
+ - [x] ~~Log out (currently there are bugs surrounding navigation aspect)~~
  - [x] Sign up
  - [x] Forgot password
  - [x] Main posts feed
