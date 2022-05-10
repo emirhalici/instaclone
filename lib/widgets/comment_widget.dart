@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:instaclone/models/comment_model.dart';
@@ -27,7 +28,7 @@ class _CommentWidgetState extends State<CommentWidget> {
           CircleAvatar(
             foregroundImage: (widget.userModel == null || widget.userModel!['profilePic'] == null || widget.userModel!['profilePic'] == '')
                 ? const AssetImage('assets/images/default_profile_pic.png') as ImageProvider
-                : NetworkImage(widget.userModel!['profilePic']),
+                : CachedNetworkImageProvider(widget.userModel!['profilePic']),
           ),
           Expanded(
             child: Padding(

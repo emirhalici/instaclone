@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:instaclone/providers/profile_page_provider.dart';
 import 'package:instaclone/screens/post_page.dart';
@@ -62,7 +63,7 @@ class _ProfilePostsState extends State<ProfilePosts> {
                     hoverColor: Colors.black.withOpacity(0.2),
                     splashColor: Colors.black.withOpacity(0.2),
                     child: Ink.image(
-                      image: NetworkImage(
+                      image: CachedNetworkImageProvider(
                         post.pictures[0],
                       ),
                       width: MediaQuery.of(context).size.width / 3,

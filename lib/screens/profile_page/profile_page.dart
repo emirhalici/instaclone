@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -154,7 +155,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   : SizedBox(
                       width: 86.0,
                       height: 86.0,
-                      child: CircleAvatar(foregroundImage: NetworkImage(userData['profilePic'])),
+                      child: CircleAvatar(foregroundImage: CachedNetworkImageProvider(userData['profilePic'])),
                     ),
               Column(
                 children: [

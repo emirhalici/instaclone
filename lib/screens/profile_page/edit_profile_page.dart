@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
@@ -38,7 +39,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
   }
 
   void updateProfilePic(XFile? image) async {
-    print('updating profile pic:');
     if (image != null) {
       String imgLink = await context.read<ProfilePageProvider>().uploadProfilePicture(image);
       setState(() {
@@ -177,7 +177,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                         width: 86.0,
                         height: 86.0,
                         child: CircleAvatar(
-                          foregroundImage: NetworkImage(widget.user.profilePic),
+                          foregroundImage: CachedNetworkImageProvider(widget.user.profilePic),
                         ),
                       ),
               ),

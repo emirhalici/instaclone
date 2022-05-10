@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -49,9 +50,11 @@ class _PostWidgetState extends State<PostWidget> {
       images.add(
         SizedBox(
           width: double.infinity,
-          child: Image.network(
-            picture,
+          child: CachedNetworkImage(
+            imageUrl: picture,
+            placeholder: (context, url) => const CircularProgressIndicator.adaptive(),
             fit: BoxFit.cover,
+            width: double.infinity,
           ),
         ),
       );
@@ -77,7 +80,7 @@ class _PostWidgetState extends State<PostWidget> {
                   CircleAvatar(
                     foregroundImage: profilePic == ''
                         ? const AssetImage('assets/images/default_profile_pic.png')
-                        : NetworkImage(profilePic) as ImageProvider,
+                        : CachedNetworkImageProvider(profilePic) as ImageProvider,
                     radius: 16,
                   ),
                   SizedBox(width: 8.w),
