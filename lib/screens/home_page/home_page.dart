@@ -51,9 +51,19 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin<
         foregroundColor: primaryColor,
         toolbarHeight: ProjectConstants.toolbarHeight,
         elevation: 0,
-        title: SvgPicture.asset(
-          "assets/icons/logo.svg",
-          color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
+        title: GestureDetector(
+          onTap: () {
+            if (context.read<HomePageProvider>().mainPostsController.hasClients) {
+              context
+                  .read<HomePageProvider>()
+                  .mainPostsController
+                  .animateTo(0, duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
+            }
+          },
+          child: SvgPicture.asset(
+            "assets/icons/logo.svg",
+            color: Theme.of(context).brightness == Brightness.dark ? Colors.white : Colors.black,
+          ),
         ),
         actions: [
           IconButton(
