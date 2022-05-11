@@ -118,8 +118,8 @@ class _PostCommentsWidgetState extends State<PostCommentsWidget> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CircleAvatar(
-                  foregroundImage: (widget.post.userData['profilePic'] != null && widget.post.userData['profilePic'] != '')
-                      ? CachedNetworkImageProvider(widget.post.userData['profilePic'])
+                  foregroundImage: (widget.post.userData?.profilePic != '')
+                      ? CachedNetworkImageProvider(widget.post.userData?.profilePic as String)
                       : const AssetImage('assets/images/default_profile_pic.png') as ImageProvider,
                 ),
                 Expanded(
@@ -194,8 +194,8 @@ class _PostCommentsWidgetState extends State<PostCommentsWidget> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: CircleAvatar(
-                  foregroundImage: (widget.post.userData['profilePic'] != null && widget.post.userData['profilePic'] != '')
-                      ? CachedNetworkImageProvider(widget.post.userData['profilePic'])
+                  foregroundImage: (widget.post.userData?.profilePic != '')
+                      ? CachedNetworkImageProvider(widget.post.userData?.profilePic as String)
                       : const AssetImage('assets/images/default_profile_pic.png') as ImageProvider,
                   radius: 24,
                 ),

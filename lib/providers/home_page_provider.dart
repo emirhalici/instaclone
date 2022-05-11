@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:instaclone/models/chat_model.dart';
 import 'package:instaclone/models/post_model.dart';
 import 'package:instaclone/models/user_model.dart';
 
@@ -13,14 +14,16 @@ class HomePageProvider with ChangeNotifier {
   Stream? userStream;
   ScrollController mainPostsController = ScrollController();
   UserModel? userModel;
+  Stream<List<ChatModel>>? chatsStream;
+  Stream<ChatModel>? specifiedChatStream;
 
   void setUser(User? user) {
     loggedInUser = user;
   }
 
-  Future<Map<String, dynamic>> getUserWithUserUUID(String userUUID) async {
+  Future<UserModel> getUserWithUserUUID(String userUUID) async {
     var snapshot = await firestore.collection('users').where('userUUID', isEqualTo: userUUID).get();
-    return snapshot.docs[0].data();
+    return UserModel.fromJson(snapshot.docs[0].data(), snapshot.docs[0].id);
   }
 
   Future<void> getPostsStreamForMainPage() async {
@@ -69,5 +72,48 @@ class HomePageProvider with ChangeNotifier {
       );
       notifyListeners();
     }
+  }
+
+  Future<void> getChatsStream() async {
+    chatsStream ??= firestore.collection('chats').where('userUUIDs', arrayContains: userModel?.userUUID ?? '-1').snapshots().asyncMap(
+      (snapshot) async {
+        List<ChatModel> chats = [];
+        for (var doc in snapshot.docs) {
+          List<UserModel> users = [];
+          for (var userUUID in doc.data()['userUUIDs']) {
+            if (userUUID != userModel?.userUUID && userUUID != '') {
+              var user = await getUserWithUserUUID(userUUID);
+              users.add(user);
+            }
+          }
+          ChatModel chat = ChatModel.fromJson(doc.data(), users, doc.id);
+          chats.add(chat);
+        }
+        return chats;
+      },
+    );
+  }
+
+  Future<void> getSpecifiedChatStream(String documentId) async {
+    specifiedChatStream = firestore.collection('chats').doc(documentId).snapshots().asyncMap((snapshot) async {
+      List<UserModel> users = [];
+      for (var userUUID in snapshot.data()!['userUUIDs']) {
+        if (userUUID != userModel?.userUUID && userUUID != '') {
+          var user = await getUserWithUserUUID(userUUID);
+          users.add(user);
+        }
+      }
+      return ChatModel.fromJson(snapshot.data()!, users, documentId);
+    });
+  }
+
+  Future<bool> writeToChatModel(ChatModel chatModel) async {
+    bool isSuccess = false;
+    await firestore.collection('chats').doc(chatModel.documentId).update(chatModel.toJson()).then(((value) {
+      isSuccess = true;
+    })).catchError((error) {
+      isSuccess = false;
+    });
+    return isSuccess;
   }
 }

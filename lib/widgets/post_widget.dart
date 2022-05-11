@@ -31,7 +31,7 @@ class _PostWidgetState extends State<PostWidget> {
     Color primaryColor = ProjectConstants.getPrimaryColor(context, false);
 
     //print(widget.post.userData);
-    String profilePic = widget.post.userData['profilePic'] ?? '';
+    String profilePic = widget.post.userData?.profilePic as String;
     List<String> likes = [];
 
     for (var item in widget.post.likes) {
@@ -103,7 +103,7 @@ class _PostWidgetState extends State<PostWidget> {
                       }
                     },
                     child: Text(
-                      widget.post.userData['username'],
+                      widget.post.userData?.username as String,
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 13.sp,

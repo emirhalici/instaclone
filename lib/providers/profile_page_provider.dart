@@ -71,7 +71,7 @@ class ProfilePageProvider with ChangeNotifier {
       (snapshot) {
         List<PostModel> posts = [];
         for (var doc in snapshot.docs) {
-          PostModel post = PostModel.fromJson(doc.data(), userData, doc.id);
+          PostModel post = PostModel.fromJson(doc.data(), userModel, doc.id);
           posts.add(post);
         }
         return posts;
@@ -86,7 +86,7 @@ class ProfilePageProvider with ChangeNotifier {
       (snapshot) {
         List<PostModel> posts = [];
         for (var doc in snapshot.docs) {
-          PostModel post = PostModel.fromJson(doc.data(), anotherUserData, doc.id);
+          PostModel post = PostModel.fromJson(doc.data(), anotherUserModel, doc.id);
           posts.add(post);
         }
         return posts;

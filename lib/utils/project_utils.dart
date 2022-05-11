@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:instaclone/utils/project_constants.dart';
+import 'package:intl/intl.dart';
 
 class ProjectUtils {
   static String timestampToString(DateTime then, DateTime now) {
@@ -19,6 +20,25 @@ class ProjectUtils {
       returnStr = '${difference.inSeconds} seconds ago';
     }
     return returnStr;
+  }
+
+  static int timeDifferenceInSeconds(DateTime date1, DateTime date2) {
+    return date1.difference(date2).inSeconds;
+  }
+
+  static bool isDateToday(DateTime date) {
+    DateTime now = DateTime.now();
+    return date.year == now.year && date.month == now.month && date.day == now.day;
+  }
+
+  // Converts DateTime date into readable String formatted as MONTH DAY, HH:MM AM
+  static String dateTimeToStringWithDate(DateTime date) {
+    return DateFormat('MMM d ').format(date) + dateTimeToString(date);
+  }
+
+  // Converts DateTime date into readable String formatted as HH:MM AM
+  static String dateTimeToString(DateTime date) {
+    return DateFormat.jm().format(date);
   }
 
   static void showSnackBarMessage(BuildContext context, String message) {

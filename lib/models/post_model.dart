@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:instaclone/models/comment_model.dart';
+import 'package:instaclone/models/user_model.dart';
 
 class PostModel {
   List<dynamic> likes;
@@ -9,7 +10,7 @@ class PostModel {
   List<CommentModel> comments;
   Timestamp timestamp;
   String username;
-  Map<String, dynamic> userData;
+  UserModel? userData;
   String documentId;
 
   PostModel({
@@ -38,7 +39,7 @@ class PostModel {
         comments = <CommentModel>[],
         username = '',
         documentId = '',
-        userData = {},
+        userData = null,
         timestamp = Timestamp.now();
 
   PostModel.fromJson(Map<String, dynamic> json, this.userData, this.documentId)
@@ -47,6 +48,6 @@ class PostModel {
         description = json['description'] as String,
         userUUID = json['userUUID'] as String,
         comments = CommentModel.repliesFromJson(json['comments']),
-        username = userData['username'] as String,
+        username = userData?.username as String,
         timestamp = json['timestamp'] as Timestamp;
 }

@@ -36,5 +36,5 @@ class UserModel {
         userUUID = json['userUUID'] as String,
         username = json['username'] as String,
         name = json['name'] as String,
-        profilePic = json['profilePic'] as String;
+        profilePic = json['profilePic'] ?? '';
 }
