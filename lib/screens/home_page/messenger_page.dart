@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:instaclone/models/chat_model.dart';
 import 'package:instaclone/models/user_model.dart';
 import 'package:instaclone/providers/home_page_provider.dart';
@@ -50,7 +51,14 @@ class _MessengerPageState extends State<MessengerPage> with AutomaticKeepAliveCl
         backgroundColor: primaryColorReversed,
         foregroundColor: primaryColor,
         elevation: 0,
-        title: const Text('Messages'),
+        titleSpacing: 10,
+        leadingWidth: 26,
+        title: Text(
+          context.read<HomePageProvider>().userModel?.username as String,
+          style: TextStyle(
+            fontSize: 18.sp,
+          ),
+        ),
         centerTitle: false,
         leading: BackButton(
           color: primaryColor,
@@ -61,6 +69,18 @@ class _MessengerPageState extends State<MessengerPage> with AutomaticKeepAliveCl
                 .animateToPage(0, duration: const Duration(milliseconds: 400), curve: Curves.ease);
           },
         ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            iconSize: 24,
+            icon: const Icon(Icons.video_camera_back),
+          ),
+          IconButton(
+            onPressed: () {},
+            iconSize: 24,
+            icon: const Icon(Icons.add),
+          ),
+        ],
       ),
       body: (stream == null)
           ? Center(
@@ -153,8 +173,50 @@ class _MessengerPageState extends State<MessengerPage> with AutomaticKeepAliveCl
                   );
                 }
 
-                return ListView(
-                  children: chatTileWidgets,
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SizedBox(
+                        height: 48.h,
+                        child: TextField(
+                          maxLines: 1,
+                          textAlignVertical: TextAlignVertical.center,
+                          decoration: InputDecoration(
+                            border: const OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              borderRadius: BorderRadius.all(Radius.circular(16.0)),
+                            ),
+                            isDense: true,
+                            isCollapsed: true,
+                            prefixIcon: const Icon(Icons.search),
+                            filled: true,
+                            fillColor: Theme.of(context).brightness == Brightness.dark
+                                ? primaryColor.withOpacity(0.15)
+                                : primaryColor.withOpacity(0.05),
+                            hintText: 'Search',
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                      child: Text(
+                        'Messages',
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                          color: primaryColor,
+                          fontSize: 18.sp,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ),
+                    ListView(
+                      shrinkWrap: true,
+                      children: chatTileWidgets,
+                    ),
+                  ],
                 );
               },
             ),

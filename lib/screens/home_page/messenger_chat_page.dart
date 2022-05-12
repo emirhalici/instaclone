@@ -88,6 +88,7 @@ class _MessengerChatPageState extends State<MessengerChatPage> {
                 toolbarHeight: ProjectConstants.toolbarHeight,
                 centerTitle: false,
                 leadingWidth: 26,
+                titleSpacing: 10,
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -134,10 +135,13 @@ class _MessengerChatPageState extends State<MessengerChatPage> {
                               ? ProjectUtils.dateTimeToString(date)
                               : ProjectUtils.dateTimeToStringWithDate(date);
                           widgets.add(
-                            Center(
-                              child: Text(
-                                dateString,
-                                style: ProjectConstants.chatMessagesDateTextStyle(context),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Center(
+                                child: Text(
+                                  dateString,
+                                  style: ProjectConstants.chatMessagesDateTextStyle(context),
+                                ),
                               ),
                             ),
                           );
@@ -150,12 +154,15 @@ class _MessengerChatPageState extends State<MessengerChatPage> {
                                 ? ProjectUtils.dateTimeToString(date1)
                                 : ProjectUtils.dateTimeToStringWithDate(date1);
                             widgets.add(
-                              Center(
-                                child: Text(
-                                  dateString,
-                                  style: TextStyle(
-                                    color: primaryColor.withOpacity(0.5),
-                                    fontSize: 12.sp,
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Center(
+                                  child: Text(
+                                    dateString,
+                                    style: TextStyle(
+                                      color: primaryColor.withOpacity(0.5),
+                                      fontSize: 12.sp,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -170,7 +177,7 @@ class _MessengerChatPageState extends State<MessengerChatPage> {
                             Align(
                               alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
                               child: Padding(
-                                padding: const EdgeInsets.all(8.0),
+                                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
                                 child: Material(
                                   elevation: 0,
                                   borderRadius: const BorderRadius.all(Radius.circular(22.0)),
@@ -198,7 +205,7 @@ class _MessengerChatPageState extends State<MessengerChatPage> {
                                   ),
                                   Flexible(
                                     child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
+                                      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
                                       child: Material(
                                         elevation: 0,
                                         borderRadius: const BorderRadius.all(Radius.circular(22.0)),
