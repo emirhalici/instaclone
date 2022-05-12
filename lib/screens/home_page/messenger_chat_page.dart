@@ -22,11 +22,28 @@ class _MessengerChatPageState extends State<MessengerChatPage> {
   @override
   void initState() {
     context.read<HomePageProvider>().getSpecifiedChatStream(widget.documentId);
+    triggerScrollToBottom();
     super.initState();
   }
 
   TextEditingController userMessageTextController = TextEditingController();
   String userMessageText = '';
+  ScrollController messagesScrollController = ScrollController();
+
+  void triggerScrollToBottom() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (messagesScrollController.hasClients) {
+        messagesScrollController.animateTo(
+          messagesScrollController.position.maxScrollExtent + 80,
+          duration: const Duration(milliseconds: 150),
+          curve: Curves.easeIn,
+        );
+      } else {
+        print('there are no listeners, triggering again.');
+        triggerScrollToBottom();
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,6 +95,7 @@ class _MessengerChatPageState extends State<MessengerChatPage> {
             chatTitleText = users.join(', ');
           }
 
+          triggerScrollToBottom();
           return GestureDetector(
             onTap: () => WidgetsBinding.instance.focusManager.primaryFocus?.unfocus(),
             child: Scaffold(
@@ -121,6 +139,7 @@ class _MessengerChatPageState extends State<MessengerChatPage> {
                 children: [
                   Expanded(
                     child: ListView.builder(
+                      controller: messagesScrollController,
                       shrinkWrap: false,
                       reverse: false,
                       itemCount: snapshot.data?.messages.length,
@@ -271,6 +290,7 @@ class _MessengerChatPageState extends State<MessengerChatPage> {
                             if (!response) {
                               showSnackbarMessage('Failed to send message');
                             } else {
+                              triggerScrollToBottom();
                               userMessageTextController.clear();
                               userMessageText = '';
                             }
