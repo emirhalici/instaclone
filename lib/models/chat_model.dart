@@ -19,6 +19,10 @@ class ChatModel {
         'messages': MessageModel.messageListToJson(messages),
       };
 
+  ChatModel.newModelForUpload(this.userUUIDs)
+      : messages = [],
+        documentId = '';
+
   ChatModel.fromJson(Map<String, dynamic> json, this.users, this.documentId)
       : userUUIDs = json['userUUIDs'],
         messages = MessageModel.messagesFromJson(json['messages']);

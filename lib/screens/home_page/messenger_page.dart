@@ -4,10 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:instaclone/models/chat_model.dart';
 import 'package:instaclone/models/user_model.dart';
 import 'package:instaclone/providers/home_page_provider.dart';
+import 'package:instaclone/screens/home_page/messenger_add_page.dart';
 import 'package:instaclone/screens/home_page/messenger_chat_page.dart';
 import 'package:instaclone/utils/project_constants.dart';
 import 'package:provider/provider.dart';
-
 
 class MessengerPage extends StatefulWidget {
   const MessengerPage({Key? key}) : super(key: key);
@@ -76,7 +76,7 @@ class _MessengerPageState extends State<MessengerPage> with AutomaticKeepAliveCl
             icon: const Icon(Icons.video_camera_back),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) => const MessengerAddPage())),
             iconSize: 24,
             icon: const Icon(Icons.add),
           ),

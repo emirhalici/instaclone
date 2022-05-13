@@ -39,7 +39,7 @@ class _MessengerChatPageState extends State<MessengerChatPage> {
           curve: Curves.easeIn,
         );
       } else {
-        print('there are no listeners, triggering again.');
+        //print('there are no listeners, triggering again.');
         triggerScrollToBottom();
       }
     });
@@ -95,7 +95,7 @@ class _MessengerChatPageState extends State<MessengerChatPage> {
             chatTitleText = users.join(', ');
           }
 
-          triggerScrollToBottom();
+          //triggerScrollToBottom();
           return GestureDetector(
             onTap: () => WidgetsBinding.instance.focusManager.primaryFocus?.unfocus(),
             child: Scaffold(

@@ -16,6 +16,7 @@ class HomePageProvider with ChangeNotifier {
   UserModel? userModel;
   Stream<List<ChatModel>>? chatsStream;
   Stream<ChatModel>? specifiedChatStream;
+  List<UserModel>? followingUserModels;
 
   void setUser(User? user) {
     loggedInUser = user;
@@ -115,5 +116,36 @@ class HomePageProvider with ChangeNotifier {
       isSuccess = false;
     });
     return isSuccess;
+  }
+
+  Future<String> writeNewChatModel(ChatModel chatModel) async {
+    print(chatModel.userUUIDs);
+    try {
+      var ref = await firestore.collection('chats').add(chatModel.toJson());
+      return ref.id;
+    } catch (e) {
+      return '';
+    }
+  }
+
+  Future<void> getFollowingUsersForNewChat() async {
+    if (userModel == null) {
+      await getUserStream();
+    }
+
+    List<UserModel> followingUsers = [];
+    List followingExceptSelf = userModel!.following;
+    if (followingExceptSelf.contains(userModel?.userUUID)) {
+      followingExceptSelf.remove(userModel?.userUUID);
+    }
+    await firestore.collection('users').where('userUUID', whereIn: userModel?.following).get().then((value) {
+      var docs = value.docs;
+      for (var doc in docs) {
+        UserModel user = UserModel.fromJson(doc.data(), doc.id);
+        followingUsers.add(user);
+      }
+      followingUserModels = followingUsers;
+      notifyListeners();
+    });
   }
 }
