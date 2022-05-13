@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:instaclone/models/post_model.dart';
+import 'package:instaclone/models/user_model.dart';
 
 class SearchPageProvider with ChangeNotifier {
   Stream<List<List<PostModel>>>? postsStream;
@@ -24,8 +25,8 @@ class SearchPageProvider with ChangeNotifier {
     return posts;
   }
 
-  Future<Map<String, dynamic>> getUserWithUserUUID(String userUUID) async {
+  Future<UserModel> getUserWithUserUUID(String userUUID) async {
     var snapshot = await firestore.collection('users').where('userUUID', isEqualTo: userUUID).get();
-    return snapshot.docs[0].data();
+    return UserModel.fromJson(snapshot.docs[0].data(), snapshot.docs[0].id);
   }
 }
