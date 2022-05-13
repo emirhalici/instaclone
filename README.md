@@ -10,11 +10,12 @@ An **instagram** clone app powered with **Firebase** and written in **Flutter/Da
  - [x] Profile page
  - [x] User profile page
  - [x] Adding posts
+ - [x] DM messages (both dm and group chat)
 
 ### Features I'm working on:
  - [ ] Search for username
  - [ ] Handle back button presses
- - [ ] DM messages
+
  - [ ] Infinite scroll pagination
  - [ ] ~~Scroll to refresh (not really needed because all posts are taken as streams and they are in sync with firestore)~~
 
@@ -52,6 +53,10 @@ Run App
 |Add Post Page 1|Add Post Page 2|Add Post Page 3|
 |--|--|--|
 | ![Add Post 1](https://user-images.githubusercontent.com/81600010/167616434-1d096f7b-8f8c-45f6-ba44-ad9851bbeed7.PNG) |![Add Post 2](https://user-images.githubusercontent.com/81600010/167616457-3f7f2883-d973-4b4a-9366-866f778dd0c9.PNG)  | ![Add Post 3](https://user-images.githubusercontent.com/81600010/167616459-ed5dd4be-7351-4d42-b57b-35d5e095326c.PNG) |
+
+|Messages Page|Add Chat Page|Chat Page|
+|--|--|--|
+| ![IMG_0065](https://user-images.githubusercontent.com/81600010/168391236-96364321-72e0-419d-8e29-6c3ca3af645b.PNG) |![IMG_0067](https://user-images.githubusercontent.com/81600010/168391221-a8a1a871-f875-407d-a437-6a2d5b896aa8.PNG) | ![IMG_0066](https://user-images.githubusercontent.com/81600010/168391231-140973b6-90cf-4f79-916c-76cac174ff62.PNG) |
 
 # Videos/Screencasts
 TODO
