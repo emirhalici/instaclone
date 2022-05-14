@@ -1,9 +1,9 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:instaclone/models/comment_model.dart';
 import 'package:instaclone/screens/profile_page/profile_page_general.dart';
 import 'package:instaclone/utils/project_constants.dart';
+import 'package:instaclone/utils/project_utils.dart';
 import 'package:instaclone/widgets/duration_timer_widget.dart';
 
 class CommentWidget extends StatefulWidget {
@@ -25,10 +25,9 @@ class _CommentWidgetState extends State<CommentWidget> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CircleAvatar(
-            foregroundImage: (widget.userModel == null || widget.userModel!['profilePic'] == null || widget.userModel!['profilePic'] == '')
-                ? const AssetImage('assets/images/default_profile_pic.png') as ImageProvider
-                : CachedNetworkImageProvider(widget.userModel!['profilePic']),
+          ProjectUtils.profilePictureAvatar(
+            (widget.userModel == null || widget.userModel!['profilePic'] == null) ? '' : widget.userModel!['profilePic'],
+            null,
           ),
           Expanded(
             child: Padding(

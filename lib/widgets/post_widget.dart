@@ -77,12 +77,7 @@ class _PostWidgetState extends State<PostWidget> {
             children: [
               Row(
                 children: [
-                  CircleAvatar(
-                    foregroundImage: profilePic == ''
-                        ? const AssetImage('assets/images/default_profile_pic.png')
-                        : CachedNetworkImageProvider(profilePic) as ImageProvider,
-                    radius: 16,
-                  ),
+                  ProjectUtils.profilePictureAvatar(profilePic, 16),
                   SizedBox(width: 8.w),
                   GestureDetector(
                     onTap: () {

@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
@@ -165,21 +164,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             child: GestureDetector(
               onTap: () => ProjectUtils.showBottomSheet(context, (context) => changeProfilePicMenu(context)),
               child: Center(
-                child: widget.user.profilePic == ''
-                    ? const SizedBox(
-                        width: 86.0,
-                        height: 86.0,
-                        child: CircleAvatar(
-                          foregroundImage: AssetImage('assets/images/default_profile_pic.png'),
-                        ),
-                      )
-                    : SizedBox(
-                        width: 86.0,
-                        height: 86.0,
-                        child: CircleAvatar(
-                          foregroundImage: CachedNetworkImageProvider(widget.user.profilePic),
-                        ),
-                      ),
+                child: ProjectUtils.profilePictureAvatar(widget.user.profilePic, 46.0),
               ),
             ),
           ),

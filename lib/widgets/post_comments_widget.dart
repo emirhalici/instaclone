@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -117,11 +116,7 @@ class _PostCommentsWidgetState extends State<PostCommentsWidget> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CircleAvatar(
-                  foregroundImage: (widget.post.userData?.profilePic != '')
-                      ? CachedNetworkImageProvider(widget.post.userData?.profilePic as String)
-                      : const AssetImage('assets/images/default_profile_pic.png') as ImageProvider,
-                ),
+                ProjectUtils.profilePictureAvatar(widget.post.userData == null ? '' : widget.post.userData!.profilePic, null),
                 Expanded(
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 12.w),
@@ -193,12 +188,7 @@ class _PostCommentsWidgetState extends State<PostCommentsWidget> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: CircleAvatar(
-                  foregroundImage: (widget.post.userData?.profilePic != '')
-                      ? CachedNetworkImageProvider(widget.post.userData?.profilePic as String)
-                      : const AssetImage('assets/images/default_profile_pic.png') as ImageProvider,
-                  radius: 24,
-                ),
+                child: ProjectUtils.profilePictureAvatar(widget.post.userData == null ? '' : widget.post.userData!.profilePic, 24),
               ),
               Expanded(
                 child: Padding(

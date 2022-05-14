@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -110,14 +109,11 @@ class _MessengerChatPageState extends State<MessengerChatPage> {
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    CircleAvatar(
-                      foregroundImage: (snapshot.data == null ||
-                              snapshot.data!.users == null ||
-                              snapshot.data!.users!.isEmpty ||
-                              snapshot.data!.users![0].profilePic == '')
-                          ? const AssetImage('assets/images/default_profile_pic.png') as ImageProvider
-                          : CachedNetworkImageProvider(snapshot.data!.users![0].profilePic),
-                      radius: 16,
+                    ProjectUtils.profilePictureAvatar(
+                      (snapshot.data == null || snapshot.data!.users == null || snapshot.data!.users!.isEmpty)
+                          ? ''
+                          : snapshot.data!.users![0].profilePic,
+                      16,
                     ),
                     const SizedBox(width: 8),
                     Flexible(
@@ -216,12 +212,7 @@ class _MessengerChatPageState extends State<MessengerChatPage> {
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  CircleAvatar(
-                                    foregroundImage: (user == null || user.profilePic == '')
-                                        ? const AssetImage('assets/images/default_profile_pic.png') as ImageProvider
-                                        : CachedNetworkImageProvider(user.profilePic),
-                                    radius: 16,
-                                  ),
+                                  ProjectUtils.profilePictureAvatar(user == null ? '' : user.profilePic, 16),
                                   Flexible(
                                     child: Padding(
                                       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),

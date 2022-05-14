@@ -1,9 +1,9 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:instaclone/models/user_model.dart';
 import 'package:instaclone/screens/profile_page/profile_posts_general.dart';
+import 'package:instaclone/utils/project_utils.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/profile_page_provider.dart';
@@ -144,17 +144,7 @@ class _ProfilePageGeneralState extends State<ProfilePageGeneral> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              userData.profilePic == ''
-                  ? const SizedBox(
-                      width: 86.0,
-                      height: 86.0,
-                      child: CircleAvatar(foregroundImage: AssetImage('assets/images/default_profile_pic.png')),
-                    )
-                  : SizedBox(
-                      width: 86.0,
-                      height: 86.0,
-                      child: CircleAvatar(foregroundImage: CachedNetworkImageProvider(userData.profilePic)),
-                    ),
+              ProjectUtils.profilePictureAvatar(userData.profilePic, 46),
               Column(
                 children: [
                   Text(

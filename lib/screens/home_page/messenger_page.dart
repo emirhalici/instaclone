@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:instaclone/models/chat_model.dart';
@@ -7,6 +6,7 @@ import 'package:instaclone/providers/home_page_provider.dart';
 import 'package:instaclone/screens/home_page/messenger_add_page.dart';
 import 'package:instaclone/screens/home_page/messenger_chat_page.dart';
 import 'package:instaclone/utils/project_constants.dart';
+import 'package:instaclone/utils/project_utils.dart';
 import 'package:provider/provider.dart';
 
 class MessengerPage extends StatefulWidget {
@@ -142,11 +142,9 @@ class _MessengerPageState extends State<MessengerPage> with AutomaticKeepAliveCl
                         padding: const EdgeInsets.all(16.0),
                         child: Row(
                           children: [
-                            CircleAvatar(
-                              foregroundImage: (chat.users!.isNotEmpty && chat.users![0].profilePic != '')
-                                  ? CachedNetworkImageProvider(chat.users![0].profilePic)
-                                  : const AssetImage('assets/images/default_profile_pic.png') as ImageProvider,
-                              radius: 26,
+                            ProjectUtils.profilePictureAvatar(
+                              (chat.users == null || chat.users!.isNotEmpty) ? '' : chat.users![0].profilePic,
+                              26,
                             ),
                             const SizedBox(width: 8),
                             Flexible(

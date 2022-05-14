@@ -1,8 +1,8 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:instaclone/models/user_model.dart';
 import 'package:instaclone/utils/project_constants.dart';
+import 'package:instaclone/utils/project_utils.dart';
 
 class CheckboxListTileWidget extends StatefulWidget {
   final UserModel userModel;
@@ -23,12 +23,7 @@ class _CheckboxListTileWidgetState extends State<CheckboxListTileWidget> {
     return CheckboxListTile(
       title: Row(
         children: [
-          CircleAvatar(
-            foregroundImage: (widget.userModel.profilePic == '')
-                ? const AssetImage('assets/images/default_profile_pic.png') as ImageProvider
-                : CachedNetworkImageProvider(widget.userModel.profilePic),
-            radius: 16,
-          ),
+          ProjectUtils.profilePictureAvatar(widget.userModel.profilePic, 16),
           const SizedBox(width: 8),
           Expanded(
             child: Column(

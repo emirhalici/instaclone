@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:instaclone/utils/project_constants.dart';
 import 'package:intl/intl.dart';
@@ -65,4 +66,11 @@ class ProjectUtils {
       builder: builder,
     );
   }
+
+  static Widget profilePictureAvatar(String picture, double? radius) => CircleAvatar(
+        radius: radius,
+        foregroundImage: picture == ''
+            ? const AssetImage('assets/images/default_profile_pic.png') as ImageProvider
+            : CachedNetworkImageProvider(picture),
+      );
 }
