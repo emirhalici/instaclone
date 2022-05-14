@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:instaclone/main.dart';
+import 'package:instaclone/providers/home_page_provider.dart';
+import 'package:instaclone/providers/profile_page_provider.dart';
+import 'package:instaclone/providers/search_page_provider.dart';
+import 'package:instaclone/screens/authentication_wrapper.dart';
 import 'package:instaclone/screens/login_page/login_page.dart';
 import 'package:instaclone/utils/authentication_service.dart';
 import 'package:instaclone/utils/project_constants.dart';
@@ -18,9 +23,13 @@ class MenuSheet extends StatelessWidget {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => const LoginPage(),
+          builder: (context) => const AuthenticationWrapper(),
         ),
       );
+    }
+
+    void restartApp() {
+      RestartWidget.restartApp(context);
     }
 
     return Column(
@@ -90,8 +99,17 @@ class MenuSheet extends StatelessWidget {
             style: listTileTextStyle,
           ),
           onTap: () async {
+            context.read<HomePageProvider>().userStream = null;
+            context.read<HomePageProvider>().chatsStream = null;
+            context.read<HomePageProvider>().postsStream = null;
+            context.read<HomePageProvider>().specifiedChatStream = null;
+
+            context.read<ProfilePageProvider>().userPostsStream = null;
+            context.read<ProfilePageProvider>().anotherUserPostsStream = null;
+
+            context.read<SearchPageProvider>().postsStream = null;
             await context.read<AuthenticationService>().signOut();
-            directToLoginPage();
+            restartApp();
           },
         ),
       ],

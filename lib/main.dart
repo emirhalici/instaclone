@@ -14,23 +14,57 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => HomePageProvider()),
-        ChangeNotifierProvider(create: (_) => ProfilePageProvider()),
-        ChangeNotifierProvider(create: (_) => PostsProvider()),
-        ChangeNotifierProvider(create: (_) => SearchPageProvider()),
-        Provider<AuthenticationService>(
-          create: (context) => AuthenticationService(FirebaseAuth.instance),
-        ),
-        StreamProvider(
-          create: (context) => context.read<AuthenticationService>().authStateChanges,
-          initialData: null,
-        ),
-      ],
-      child: const MyApp(),
+    RestartWidget(
+      child: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => HomePageProvider()),
+          ChangeNotifierProvider(create: (_) => ProfilePageProvider()),
+          ChangeNotifierProvider(create: (_) => PostsProvider()),
+          ChangeNotifierProvider(create: (_) => SearchPageProvider()),
+          Provider<AuthenticationService>(
+            create: (context) => AuthenticationService(FirebaseAuth.instance),
+          ),
+          StreamProvider(
+            create: (context) => context.read<AuthenticationService>().authStateChanges,
+            initialData: null,
+          ),
+        ],
+        child: const MyApp(),
+      ),
     ),
   );
+}
+
+class RestartWidget extends StatefulWidget {
+  final Widget child;
+  const RestartWidget({super.key, required this.child});
+
+  static void restartApp(BuildContext context) {
+    if (context.findAncestorStateOfType<_RestartWidgetState>() != null) {
+      context.findAncestorStateOfType<_RestartWidgetState>()?.restartApp();
+    }
+  }
+
+  @override
+  State<RestartWidget> createState() => _RestartWidgetState();
+}
+
+class _RestartWidgetState extends State<RestartWidget> {
+  Key key = UniqueKey();
+
+  void restartApp() {
+    setState(() {
+      key = UniqueKey();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return KeyedSubtree(
+      key: key,
+      child: widget.child,
+    );
+  }
 }
 
 class MyApp extends StatelessWidget {
