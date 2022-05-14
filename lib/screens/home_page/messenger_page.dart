@@ -143,7 +143,7 @@ class _MessengerPageState extends State<MessengerPage> with AutomaticKeepAliveCl
                         child: Row(
                           children: [
                             ProjectUtils.profilePictureAvatar(
-                              (chat.users == null || chat.users!.isNotEmpty) ? '' : chat.users![0].profilePic,
+                              (chat.users == null || chat.users!.isEmpty) ? '' : chat.users![0].profilePic,
                               26,
                             ),
                             const SizedBox(width: 8),
