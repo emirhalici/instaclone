@@ -103,9 +103,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin<
           ? (context.watch<HomePageProvider>().userModel != null && context.watch<HomePageProvider>().userModel!.following.isEmpty)
               ? Container()
               : Center(
-                  child: CircularProgressIndicator.adaptive(
-                    backgroundColor: primaryColor,
-                  ),
+                  child: ProjectUtils.progressIndicator(primaryColor),
                 )
           : (context.watch<HomePageProvider>().userModel!.following.isEmpty)
               ? Container()
@@ -120,9 +118,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin<
 
                     if (list.connectionState == ConnectionState.waiting) {
                       return Center(
-                        child: CircularProgressIndicator.adaptive(
-                          backgroundColor: primaryColor,
-                        ),
+                        child: ProjectUtils.progressIndicator(primaryColor),
                       );
                     }
 

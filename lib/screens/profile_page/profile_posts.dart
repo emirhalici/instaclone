@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:instaclone/providers/profile_page_provider.dart';
 import 'package:instaclone/screens/post_page.dart';
 import 'package:instaclone/utils/project_constants.dart';
+import 'package:instaclone/utils/project_utils.dart';
 import 'package:instaclone/widgets/post_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -27,9 +28,7 @@ class _ProfilePostsState extends State<ProfilePosts> {
 
     return stream == null
         ? Center(
-            child: CircularProgressIndicator.adaptive(
-              backgroundColor: primaryColor,
-            ),
+            child: ProjectUtils.progressIndicator(primaryColor),
           )
         : StreamBuilder<List<PostModel>>(
             stream: stream,
@@ -42,9 +41,7 @@ class _ProfilePostsState extends State<ProfilePosts> {
 
               if (list.connectionState == ConnectionState.waiting) {
                 return Center(
-                  child: CircularProgressIndicator.adaptive(
-                    backgroundColor: primaryColor,
-                  ),
+                  child: ProjectUtils.progressIndicator(primaryColor),
                 );
               }
 

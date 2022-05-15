@@ -143,9 +143,7 @@ class _MessengerAddPageState extends State<MessengerAddPage> {
           ),
           if (users == null)
             Center(
-              child: CircularProgressIndicator.adaptive(
-                backgroundColor: primaryColor,
-              ),
+              child: ProjectUtils.progressIndicator(primaryColor),
             )
           else
             ListView.builder(

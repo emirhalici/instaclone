@@ -171,9 +171,7 @@ class _PostCommentsWidgetState extends State<PostCommentsWidget> {
           if (comments.isNotEmpty)
             users.isEmpty
                 ? Expanded(
-                    child: CircularProgressIndicator.adaptive(
-                      backgroundColor: ProjectConstants.getPrimaryColor(context, false),
-                    ),
+                    child: ProjectUtils.progressIndicator(primaryColor)
                   )
                 : Expanded(
                     child: SingleChildScrollView(

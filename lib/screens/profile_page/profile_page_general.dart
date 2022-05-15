@@ -75,7 +75,7 @@ class _ProfilePageGeneralState extends State<ProfilePageGeneral> {
       ),
       body: (userModel == null || currentUserModel == null)
           ? Center(
-              child: CircularProgressIndicator.adaptive(backgroundColor: ProjectConstants.getPrimaryColor(context, false)),
+              child: ProjectUtils.progressIndicator(primaryColor),
             )
           : DefaultTabController(
               length: 2,

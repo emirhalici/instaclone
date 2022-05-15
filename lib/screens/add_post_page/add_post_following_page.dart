@@ -108,8 +108,8 @@ class _AddPostFollowingPageState extends State<AddPostFollowingPage> {
             thickness: 1,
           ),
           if (isLoading)
-            const Center(
-              child: CircularProgressIndicator.adaptive(),
+            Center(
+              child: ProjectUtils.progressIndicator(primaryColor),
             )
         ],
       ),

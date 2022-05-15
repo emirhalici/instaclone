@@ -7,6 +7,7 @@ import 'package:instaclone/widgets/post_widget.dart';
 import 'package:provider/provider.dart';
 
 import '../../models/post_model.dart';
+import '../../utils/project_utils.dart';
 
 class ProfilePostsGeneral extends StatefulWidget {
   final String userUUID;
@@ -39,9 +40,7 @@ class _ProfilePostsGeneralState extends State<ProfilePostsGeneral> {
 
     return stream == null
         ? Center(
-            child: CircularProgressIndicator.adaptive(
-              backgroundColor: primaryColor,
-            ),
+            child: ProjectUtils.progressIndicator(primaryColor),
           )
         : StreamBuilder<List<PostModel>>(
             stream: stream,
@@ -54,9 +53,7 @@ class _ProfilePostsGeneralState extends State<ProfilePostsGeneral> {
 
               if (list.connectionState == ConnectionState.waiting) {
                 return Center(
-                  child: CircularProgressIndicator.adaptive(
-                    backgroundColor: primaryColor,
-                  ),
+                  child: ProjectUtils.progressIndicator(primaryColor),
                 );
               }
 

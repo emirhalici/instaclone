@@ -52,7 +52,7 @@ class _PostWidgetState extends State<PostWidget> {
           width: double.infinity,
           child: CachedNetworkImage(
             imageUrl: picture,
-            placeholder: (context, url) => const CircularProgressIndicator.adaptive(),
+            placeholder: (context, url) => ProjectUtils.progressIndicator(primaryColor),
             fit: BoxFit.cover,
             width: double.infinity,
           ),

@@ -50,6 +50,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
   }
 
   Widget changeProfilePicMenu(context) {
+    Color primaryColor = ProjectConstants.getPrimaryColor(context, false);
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -58,7 +60,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           title: Text(
             'Pick From Camera',
             style: TextStyle(
-              color: ProjectConstants.getPrimaryColor(context, false),
+              color: primaryColor,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -76,7 +78,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           title: Text(
             'Pick From Gallery',
             style: TextStyle(
-              color: ProjectConstants.getPrimaryColor(context, false),
+              color: primaryColor,
               fontWeight: FontWeight.w600,
             ),
           ),
@@ -89,10 +91,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
             updateProfilePic(image);
           },
         ),
-        if (isLoading)
-          CircularProgressIndicator.adaptive(
-            backgroundColor: ProjectConstants.getPrimaryColor(context, false),
-          ),
+        if (isLoading) ProjectUtils.progressIndicator(primaryColor),
       ],
     );
   }
@@ -267,10 +266,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
               ],
             ),
           ),
-          if (isLoading)
-            CircularProgressIndicator.adaptive(
-              backgroundColor: primaryColor,
-            )
+          if (isLoading) ProjectUtils.progressIndicator(primaryColor)
         ],
       ),
     );

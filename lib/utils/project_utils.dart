@@ -73,4 +73,11 @@ class ProjectUtils {
             ? const AssetImage('assets/images/default_profile_pic.png') as ImageProvider
             : CachedNetworkImageProvider(picture),
       );
+
+  static Widget progressIndicator(Color backgroundColor) => Center(
+        child: CircularProgressIndicator.adaptive(
+          backgroundColor: backgroundColor,
+          valueColor: const AlwaysStoppedAnimation<Color>(ProjectConstants.blueColor),
+        ),
+      );
 }

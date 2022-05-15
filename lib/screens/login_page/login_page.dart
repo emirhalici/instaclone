@@ -35,6 +35,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    Color primaryColor = ProjectConstants.getPrimaryColor(context, false);
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
@@ -169,8 +170,9 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 if (waitingForRequest)
                   Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: CircularProgressIndicator.adaptive(backgroundColor: ProjectConstants.getPrimaryColor(context, false)))
+                    padding: const EdgeInsets.all(16.0),
+                    child: ProjectUtils.progressIndicator(primaryColor),
+                  )
                 else
                   SizedBox(height: 32.h),
                 SvgPicture.asset(

@@ -37,6 +37,7 @@ class _ForgotPasswordPage extends State<ForgotPasswordPage> {
 
   @override
   Widget build(BuildContext context) {
+    Color primaryColor = ProjectConstants.getPrimaryColor(context, false);
     return Scaffold(
       body: Center(
         child: SingleChildScrollView(
@@ -108,7 +109,7 @@ class _ForgotPasswordPage extends State<ForgotPasswordPage> {
                 if (waitingForRequest)
                   Padding(
                     padding: const EdgeInsets.all(16.0),
-                    child: CircularProgressIndicator.adaptive(backgroundColor: ProjectConstants.getPrimaryColor(context, false)),
+                    child: ProjectUtils.progressIndicator(primaryColor),
                   )
                 else
                   SizedBox(height: 12.h),

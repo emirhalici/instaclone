@@ -54,9 +54,7 @@ class _MessengerChatPageState extends State<MessengerChatPage> {
 
     if (stream == null) {
       return Center(
-        child: CircularProgressIndicator.adaptive(
-          backgroundColor: primaryColor,
-        ),
+        child: ProjectUtils.progressIndicator(primaryColor),
       );
     } else {
       return StreamBuilder(
@@ -70,9 +68,7 @@ class _MessengerChatPageState extends State<MessengerChatPage> {
 
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
-              child: CircularProgressIndicator.adaptive(
-                backgroundColor: primaryColor,
-              ),
+              child: ProjectUtils.progressIndicator(primaryColor),
             );
           }
 

@@ -4,6 +4,7 @@ import 'package:instaclone/models/post_model.dart';
 import 'package:instaclone/providers/search_page_provider.dart';
 import 'package:instaclone/screens/post_page.dart';
 import 'package:instaclone/utils/project_constants.dart';
+import 'package:instaclone/utils/project_utils.dart';
 import 'package:instaclone/widgets/post_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -53,9 +54,7 @@ class _SearchPageState extends State<SearchPage> {
           ),
           stream == null
               ? Center(
-                  child: CircularProgressIndicator.adaptive(
-                    backgroundColor: primaryColor,
-                  ),
+                  child: ProjectUtils.progressIndicator(primaryColor),
                 )
               : StreamBuilder<List<List<PostModel>>>(
                   stream: stream,
@@ -68,9 +67,7 @@ class _SearchPageState extends State<SearchPage> {
 
                     if (list.connectionState == ConnectionState.waiting) {
                       return Center(
-                        child: CircularProgressIndicator.adaptive(
-                          backgroundColor: primaryColor,
-                        ),
+                        child: ProjectUtils.progressIndicator(primaryColor),
                       );
                     }
 
