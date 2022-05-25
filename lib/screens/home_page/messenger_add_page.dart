@@ -85,7 +85,6 @@ class _MessengerAddPageState extends State<MessengerAddPage> {
               selectedUsers.add(context.read<HomePageProvider>().loggedInUser!.uid);
               ChatModel chatModel = ChatModel.newModelForUpload(selectedUsers);
               String response = await context.read<HomePageProvider>().writeNewChatModel(chatModel);
-              print('resonse $response');
               if (response != '') {
                 redirectToChatPage(response);
               } else {
@@ -150,14 +149,15 @@ class _MessengerAddPageState extends State<MessengerAddPage> {
               itemCount: users.length,
               shrinkWrap: true,
               itemBuilder: (context, index) => CheckboxListTileWidget(
-                  userModel: users[index],
-                  onPressedCallback: (UserModel user, bool val) {
-                    if (val) {
-                      selectedUsers.add(user.userUUID);
-                    } else {
-                      selectedUsers.remove(user.userUUID);
-                    }
-                  }),
+                userModel: users[index],
+                onPressedCallback: (UserModel user, bool val) {
+                  if (val) {
+                    selectedUsers.add(user.userUUID);
+                  } else {
+                    selectedUsers.remove(user.userUUID);
+                  }
+                },
+              ),
             ),
         ],
       ),

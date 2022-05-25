@@ -3,8 +3,6 @@ import 'package:instaclone/main.dart';
 import 'package:instaclone/providers/home_page_provider.dart';
 import 'package:instaclone/providers/profile_page_provider.dart';
 import 'package:instaclone/providers/search_page_provider.dart';
-import 'package:instaclone/screens/authentication_wrapper.dart';
-import 'package:instaclone/screens/login_page/login_page.dart';
 import 'package:instaclone/utils/authentication_service.dart';
 import 'package:instaclone/utils/project_constants.dart';
 import 'package:provider/provider.dart';
@@ -19,14 +17,14 @@ class MenuSheet extends StatelessWidget {
       fontWeight: FontWeight.w600,
     );
 
-    void directToLoginPage() {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const AuthenticationWrapper(),
-        ),
-      );
-    }
+    // void directToLoginPage() {
+    //   Navigator.pushReplacement(
+    //     context,
+    //     MaterialPageRoute(
+    //       builder: (context) => const AuthenticationWrapper(),
+    //     ),
+    //   );
+    // }
 
     void restartApp() {
       RestartWidget.restartApp(context);

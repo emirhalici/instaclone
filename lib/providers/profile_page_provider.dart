@@ -115,7 +115,6 @@ class ProfilePageProvider with ChangeNotifier {
         Map<String, dynamic> data = doc.data();
         if (data['userUUID'] == userUUID) {
           anotherUserData = data;
-          print('another user data $anotherUserData');
           anotherUserModel = UserModel.fromJson(anotherUserData, doc.id);
         }
       }

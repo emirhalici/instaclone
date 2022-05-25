@@ -119,7 +119,6 @@ class HomePageProvider with ChangeNotifier {
   }
 
   Future<String> writeNewChatModel(ChatModel chatModel) async {
-    print(chatModel.userUUIDs);
     try {
       var ref = await firestore.collection('chats').add(chatModel.toJson());
       return ref.id;
