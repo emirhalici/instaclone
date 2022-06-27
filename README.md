@@ -12,11 +12,13 @@ An **instagram** clone app powered with **Firebase** and written in **Flutter/Da
  - [x] Adding posts
  - [x] DM messages (both dm and group chat)
 
+> I recently dropped active development of this project to focus on other topics and my internship. If I come back to it I'll hopefully implement remaining features. Feel free to fork the project, use and publish it freely and maybe even contribute!
+
 ### Features I'm working on:
  - [ ] Search for username
  - [ ] Handle back button presses
 
- - [ ] Infinite scroll pagination
+ - [ ] ~~Infinite scroll pagination (not really needed because all posts are taken as streams and they are in sync with firestore)~~
  - [ ] ~~Scroll to refresh (not really needed because all posts are taken as streams and they are in sync with firestore)~~
 
 ### Features I'm planning to implement:
